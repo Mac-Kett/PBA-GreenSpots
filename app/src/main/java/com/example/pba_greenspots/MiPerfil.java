@@ -11,17 +11,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MiPerfil extends Fragment {
 
     private MiPerfilViewModel mViewModel;
     private View v;
-    var nombre;
-    var apellido;
-    var pais;
-    var email;
-    var contrasenia;
-    var btnVolver;
+    EditText nombre;
+    EditText apellido;
+    EditText pais;
+    EditText email;
+    EditText contrasenia;
+    Button btnVolver;
     public static MiPerfil newInstance() {
         return new MiPerfil();
     }

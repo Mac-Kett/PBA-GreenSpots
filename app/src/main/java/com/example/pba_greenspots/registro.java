@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -18,13 +19,13 @@ public class registro extends Fragment {
 
     private RegistroViewModel mViewModel;
     private View v;
-     var nombre;
-     var apellido;
-     var pais;
-     var email;
-     var contrasenia;
-     var confirmarContrasenia;
-     var btnRegistrarse;
+    EditText nombre;
+    EditText apellido;
+    Spinner pais;
+    EditText email;
+    EditText contrasenia;
+    EditText confirmarContrasenia;
+    Button btnRegistrarse;
 
     public static registro newInstance() {
         return new registro();
