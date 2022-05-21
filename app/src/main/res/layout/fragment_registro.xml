@@ -36,6 +36,12 @@
             android:inputType="textPersonName"
             android:minHeight="48dp" />
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
+
         <EditText
             android:id="@+id/editTextTextEmailAddress2"
             android:layout_width="match_parent"
@@ -61,7 +67,8 @@
             android:ems="10"
             android:hint="Repetir Contraseña"
             android:inputType="textPassword"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:textColorHint="#546E7A" />
 
         <Button
             android:id="@+id/button5"
