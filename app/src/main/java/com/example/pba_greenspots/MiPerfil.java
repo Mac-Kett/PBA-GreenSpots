@@ -15,7 +15,13 @@ import android.view.ViewGroup;
 public class MiPerfil extends Fragment {
 
     private MiPerfilViewModel mViewModel;
-
+    private View v;
+    var nombre;
+    var apellido;
+    var pais;
+    var email;
+    var contrasenia;
+    var btnVolver;
     public static MiPerfil newInstance() {
         return new MiPerfil();
     }
@@ -23,7 +29,13 @@ public class MiPerfil extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mi_perfil, container, false);
+        v = inflater.inflate(R.layout.fragment_registro, container, false);
+        nombre = v.findViewById(R.id.nombre_perfil);
+        apellido = v.findViewById(R.id.apellido_perfil);
+        email = v.findViewById(R.id.email_perfil);
+        contrasenia = v.findViewById(R.id.contrasenia_perfil);
+        btnVolver = v.findViewById(R.id.btn_volver);
+        return v;
     }
 
     @Override

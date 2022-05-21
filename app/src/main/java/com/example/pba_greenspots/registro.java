@@ -11,10 +11,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 public class registro extends Fragment {
 
     private RegistroViewModel mViewModel;
+    private View v;
+     var nombre;
+     var apellido;
+     var pais;
+     var email;
+     var contrasenia;
+     var confirmarContrasenia;
+     var btnRegistrarse;
 
     public static registro newInstance() {
         return new registro();
@@ -23,7 +33,16 @@ public class registro extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_registro, container, false);
+        v = inflater.inflate(R.layout.fragment_registro, container, false);
+        nombre = v.findViewById(R.id.nombre_registro);
+        apellido = v.findViewById(R.id.apellido_registro);
+        email = v.findViewById(R.id.email_registro);
+        contrasenia = v.findViewById(R.id.contrasenia1_registro);
+        confirmarContrasenia = v.findViewById(R.id.contrasenia2_registro);
+        btnRegistrarse = v.findViewById(R.id.btn_registrarse);
+        return v;
+
+
     }
 
     @Override
@@ -32,5 +51,7 @@ public class registro extends Fragment {
         mViewModel = new ViewModelProvider(this).get(RegistroViewModel.class);
         // TODO: Use the ViewModel
     }
+
+
 
 }

@@ -33,7 +33,7 @@
             android:text="@string/nombre" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/nombre_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -46,7 +46,7 @@
             android:text="@string/apellido" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/apellido_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -59,7 +59,7 @@
             android:text="@string/pais" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName5"
+            android:id="@+id/pais_pefil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -72,7 +72,7 @@
             android:text="@string/email" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName6"
+            android:id="@+id/email_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -85,14 +85,14 @@
             android:text="@string/contrase_a" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName7"
+            android:id="@+id/contrasenia_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btn_volver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Volver" />
