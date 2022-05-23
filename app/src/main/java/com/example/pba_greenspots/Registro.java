@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class registro extends Fragment {
+public class Registro extends Fragment {
 
     private RegistroViewModel mViewModel;
     private View v;
@@ -27,8 +27,8 @@ public class registro extends Fragment {
     EditText confirmarContrasenia;
     Button btnRegistrarse;
 
-    public static registro newInstance() {
-        return new registro();
+    public static Registro newInstance() {
+        return new Registro();
     }
 
     @Override
