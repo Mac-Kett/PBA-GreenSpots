@@ -3,10 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.5475" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/drawable/ic_launcher_background.xml" value="0.5475" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/fragment__inicio.xml" value="0.33" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/fragment_mi_perfil.xml" value="0.25" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/fragment_registro.xml" value="0.25" />
         <entry key="..\:/Users/maca9/AndroidStudioProjects/PBAGreenSpots/app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
       </map>
     </option>
