@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "618405842721",
+    "project_id": "pba-greenspots",
+    "storage_bucket": "pba-greenspots.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618405842721:android:82caab68a30eb297da3860",
+        "android_client_info": {
+          "package_name": "com.example.pba_greenspots"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618405842721-3fbccg13a09pqghfqpvkf8mo2jbbr364.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeFPYDzUIZ_09a28z2EhAT8d55JAR3TOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618405842721-3fbccg13a09pqghfqpvkf8mo2jbbr364.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
