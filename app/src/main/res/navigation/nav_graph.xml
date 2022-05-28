@@ -8,7 +8,7 @@
         android:id="@+id/fragment_Inicio"
         android:name="com.example.pba_greenspots.Fragment_Inicio"
         android:label="fragment__inicio"
-        tools:layout="@layout/fragment__inicio" >
+        tools:layout="@layout/fragment_inicio" >
         <action
             android:id="@+id/action_fragment_Inicio_to_fragment_LogIn"
             app:destination="@id/fragment_LogIn" />
