@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PBA-GreenSpots</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home_fragment">Hello Home fragment</string>
+    <string name="perfil_fragment">Hello Perfil fragment</string>
+    <string name="account_fragment">Hello Account fragment</string>
+    <string name="search_fragment">Hello Search fragment</string>
 </resources>

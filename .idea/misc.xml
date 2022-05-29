@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/activity_main.xml" value="0.16847826086956522" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/fragment_account.xml" value="0.1" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/fragment_home.xml" value="0.17844202898550723" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/fragment_home2.xml" value="0.10507246376811594" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/fragment_perfil.xml" value="0.17844202898550723" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/layout/fragment_search.xml" value="0.10507246376811594" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19692307692307692" />
+        <entry key="..\:/Users/Ivanqsa/AndroidStudioProjects/PBA-GreenSpots/app/src/main/res/menu/bottom_navmenu.xml" value="0.203125" />
         <entry key="..\:/Users/maca9/AndroidStudioProjects/PBAGreenSpots/app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
       </map>
     </option>
