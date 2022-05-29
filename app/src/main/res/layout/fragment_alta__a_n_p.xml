@@ -20,11 +20,332 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="2015dp"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical">
 
 
+                <EditText
+                    android:id="@+id/et_instrumentoPlanificacion"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="20dp"
+                    android:ems="10"
+                    android:hint="Instrumento de planificación"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toTopOf="@+id/et_instrumentoLegal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_nombreAnp"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Nombre de la unidad de conservación"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toTopOf="@+id/et_instrumentoPlanificacion"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_administracionPublicaPrivada"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Administración pública o privada"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_municipio"
+                    app:layout_constraintVertical_bias="0.086" />
+
+                <EditText
+                    android:id="@+id/et_municipio"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="24dp"
+                    android:ems="10"
+                    android:hint="Municipio"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_zonaServicios" />
+
+                <EditText
+                    android:id="@+id/et_zonaServicios"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:ems="10"
+                    android:hint="Zona de Servicios"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_ingresoGratuitoPago" />
+
+                <EditText
+                    android:id="@+id/et_ingresoGratuitoPago"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:ems="10"
+                    android:hint="Ingreso grstuito o pago"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_dificultadSenderismo" />
+
+                <EditText
+                    android:id="@+id/et_dificultadSenderismo"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:hint="Niveles de dificultad del senderismo"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_senializacion" />
+
+                <EditText
+                    android:id="@+id/et_senializacion"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:hint="Señalización de Senderos"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_accesos" />
+
+                <EditText
+                    android:id="@+id/et_accesos"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:ems="10"
+                    android:hint="Accesos"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_horarios" />
+
+                <EditText
+                    android:id="@+id/et_horarios"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:hint="Horarios"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_informacionAdicional" />
+
+                <EditText
+                    android:id="@+id/et_informacionAdicional"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Información Adicional"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_gestionesDesarrollo" />
+
+                <EditText
+                    android:id="@+id/et_gestionesDesarrollo"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Gestiones en desarrollo"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_telefono" />
+
+                <EditText
+                    android:id="@+id/et_telefono"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Teléfono de contacto"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_correoPagWeb" />
+
+                <EditText
+                    android:id="@+id/et_correoPagWeb"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Correo y página web"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_infraestructura" />
+
+                <EditText
+                    android:id="@+id/et_infraestructura"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Infraestructura"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_actividadesDelArea" />
+
+                <EditText
+                    android:id="@+id/et_actividadesDelArea"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Actividades del área"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_fauna" />
+
+                <EditText
+                    android:id="@+id/et_fauna"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Fauna Emblemática"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_flora" />
+
+                <EditText
+                    android:id="@+id/et_flora"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Flora Emblemática"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_clima" />
+
+                <EditText
+                    android:id="@+id/et_clima"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Clima"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_geologia" />
+
+                <EditText
+                    android:id="@+id/et_geologia"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Geología"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_superficie" />
+
+                <EditText
+                    android:id="@+id/et_superficie"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Superficie"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_geolocalizacion" />
+
+                <EditText
+                    android:id="@+id/et_geolocalizacion"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Geolocalización"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_caracteristicasGenerales" />
+
+                <EditText
+                    android:id="@+id/et_caracteristicasGenerales"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Características Generales"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_fechaCreacion" />
+
+                <EditText
+                    android:id="@+id/et_fechaCreacion"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Fecha de creación"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_importancia" />
+
+                <EditText
+                    android:id="@+id/et_importancia"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="importancia"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_acceso" />
+
+                <EditText
+                    android:id="@+id/et_instrumentoLegal"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Instrumento legal"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="160dp" />
+
+                <EditText
+                    android:id="@+id/et_acceso"
+                    android:layout_width="379dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Acceso"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_instrumentoLegal" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
