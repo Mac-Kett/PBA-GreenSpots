@@ -5,7 +5,14 @@
 
     <string-array name="ABM">
         <item>Alta</item>
-        <item>Baja-Modificacion</item>
+        <item>Baja</item>
+        <item>Modificacion</item>
     </string-array>
+
+    <string name="msg_campoIncompleto">Campo obligatorio incompleto!</string>
+    <string name="msg_Alta_ReservaNatural_Exito">Se ha registrado con exito!</string>
+    <string name="msg_Alta_ReservaNatural_Error">ERROR. No pudimos guardar su registro!</string>
+    <string name="msg_Baja_ReservaNatural_Exito">Se ha eliminado con exito:</string>
+    <string name="msg_Baja_ReservaNatural_Error">No se ha podido eliminar el recurso solicitado:</string>
 
 </resources>
