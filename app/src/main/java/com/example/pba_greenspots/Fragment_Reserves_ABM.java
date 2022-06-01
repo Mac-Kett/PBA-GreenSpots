@@ -2,12 +2,9 @@ package com.example.pba_greenspots;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,19 +26,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Fragment_Reserves_ABM extends Fragment{
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static Spinner spABM, spReserves;
-    private static FragmentManager fragmentManager;
-    private static Button btnConfirmar, btnModificar, btnEliminar;
-    private static EditText etNombre, etInstrumentoPlanificacion, etMunicipio;
-    private static LinearLayout formLinearLayout;
-    private static ScrollView scrollView;
-
+    private Spinner spABM, spReserves;
+    private Button btnConfirmar, btnModificar, btnEliminar;
+    private EditText etNombre, etInstrumentoPlanificacion, etMunicipio;
+    private LinearLayout formLinearLayout;
+    private ScrollView scrollView;
+    private ArrayList<EditText> listaEditTexts;
     private static ArrayList<ReservaNatural> listaReservasNaturales;
 
     public Fragment_Reserves_ABM() {
@@ -58,7 +53,6 @@ public class Fragment_Reserves_ABM extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_reserves_abm, container, false);
-        fragmentManager=getParentFragmentManager();
         scrollView = view.findViewById(R.id.scrollView);
         formLinearLayout = view.findViewById(R.id.formLinearLayout);
         btnConfirmar = view.findViewById(R.id.btnConfirmar);
@@ -68,7 +62,25 @@ public class Fragment_Reserves_ABM extends Fragment{
         spReserves = view.findViewById(R.id.spReservas);
 
         instanciarEditTextsFormulario(view);
+        cargarArrayListEditTextsFormulario();
+
+
         METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
+
+
+
+
+
+        spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cargarFormularioItemSeleccionado();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         spABM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -92,9 +104,7 @@ public class Fragment_Reserves_ABM extends Fragment{
 
         configuracionEventosListenersBotones();
 
-        //METODOS_COMPLEMENTARIOS.obtenerReservasNaturales();
-
-        //OBTENGO RESERVAS NATURALES Y LAS CARGO AL SPINNER CORRESPONDIENTE
+       // OBTENGO RESERVAS NATURALES Y LAS CARGO AL SPINNER CORRESPONDIENTE
         db.collection("Reserves")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -103,16 +113,13 @@ public class Fragment_Reserves_ABM extends Fragment{
                         if (task.isSuccessful()){
                             listaReservasNaturales=new ArrayList<ReservaNatural>();
                             ReservaNatural reservaNaturalActual;
-
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
                                 reservaNaturalActual = documentSnapshot.toObject(ReservaNatural.class);
                                 reservaNaturalActual.setId(documentSnapshot.getId());
                                 listaReservasNaturales.add(reservaNaturalActual);
                                 Log.d(getTag(), String.valueOf(listaReservasNaturales));
                             }
-
                             actualizarSpinnerReservas();
-
                         }else{
                             Log.d(getTag(), "ERROR OBTENIENDO DATA!", task.getException());
                             Toast.makeText(getContext(), "ERROR! No pudimos completar la lista de reservas", Toast.LENGTH_LONG).show();
@@ -123,14 +130,18 @@ public class Fragment_Reserves_ABM extends Fragment{
         return view;
     }
 
-    private void actualizarSpinnerReservas() {
-        //AGREGAR AL SPINNER DE RESERVAS
-        ArrayAdapter<ReservaNatural> arrayAdapter = new ArrayAdapter<ReservaNatural>(getContext(), android.R.layout.simple_spinner_item, listaReservasNaturales);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spReserves.setAdapter(arrayAdapter);
+    private void cargarArrayListEditTextsFormulario() {
+        listaEditTexts = new ArrayList<>();
+        listaEditTexts.add(etNombre);
+        listaEditTexts.add(etInstrumentoPlanificacion);
+        listaEditTexts.add(etMunicipio);
     }
 
-    private void cargarFormulario() {
+    private void actualizarSpinnerReservas() {
+        //ACTUALIZAR AL SPINNER DE RESERVAS
+        ArrayAdapter<ReservaNatural> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaReservasNaturales);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spReserves.setAdapter(arrayAdapter);
     }
 
     private void configuracionEventosListenersBotones() {
@@ -156,8 +167,36 @@ public class Fragment_Reserves_ABM extends Fragment{
         });
     }
 
-    private void modificarReserva() {
+    private void crearReserva() {
+        //Valido campos
+        if (!validarCampos()){
+            Toast.makeText(getContext(),"Revise el formulario", Toast.LENGTH_LONG).show();
+        }else{
+            ReservaNatural reservaNatural = crearReservaNaturalConDatosFormulario();
+
+            db.collection("Reserves")
+                    .add(reservaNatural)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
+                            Log.d(getTag(),"SE REGISTRO CON EXITO!");
+                            reservaNatural.setId(documentReference.getId());
+                            limpiarFormulario();
+                            listaReservasNaturales.add(reservaNatural);
+                            actualizarSpinnerReservas();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Error, Toast.LENGTH_LONG).show();
+                            Log.d(getTag(),"OCURRIO UN ERROR", e);
+                        }
+                    });
+        }
     }
+
 
     private void eliminarReserva() {
         ReservaNatural reservaEliminar;
@@ -182,7 +221,49 @@ public class Fragment_Reserves_ABM extends Fragment{
                     }
                 });
     }
+    private void modificarReserva() {
+        ReservaNatural reservaNaturalFormulario = crearReservaNaturalConDatosFormulario();
+        ReservaNatural reservaNaturalSeleccionada = (ReservaNatural) spReserves.getSelectedItem();
 
+        reservaNaturalFormulario.setId(reservaNaturalSeleccionada.getId());
+
+        //Me fijo si la reservaNatural seleccionada en el Spinner es igual a la de los datos del formulario (por eso tuve que agregarle el id de la seleccionada a la creada a partir del form)
+        if (reservaNaturalFormulario != reservaNaturalSeleccionada){
+            //valido campos
+            if(validarCampos()){
+                db.collection("Reserves")
+                        .document(reservaNaturalFormulario.getId())
+                        .set(reservaNaturalFormulario)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(getContext(), R.string.msg_Modificacion_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(getTag(), e.getMessage());
+                                Toast.makeText(getContext(), R.string.msg_Modificacion_ReservaNatural_Error, Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
+        }else{
+            Toast.makeText(getContext(), "No ha modificado ningun campo!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private ReservaNatural crearReservaNaturalConDatosFormulario() {
+        //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
+        ReservaNatural reservaCreada;
+        reservaCreada = new ReservaNatural(
+                etNombre.getText().toString().trim(),
+                etMunicipio.getText().toString().trim(),
+                etInstrumentoPlanificacion.getText().toString().trim()
+        );
+        return reservaCreada;
+    }
 
     private void instanciarEditTextsFormulario(View v) {
         etNombre = v.findViewById(R.id.et_nombreAnp);
@@ -190,57 +271,33 @@ public class Fragment_Reserves_ABM extends Fragment{
         etInstrumentoPlanificacion = v.findViewById(R.id.et_instrumentoPlanificacion);
     }
 
-    private void crearReserva() {
-        String nombre, instrumentoPlanificacion, municipio;
-
-        nombre= etNombre.getText().toString().trim();
-        instrumentoPlanificacion= etInstrumentoPlanificacion.getText().toString().trim();
-        municipio= etMunicipio.getText().toString().trim();
-
-        //Valido campos
-        if (    !validarCampo(etNombre, nombre) ||
-                !validarCampo(etMunicipio, municipio) ||
-                !validarCampo(etInstrumentoPlanificacion, instrumentoPlanificacion)){
-            Toast.makeText(getContext(),"Revise el formulario", Toast.LENGTH_LONG).show();
-        }else{
-            ReservaNatural reservaNatural;
-            reservaNatural = new ReservaNatural(nombre,instrumentoPlanificacion,municipio);
-
-            db.collection("Reserves")
-                    .add(reservaNatural)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
-                            Log.d(getTag(),"SE REGISTRO CON EXITO!");
-                            limpiarFormulario();
-                            actualizarSpinnerReservas();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Error, Toast.LENGTH_LONG).show();
-                            Log.d(getTag(),"OCURRIO UN ERROR", e);
-                        }
-                    });
+    private boolean validarCampos() {
+        Boolean bool = true;
+        for (EditText editText : listaEditTexts) {
+            if (editText.getText().toString().trim().isEmpty()) {
+                editText.setError(getString(R.string.msg_campoIncompleto));
+                editText.setHintTextColor(Color.RED);
+                bool = false;
+                break;
+            }
         }
+        return bool;
     }
 
     private void limpiarFormulario() {
-        etNombre.setText("");
-        etMunicipio.setText("");
-        etInstrumentoPlanificacion.setText("");
+        for (EditText editText: listaEditTexts) {
+            editText.setHintTextColor(getResources().getColor(R.color.default_hint));
+            editText.setText("");
+        }
     }
 
-    private boolean validarCampo(EditText et, String str) {
-        boolean bool=true;
-        if (str.isEmpty()){
-            et.setError(getString(R.string.msg_campoIncompleto));
-            et.setHintTextColor(Color.RED);
-            bool = false;
-        }
-        return bool;
+    private void cargarFormularioItemSeleccionado() {
+        ReservaNatural reservaNaturalSeleccionada;
+        reservaNaturalSeleccionada = (ReservaNatural) spReserves.getSelectedItem();
+        etNombre.setText(reservaNaturalSeleccionada.getNombreUnidad());
+        etInstrumentoPlanificacion.setText(reservaNaturalSeleccionada.getInstrumentoPlanificacion());
+        etMunicipio.setText(reservaNaturalSeleccionada.getMunicipio());
+
     }
 
     private void flujoAlta() {
@@ -250,6 +307,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         btnModificar.setVisibility(View.GONE);
         btnEliminar.setVisibility(View.GONE);
         spReserves.setVisibility(View.GONE);
+        limpiarFormulario();
     }
     private void flujoModificacion() {
         scrollView.setVisibility(View.VISIBLE);

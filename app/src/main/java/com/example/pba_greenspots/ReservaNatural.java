@@ -1,16 +1,17 @@
 package com.example.pba_greenspots;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ReservaNatural {
+
+
     private String id;
     private String nombreUnidad;
     private String instrumentoPlanificacion;
     private String municipio;
 
-    public ReservaNatural(){
-
-    }
+    public ReservaNatural(){}
 
     public ReservaNatural(String nombreUnidad, String instrumentoPlanificaicon, String municipio) {
         this.nombreUnidad = nombreUnidad;
@@ -21,6 +22,7 @@ public class ReservaNatural {
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
