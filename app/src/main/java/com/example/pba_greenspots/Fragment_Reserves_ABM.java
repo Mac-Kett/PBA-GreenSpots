@@ -25,7 +25,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -33,8 +32,36 @@ public class Fragment_Reserves_ABM extends Fragment{
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Spinner spABM, spReserves;
-    private Button btnConfirmar, btnModificar, btnEliminar;
-    private EditText etNombre, etInstrumentoPlanificacion, etMunicipio;
+    private Button btnConfirmar,
+            btnModificar,
+            btnEliminar;
+    private EditText etNombre,
+            etInstrumentoPlanificacion,
+            etMunicipio,
+            et_administracionPublicaPrivada,
+            et_zonaServicios,
+            et_ingresoGratuitoPago,
+            et_dificultadSenderismo,
+            et_senializacion,
+            et_accesos,
+            et_horarios,
+            et_informacionAdicional,
+            et_gestionesDesarrollo,
+            et_telefono,
+            et_correoPagWeb,
+            et_infraestructura,
+            et_actividadesDelArea,
+            et_fauna,
+            et_flora,
+            et_clima,
+            et_geologia,
+            et_superficie,
+            et_geolocalizacion,
+            et_caracteristicasGenerales,
+            et_fechaCreacion,
+            et_importancia,
+            et_instrumentoLegal,
+            et_acceso;
     private LinearLayout formLinearLayout;
     private ScrollView scrollView;
     private ArrayList<EditText> listaEditTexts;
@@ -135,6 +162,30 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(etNombre);
         listaEditTexts.add(etInstrumentoPlanificacion);
         listaEditTexts.add(etMunicipio);
+        listaEditTexts.add(et_administracionPublicaPrivada);
+        listaEditTexts.add(et_zonaServicios);
+        listaEditTexts.add(et_ingresoGratuitoPago);
+        listaEditTexts.add(et_dificultadSenderismo);
+        listaEditTexts.add(et_senializacion);
+        listaEditTexts.add(et_accesos);
+        listaEditTexts.add(et_horarios);
+        listaEditTexts.add(et_informacionAdicional);
+        listaEditTexts.add(et_gestionesDesarrollo);
+        listaEditTexts.add(et_telefono);
+        listaEditTexts.add(et_correoPagWeb);
+        listaEditTexts.add(et_infraestructura);
+        listaEditTexts.add(et_actividadesDelArea);
+        listaEditTexts.add(et_fauna);
+        listaEditTexts.add(et_flora);
+        listaEditTexts.add(et_clima);
+        listaEditTexts.add(et_geologia);
+        listaEditTexts.add(et_superficie);
+        listaEditTexts.add(et_geolocalizacion);
+        listaEditTexts.add(et_caracteristicasGenerales);
+        listaEditTexts.add(et_fechaCreacion);
+        listaEditTexts.add(et_importancia);
+        listaEditTexts.add(et_instrumentoLegal);
+        listaEditTexts.add(et_acceso);
     }
 
     private void actualizarSpinnerReservas() {
@@ -260,7 +311,31 @@ public class Fragment_Reserves_ABM extends Fragment{
         reservaCreada = new ReservaNatural(
                 etNombre.getText().toString().trim(),
                 etMunicipio.getText().toString().trim(),
-                etInstrumentoPlanificacion.getText().toString().trim()
+                etInstrumentoPlanificacion.getText().toString().trim(),
+                et_administracionPublicaPrivada.getText().toString().trim(),
+                et_zonaServicios.getText().toString().trim(),
+                et_ingresoGratuitoPago.getText().toString().trim(),
+                et_dificultadSenderismo.getText().toString().trim(),
+                et_senializacion.getText().toString().trim(),
+                et_accesos.getText().toString().trim(),
+                et_horarios.getText().toString().trim(),
+                et_informacionAdicional.getText().toString().trim(),
+                et_gestionesDesarrollo.getText().toString().trim(),
+                et_telefono.getText().toString().trim(),
+                et_correoPagWeb.getText().toString().trim(),
+                et_infraestructura.getText().toString().trim(),
+                et_actividadesDelArea.getText().toString().trim(),
+                et_fauna.getText().toString().trim(),
+                et_flora.getText().toString().trim(),
+                et_clima.getText().toString().trim(),
+                et_geologia.getText().toString().trim(),
+                et_superficie.getText().toString().trim(),
+                et_geolocalizacion.getText().toString().trim(),
+                et_caracteristicasGenerales.getText().toString().trim(),
+                et_fechaCreacion.getText().toString().trim(),
+                et_importancia.getText().toString().trim(),
+                et_instrumentoLegal.getText().toString().trim(),
+                et_acceso.getText().toString().trim()
         );
         return reservaCreada;
     }
@@ -269,6 +344,30 @@ public class Fragment_Reserves_ABM extends Fragment{
         etNombre = v.findViewById(R.id.et_nombreAnp);
         etMunicipio = v.findViewById(R.id.et_municipio);
         etInstrumentoPlanificacion = v.findViewById(R.id.et_instrumentoPlanificacion);
+        et_administracionPublicaPrivada = v.findViewById(R.id.et_administracionPublicaPrivada);
+                et_zonaServicios = v.findViewById(R.id.et_zonaServicios);
+                et_ingresoGratuitoPago = v.findViewById(R.id.et_ingresoGratuitoPago);
+                et_dificultadSenderismo = v.findViewById(R.id.et_dificultadSenderismo);
+                et_senializacion = v.findViewById(R.id.et_senializacion);
+                et_accesos = v.findViewById(R.id.et_accesos);
+                et_horarios = v.findViewById(R.id.et_horarios);
+                et_informacionAdicional = v.findViewById(R.id.et_informacionAdicional);
+                et_gestionesDesarrollo = v.findViewById(R.id.et_gestionesDesarrollo);
+                et_telefono = v.findViewById(R.id.et_telefono);
+                et_correoPagWeb = v.findViewById(R.id.et_correoPagWeb);
+                et_infraestructura = v.findViewById(R.id.et_infraestructura);
+                et_actividadesDelArea = v.findViewById(R.id.et_actividadesDelArea);
+                et_fauna = v.findViewById(R.id.et_fauna);
+                et_flora = v.findViewById(R.id.et_municipio);
+                et_clima = v.findViewById(R.id.et_clima);
+                et_geologia = v.findViewById(R.id.et_geologia);
+                et_superficie = v.findViewById(R.id.et_superficie);
+                et_geolocalizacion = v.findViewById(R.id.et_geolocalizacion);
+                et_caracteristicasGenerales = v.findViewById(R.id.et_caracteristicasGenerales);
+                et_fechaCreacion = v.findViewById(R.id.et_fechaCreacion);
+                et_importancia = v.findViewById(R.id.et_importancia);
+                et_instrumentoLegal = v.findViewById(R.id.et_instrumentoLegal);
+                et_acceso = v.findViewById(R.id.et_acceso);
     }
 
     private boolean validarCampos() {
@@ -297,6 +396,29 @@ public class Fragment_Reserves_ABM extends Fragment{
         etNombre.setText(reservaNaturalSeleccionada.getNombreUnidad());
         etInstrumentoPlanificacion.setText(reservaNaturalSeleccionada.getInstrumentoPlanificacion());
         etMunicipio.setText(reservaNaturalSeleccionada.getMunicipio());
+        et_zonaServicios.setText(reservaNaturalSeleccionada.getEt_zonaServicios());
+        et_ingresoGratuitoPago.setText(reservaNaturalSeleccionada.getEt_ingresoGratuitoPago());
+        et_dificultadSenderismo.setText(reservaNaturalSeleccionada.getEt_dificultadSenderismo());
+        et_senializacion.setText(reservaNaturalSeleccionada.getEt_senializacion());
+        et_accesos.setText(reservaNaturalSeleccionada.getEt_accesos());
+        et_horarios.setText(reservaNaturalSeleccionada.getEt_horarios());
+        et_informacionAdicional.setText(reservaNaturalSeleccionada.getEt_informacionAdicional());
+        et_gestionesDesarrollo.setText(reservaNaturalSeleccionada.getEt_gestionesDesarrollo());
+        et_telefono.setText(reservaNaturalSeleccionada.getEt_telefono());
+        et_correoPagWeb.setText(reservaNaturalSeleccionada.getEt_correoPagWeb());
+        et_infraestructura.setText(reservaNaturalSeleccionada.getEt_infraestructura());
+        et_actividadesDelArea.setText(reservaNaturalSeleccionada.getEt_actividadesDelArea());
+        et_fauna.setText(reservaNaturalSeleccionada.getEt_fauna());
+        et_flora.setText(reservaNaturalSeleccionada.getEt_flora());
+        et_clima.setText(reservaNaturalSeleccionada.getEt_clima());
+        et_geologia.setText(reservaNaturalSeleccionada.getEt_geologia());
+        et_superficie.setText(reservaNaturalSeleccionada.getEt_superficie());
+        et_geolocalizacion.setText(reservaNaturalSeleccionada.getEt_geolocalizacion());
+        et_caracteristicasGenerales.setText(reservaNaturalSeleccionada.getEt_caracteristicasGenerales());
+        et_fechaCreacion.setText(reservaNaturalSeleccionada.getEt_fechaCreacion());
+        et_importancia.setText(reservaNaturalSeleccionada.getEt_importancia());
+        et_instrumentoLegal.setText(reservaNaturalSeleccionada.getEt_instrumentoLegal());
+        et_acceso.setText(reservaNaturalSeleccionada.getEt_acceso());
 
     }
 
