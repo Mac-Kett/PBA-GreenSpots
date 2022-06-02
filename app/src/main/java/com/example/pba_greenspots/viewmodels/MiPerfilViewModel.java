@@ -1,4 +1,4 @@
-package com.example.pba_greenspots;
+package com.example.pba_greenspots.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 

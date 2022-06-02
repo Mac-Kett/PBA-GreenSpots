@@ -1,4 +1,4 @@
-package com.example.pba_greenspots;
+package com.example.pba_greenspots.fragments;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pba_greenspots.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Inicializar#newInstance} factory method to
+ * Use the {@link PerfilUsuarioFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Inicializar extends Fragment {
+public class PerfilUsuarioFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class Inicializar extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Inicializar() {
+    public PerfilUsuarioFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class Inicializar extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Inicializar.
+     * @return A new instance of fragment PerfilUsuarioFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Inicializar newInstance(String param1, String param2) {
-        Inicializar fragment = new Inicializar();
+    public static PerfilUsuarioFragment newInstance(String param1, String param2) {
+        PerfilUsuarioFragment fragment = new PerfilUsuarioFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class Inicializar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inicializar, container, false);
+        return inflater.inflate(R.layout.fragment_perfil_usuario, container, false);
     }
 }

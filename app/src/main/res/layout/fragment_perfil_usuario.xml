@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MiPerfil" >
+    tools:context=".fragments.PerfilUsuarioFragment">
 
     <LinearLayout
         android:layout_width="373dp"
@@ -22,7 +22,9 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="Imagen_Perfil"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="@string/imagen_perfil"
+            android:padding="30dp"
             tools:ignore="ImageContrastCheck"
             tools:src="@tools:sample/avatars" />
 
@@ -36,21 +38,11 @@
             android:id="@+id/nombre_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:ems="10"
             android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/apellido" />
 
-        <EditText
-            android:id="@+id/apellido_perfil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textView4"
@@ -62,6 +54,7 @@
             android:id="@+id/pais_pefil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:ems="10"
             android:inputType="textPersonName" />
 
@@ -75,6 +68,7 @@
             android:id="@+id/email_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:ems="10"
             android:inputType="textPersonName" />
 
@@ -82,19 +76,15 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/contrase_a" />
+            android:text="@string/contrasenia" />
 
         <EditText
             android:id="@+id/contrasenia_perfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:ems="10"
             android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/btn_volver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Volver" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
