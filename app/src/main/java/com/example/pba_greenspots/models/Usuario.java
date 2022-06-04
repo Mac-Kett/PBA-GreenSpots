@@ -5,11 +5,22 @@ public class Usuario {
    // private String nombreCompleto;
     private String mail;
     private String password;
-    private int tipoUser;
-   // private String pais;
+    private String tipoUser;
+    //private int tipoUser;
+    //private String pais;
 
     public Usuario(){
 
+    }
+
+
+    public Usuario(String mail, String password, int tipoUser) {
+        //setNombreCompleto(nombreCompleto);
+        setMail(mail);
+        this.password = password;
+        this.tipoUser = tipoUser;
+        // setContrasena(contrasena);
+        //setPais(pais);
     }
 
     public Usuario(String mail, String password, int tipoUser) {

@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/DOCUMENTOS/ORT/2022_ProyectoFinal/AndroidProject/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/DOCUMENTOS/ORT/2022_ProyectoFinal/AndroidProject/app/src/main/res/layout/fragment_mi_perfil.xml" value="0.22" />
+        <entry key="..\:/DOCUMENTOS/ORT/2022_ProyectoFinal/AndroidProject/app/src/main/res/layout/fragment_registro2.xml" value="0.19635416666666666" />
+        <entry key="..\:/DOCUMENTOS/ORT/2022_ProyectoFinal/AndroidProject/app/src/main/res/layout/fragment_registro3.xml" value="0.33" />
         <entry key="..\:/DOCUMENTOS/ORT/2022_ProyectoFinal/AndroidProject/app/src/main/res/layout/fragment_reserves.xml" value="0.1" />
         <entry key="..\:/DOCUMENTOS/ORT/2022_ProyectoFinal/AndroidProject/app/src/main/res/layout/fragment_reserves2.xml" value="0.19635416666666666" />
         <entry key="..\:/DOCUMENTOS/ORT/2022_ProyectoFinal/AndroidProject/app/src/main/res/layout/item_reserve.xml" value="0.146484375" />

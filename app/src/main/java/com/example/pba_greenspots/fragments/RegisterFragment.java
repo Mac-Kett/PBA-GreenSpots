@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,8 @@ public class RegisterFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Usuario usuario = new Usuario(mail, contra, tipo);
-                            FirebaseDatabase.getInstance().getReference("Users")
+                            //Log.d("usuario", {usuario})
+                            FirebaseDatabase.getInstance().getReference("Turista")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

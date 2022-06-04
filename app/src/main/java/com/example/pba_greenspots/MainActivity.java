@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.pba_greenspots.fragments.MiPerfil;
 import com.example.pba_greenspots.fragments.RegisterFragment;
 
 
@@ -23,9 +24,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                RegisterFragment register = new RegisterFragment();
+
+                //RegisterFragment register = new RegisterFragment();
+                RegisterFragment register2 = new RegisterFragment();
+                //MiPerfil miPerfil = new MiPerfil();
                FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
-               fragmentTransaction.replace(R.id.fragment_container,register);
+               //fragmentTransaction.replace(R.id.fragment_container, miPerfil);
+                //fragmentTransaction.replace(R.id.fragment_container, register);
+                fragmentTransaction.replace(R.id.fragment_container, register2);
                fragmentTransaction.commit();
 
 
