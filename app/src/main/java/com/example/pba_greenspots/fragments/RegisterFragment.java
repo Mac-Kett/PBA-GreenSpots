@@ -1,13 +1,13 @@
 package com.example.pba_greenspots.fragments;
 
-import static java.lang.Integer.parseInt;
+
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +21,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class RegisterFragment extends Fragment {
 
-    private EditText email, contrasena, pais;
+    private EditText nombreCompleto, email, contrasena, pais;
     private Button btnRegister;
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -52,7 +52,7 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_register, container, false);
-       // nombreCompleto = v.findViewById(R.id.nombre_perfil);
+        nombreCompleto = v.findViewById(R.id.nombre_registro);
         email = v.findViewById(R.id.email_registro);
         contrasena = v.findViewById(R.id.contrasenia_registro);
         pais = v.findViewById(R.id.pais_registro);
@@ -71,17 +71,17 @@ public class RegisterFragment extends Fragment {
 
     private void userRegister(View view) {
 
-        //String nombre = nombreCompleto.getText().toString();
+        String nombre = nombreCompleto.getText().toString().trim();
         String mail = email.getText().toString().trim();
         String contra =contrasena.getText().toString().trim();
-        String tipo = pais.getText().toString().trim();
+        String country = pais.getText().toString().trim();
 
         mAuth.createUserWithEmailAndPassword(mail, contra)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            Usuario usuario = new Usuario(mail, contra, tipo);
+                            Usuario usuario = new Usuario(nombre,mail, contra, country);
                             //Log.d("usuario", {usuario})
                             db.collection("Users").add(usuario).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override

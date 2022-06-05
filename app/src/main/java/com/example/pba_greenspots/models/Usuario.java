@@ -2,12 +2,21 @@ package com.example.pba_greenspots.models;
 
 public class Usuario {
 
+    private String nombre;
     private String mail;
     private String password;
-    private String tipoUser;
+    private String pais;
 
     public Usuario(){
 
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getMail() {
@@ -26,28 +35,28 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getTipoUser() {
-        return tipoUser;
+    public String getPais() {
+        return pais;
     }
 
-    public void setTipoUser(String tipoUser) {
-        this.tipoUser = tipoUser;
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
-    public Usuario(String mail, String password, String tipoUser) {
+    public Usuario(String nombre, String mail, String password, String pais) {
+        setNombre(nombre);
         setMail(mail);
         setPassword(password);
-        setTipoUser(tipoUser);
+        setPais(pais);
     }
-
 
     @Override
     public String toString() {
         return "Usuario{" +
-
-                ", email='" + mail + '\'' +
-                ", contraseña='" + password + '\'' +
-
+                "nombre='" + nombre + '\'' +
+                ", mail='" + mail + '\'' +
+                ", password='" + password + '\'' +
+                ", pais='" + pais + '\'' +
                 '}';
     }
 }
