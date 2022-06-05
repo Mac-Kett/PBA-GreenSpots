@@ -34,14 +34,14 @@ public class Fragment_Reserves_ABM extends Fragment{
     private Spinner spABM,
             spReserves,
             spMunicipios,
-            spTipoAdministracion;
+            spTipoAdministracion,
+            spCosto;
     private Button btnConfirmar,
             btnModificar,
             btnEliminar;
     private EditText etNombre,
             etInstrumentoPlanificacion,
             et_zonaServicios,
-            et_ingresoGratuitoPago,
             et_dificultadSenderismo,
             et_senializacion,
             et_accesos,
@@ -90,6 +90,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spReserves = view.findViewById(R.id.spReservas);
         spMunicipios = view.findViewById(R.id.spMunicipios);
         spTipoAdministracion = view.findViewById(R.id.spTipoAdministracion);
+        spCosto = view.findViewById(R.id.spCosto);
 
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
@@ -98,6 +99,8 @@ public class Fragment_Reserves_ABM extends Fragment{
         METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerTipoAdministracion(spTipoAdministracion, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerCosto(spCosto, requireContext());
+
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -167,7 +170,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(spMunicipios);
         listaEditTexts.add(spTipoAdministracion);
         listaEditTexts.add(et_zonaServicios);
-        listaEditTexts.add(et_ingresoGratuitoPago);
+        listaEditTexts.add(spCosto);
         listaEditTexts.add(et_dificultadSenderismo);
         listaEditTexts.add(et_senializacion);
         listaEditTexts.add(et_accesos);
@@ -317,7 +320,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 etInstrumentoPlanificacion.getText().toString().trim(),
                 spTipoAdministracion.getSelectedItem().toString().trim(),
                 et_zonaServicios.getText().toString().trim(),
-                et_ingresoGratuitoPago.getText().toString().trim(),
+                spCosto.getSelectedItem().toString().trim(),
                 et_dificultadSenderismo.getText().toString().trim(),
                 et_senializacion.getText().toString().trim(),
                 et_accesos.getText().toString().trim(),
@@ -349,7 +352,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         etInstrumentoPlanificacion = v.findViewById(R.id.et_instrumentoPlanificacion);
         spTipoAdministracion = v.findViewById(R.id.spTipoAdministracion);
                 et_zonaServicios = v.findViewById(R.id.et_zonaServicios);
-                et_ingresoGratuitoPago = v.findViewById(R.id.et_ingresoGratuitoPago);
+                spCosto = v.findViewById(R.id.spCosto);
                 et_dificultadSenderismo = v.findViewById(R.id.et_dificultadSenderismo);
                 et_senializacion = v.findViewById(R.id.et_senializacion);
                 et_accesos = v.findViewById(R.id.et_accesos);
@@ -417,13 +420,19 @@ public class Fragment_Reserves_ABM extends Fragment{
         } catch (Exception e) {
             spMunicipios.setSelection(0);
         }
+        //TODO reveer el .getMunicipio porque le tengo que pasar la lista que tiene que ver
         try {
             spTipoAdministracion.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION)));
         } catch (Exception e) {
             spTipoAdministracion.setSelection(0);
         }
         et_zonaServicios.setText(reservaNaturalSeleccionada.getEt_zonaServicios());
-        et_ingresoGratuitoPago.setText(reservaNaturalSeleccionada.getEt_ingresoGratuitoPago());
+        //TODO reveer el .getMunicipio porque le tengo que pasar la lista que tiene que ver
+        try {
+            spCosto.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.COSTO)));
+        } catch (Exception e) {
+            spCosto.setSelection(0);
+        }
         et_dificultadSenderismo.setText(reservaNaturalSeleccionada.getEt_dificultadSenderismo());
         et_senializacion.setText(reservaNaturalSeleccionada.getEt_senializacion());
         et_accesos.setText(reservaNaturalSeleccionada.getEt_accesos());
