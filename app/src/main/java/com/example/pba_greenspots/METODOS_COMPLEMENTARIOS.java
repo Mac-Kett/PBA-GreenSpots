@@ -44,4 +44,12 @@ public class METODOS_COMPLEMENTARIOS {
 
         return spinnerNivelesDificultad;
     }
+
+    public static Spinner completarSpinnerSenializacionServicios(Spinner spinnerSenializacion, Context context){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.SENIALIZACION_DE_SENDEROS, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSenializacion.setAdapter(adapter);
+
+        return spinnerSenializacion;
+    }
 }

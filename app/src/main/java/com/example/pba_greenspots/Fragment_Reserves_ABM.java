@@ -36,14 +36,14 @@ public class Fragment_Reserves_ABM extends Fragment{
             spMunicipios,
             spTipoAdministracion,
             spCosto,
-            spNivelesDificultad;
+            spNivelesDificultad,
+            spSenializacionServicios;
     private Button btnConfirmar,
             btnModificar,
             btnEliminar;
     private EditText etNombre,
             etInstrumentoPlanificacion,
             et_zonaServicios,
-            et_senializacion,
             et_accesos,
             et_horarios,
             et_informacionAdicional,
@@ -92,6 +92,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spTipoAdministracion = view.findViewById(R.id.spTipoAdministracion);
         spCosto = view.findViewById(R.id.spCosto);
         spNivelesDificultad = view.findViewById(R.id.spNivelesDificultad);
+        spSenializacionServicios = view.findViewById(R.id.spSenializacionServicios);
 
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
@@ -102,7 +103,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         METODOS_COMPLEMENTARIOS.completarSpinnerTipoAdministracion(spTipoAdministracion, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerCosto(spCosto, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerNivelesDificultad(spNivelesDificultad, requireContext());
-
+        METODOS_COMPLEMENTARIOS.completarSpinnerSenializacionServicios(spSenializacionServicios, requireContext());
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -174,7 +175,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(et_zonaServicios);
         listaEditTexts.add(spCosto);
         listaEditTexts.add(spNivelesDificultad);
-        listaEditTexts.add(et_senializacion);
+        listaEditTexts.add(spSenializacionServicios);
         listaEditTexts.add(et_accesos);
         listaEditTexts.add(et_horarios);
         listaEditTexts.add(et_informacionAdicional);
@@ -324,7 +325,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 et_zonaServicios.getText().toString().trim(),
                 spCosto.getSelectedItem().toString().trim(),
                 spNivelesDificultad.getSelectedItem().toString().trim(),
-                et_senializacion.getText().toString().trim(),
+                spSenializacionServicios.getSelectedItem().toString().trim(),
                 et_accesos.getText().toString().trim(),
                 et_horarios.getText().toString().trim(),
                 et_informacionAdicional.getText().toString().trim(),
@@ -356,7 +357,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 et_zonaServicios = v.findViewById(R.id.et_zonaServicios);
                 spCosto = v.findViewById(R.id.spCosto);
                 spNivelesDificultad = v.findViewById(R.id.spNivelesDificultad);
-                et_senializacion = v.findViewById(R.id.et_senializacion);
+                spSenializacionServicios = v.findViewById(R.id.spSenializacionServicios);
                 et_accesos = v.findViewById(R.id.et_accesos);
                 et_horarios = v.findViewById(R.id.et_horarios);
                 et_informacionAdicional = v.findViewById(R.id.et_informacionAdicional);
@@ -438,7 +439,11 @@ public class Fragment_Reserves_ABM extends Fragment{
         } catch (Exception e) {
             spNivelesDificultad.setSelection(0);
         }
-        et_senializacion.setText(reservaNaturalSeleccionada.getSenializacion());
+        try {
+            spSenializacionServicios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getSenializacion(), getContext().getResources().getStringArray(R.array.COSTO)));
+        } catch (Exception e) {
+            spSenializacionServicios.setSelection(0);
+        }
         et_accesos.setText(reservaNaturalSeleccionada.getAccesos());
         et_horarios.setText(reservaNaturalSeleccionada.getHorarios());
         et_informacionAdicional.setText(reservaNaturalSeleccionada.getInformacionAdicional());

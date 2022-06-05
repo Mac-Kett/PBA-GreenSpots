@@ -158,6 +158,7 @@
     <string-array name="TIPO_ADMINISTRACION">
         <item>Publico/Public</item>
         <item>Privado/Private</item>
+        <item>Mixto</item>
     </string-array>
 
     <string-array name="COSTO">
@@ -166,13 +167,19 @@
     </string-array>
 
     <string-array name="NIVELES_DIFICULTAD">
-        <item>Muy Facil/Very easy</item>
         <item>Facil/Easy</item>
         <item>Media/Medium</item>
         <item>Dificil/Hard</item>
-        <item>Muy dificil/Very Hard</item>
     </string-array>
 
+    <string-array name="SENIALIZACION_DE_SENDEROS">
+        <item>No</item>
+        <item>Si</item>
+    </string-array>
 
+    <string-array name="ZONA_DE_SERVICIOS">
+        <item>si</item>
+        <item>no</item>
+    </string-array>
 
 </resources>

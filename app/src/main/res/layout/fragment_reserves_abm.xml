@@ -124,13 +124,14 @@
                     android:accessibilityLiveRegion="none"
                     android:visibility="visible" />
 
-                <EditText
-                    android:id="@+id/et_senializacion"
+                <Spinner
+                    android:id="@+id/spSenializacionServicios"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:ems="10"
-                    android:hint="Señalización de Senderos"
-                    android:inputType="textPersonName" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
 
 
                 <EditText
