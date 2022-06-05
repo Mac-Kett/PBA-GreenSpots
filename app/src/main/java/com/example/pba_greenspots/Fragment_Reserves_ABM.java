@@ -422,9 +422,8 @@ public class Fragment_Reserves_ABM extends Fragment{
         } catch (Exception e) {
             spMunicipios.setSelection(0);
         }
-        //TODO reveer el .getMunicipio porque le tengo que pasar la lista que tiene que ver
         try {
-            spTipoAdministracion.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION)));
+            spTipoAdministracion.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getEt_administracionPublicaPrivada(), getContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION)));
         } catch (Exception e) {
             spTipoAdministracion.setSelection(0);
         }
