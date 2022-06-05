@@ -1,9 +1,23 @@
 package com.example.pba_greenspots;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.CursorJoiner;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +31,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.Batch;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,19 +41,35 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.ThrowOnExtraProperties;
+import com.google.firebase.firestore.WriteBatch;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.security.Permission;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class Fragment_Reserves_ABM extends Fragment{
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<String> requestPermissionLauncher;
     private Spinner spABM, spReserves;
     private Button btnConfirmar,
             btnModificar,
-            btnEliminar;
+            btnEliminar,
+            btnImportarCSV;
     private EditText etNombre,
             etInstrumentoPlanificacion,
             etMunicipio,
+            et_personal,
             et_administracionPublicaPrivada,
             et_zonaServicios,
             et_ingresoGratuitoPago,
@@ -74,6 +106,32 @@ public class Fragment_Reserves_ABM extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == Activity.RESULT_OK){
+                    ArrayList<ReservaNatural> listaReservas = obtenerReservasNaturalesCSV(result.getData().getData());
+                    for (ReservaNatural reservaNatural:listaReservas) {
+                        putReservaNatural(reservaNatural);
+                    }
+                }else{
+                    Toast.makeText(getContext(), "Ocurrio un error.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
+            @Override
+            public void onActivityResult(Boolean result) {
+                if (result){
+                    Toast.makeText(requireContext(), "Permiso otorgado", Toast.LENGTH_SHORT).show();
+                    seleccionadorDeArchivos();
+                }else{
+                    Toast.makeText(requireContext(), "Permitanos acceder para poder realizar la importacion.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -85,22 +143,19 @@ public class Fragment_Reserves_ABM extends Fragment{
         btnConfirmar = view.findViewById(R.id.btnConfirmar);
         btnModificar = view.findViewById(R.id.btnModificar);
         btnEliminar = view.findViewById(R.id.btnEliminar);
+        btnImportarCSV = view.findViewById(R.id.btnImportarCSV);
         spABM = view.findViewById(R.id.spABM);
         spReserves = view.findViewById(R.id.spReservas);
 
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
 
-
         METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
-
-
-
-
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Al seleccionar un ITEM en la lista, se carga el formulario con sus datos.
                 cargarFormularioItemSeleccionado();
             }
             @Override
@@ -216,38 +271,148 @@ public class Fragment_Reserves_ABM extends Fragment{
                 modificarReserva();
             }
         });
+
+        btnImportarCSV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission();
+            }
+        });
     }
 
+    private ArrayList<ReservaNatural> obtenerReservasNaturalesCSV(Uri uri){
+        BufferedReader bufferedReader = null;
+        String line;
+        ArrayList<ReservaNatural> listaReservasNaturales = new ArrayList<>();
+        ReservaNatural reservaActual;
+        try
+        {
+            InputStream inputStream = requireActivity().getContentResolver().openInputStream(uri);
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            int i=0;
+            String[] splitted;
+            while ((line = bufferedReader.readLine()) != null) {
+                splitted = line.split(";");
+
+                //Es una manera de sacar a la primera fila (son los titulos de los campos).
+                if (i>0){
+                    try {
+                        reservaActual = new ReservaNatural();
+
+                        //SI ALGUNO DE LOS CAMPOS OBLIGATORIOS ES NULL NO SE DEBE SUMAR EL OBJETO A LA LISTA. ES POR ESO QUE SE LANZA UN ERROR.
+                        if(splitted[0].isEmpty() || splitted[27].isEmpty()){
+                            throw new Exception();
+                        }else {
+                            //SET DEL ATRIBUTO, CAMPO POR CAMPO.
+                            reservaActual.setNombreUnidad(splitted[0].trim());
+                            reservaActual.setInstrumentoPlanificacion(splitted[1].trim());
+                            reservaActual.setEt_personal(splitted[2].trim());
+                            reservaActual.setEt_instrumentoLegal(splitted[3].trim());
+                            reservaActual.setEt_acceso(splitted[4].trim());
+                            reservaActual.setEt_importancia(splitted[5].trim());
+                            reservaActual.setEt_fechaCreacion(splitted[6].trim());
+                            reservaActual.setEt_caracteristicasGenerales(splitted[7].trim());
+                            reservaActual.setEt_geolocalizacion(splitted[8].trim());
+                            reservaActual.setEt_superficie(splitted[9].trim());
+                            reservaActual.setEt_geologia(splitted[10].trim());
+                            reservaActual.setEt_clima(splitted[11].trim());
+                            reservaActual.setEt_flora(splitted[12].trim());
+                            reservaActual.setEt_fauna(splitted[13].trim());
+                            reservaActual.setEt_actividadesDelArea(splitted[14].trim());
+                            reservaActual.setEt_infraestructura(splitted[15].trim());
+                            reservaActual.setEt_correoPagWeb(splitted[16].trim());
+                            reservaActual.setEt_telefono(splitted[17].trim());
+                            reservaActual.setEt_gestionesDesarrollo(splitted[18].trim());
+                            reservaActual.setEt_informacionAdicional(splitted[19].trim());
+                            reservaActual.setEt_horarios(splitted[20].trim());
+                            reservaActual.setEt_accesos(splitted[21].trim());
+
+                            //VALIDAR QUE LOS STRINGS DE ESTOS CAMPOS COINCIDAN CON ALGUN STRING DENTRO DEL ARRAYSTRING DEL RECURSO EN VALUES->STRINGS.XML
+                            if (reservaActual.validarAtributo(splitted[22].trim(), requireContext().getResources().getStringArray(R.array.SI_NO))) {
+                                reservaActual.setEt_senializacion(splitted[22].trim());
+                            }
+                            if (reservaActual.validarAtributo(splitted[23].trim(), requireContext().getResources().getStringArray(R.array.NIVELES_DIFICULTAD))) {
+                                reservaActual.setEt_dificultadSenderismo(splitted[23].trim());
+                            }
+                            if (reservaActual.validarAtributo(splitted[24].trim(), requireContext().getResources().getStringArray(R.array.SI_NO))) {
+                                reservaActual.setEt_ingresoGratuitoPago(splitted[24].trim());
+                            }
+                            if (reservaActual.validarAtributo(splitted[25].trim(), requireContext().getResources().getStringArray(R.array.SI_NO))) {
+                                reservaActual.setEt_zonaServicios(splitted[25].trim());
+                            }
+                            if (reservaActual.validarAtributo(splitted[26].trim(), requireContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION))) {
+                                reservaActual.setEt_administracionPublicaPrivada(splitted[26].trim());
+                            }
+                            if (reservaActual.validarAtributo(splitted[27].trim(), requireContext().getResources().getStringArray(R.array.MUNICIPIOS))) {
+                                reservaActual.setMunicipio(splitted[27].trim());
+                            }else {
+                                throw new Exception();
+                            }
+                            listaReservasNaturales.add(reservaActual);
+                        }
+                    }catch (Exception e){
+                        e.getMessage();
+                    }
+                }
+                i++;
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return listaReservasNaturales;
+    }
+    private void requestPermission(){
+        if (ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED) {
+            Log.d(getTag(), "Permiso ya otorgado previamente!", null);
+            seleccionadorDeArchivos();
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+    }
+    private void seleccionadorDeArchivos() {
+
+        Intent intent = new Intent()
+                .setAction(Intent.ACTION_OPEN_DOCUMENT)
+                .setType("text/comma-separated-values")
+                .addCategory(Intent.CATEGORY_OPENABLE);
+
+        activityResultLauncher.launch(intent);
+    }
     private void crearReserva() {
         //Valido campos
         if (!validarCampos()){
             Toast.makeText(getContext(),"Revise el formulario", Toast.LENGTH_LONG).show();
         }else{
             ReservaNatural reservaNatural = crearReservaNaturalConDatosFormulario();
-
-            db.collection("Reserves")
-                    .add(reservaNatural)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
-                            Log.d(getTag(),"SE REGISTRO CON EXITO!");
-                            reservaNatural.setId(documentReference.getId());
-                            limpiarFormulario();
-                            listaReservasNaturales.add(reservaNatural);
-                            actualizarSpinnerReservas();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Error, Toast.LENGTH_LONG).show();
-                            Log.d(getTag(),"OCURRIO UN ERROR", e);
-                        }
-                    });
+            putReservaNatural(reservaNatural);
         }
     }
 
+    private void putReservaNatural(ReservaNatural reservaNatural) {
+        db.collection("Reserves")
+                .add(reservaNatural)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
+                        Log.d(getTag(),"SE REGISTRO CON EXITO!");
+                        reservaNatural.setId(documentReference.getId());
+                        limpiarFormulario();
+                        listaReservasNaturales.add(reservaNatural);
+                        actualizarSpinnerReservas();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Error, Toast.LENGTH_LONG).show();
+                        Log.d(getTag(),"OCURRIO UN ERROR: "+e.getMessage(), e);
+                    }
+                });
+    }
 
     private void eliminarReserva() {
         ReservaNatural reservaEliminar;
@@ -303,8 +468,6 @@ public class Fragment_Reserves_ABM extends Fragment{
             Toast.makeText(getContext(), "No ha modificado ningun campo!", Toast.LENGTH_LONG).show();
         }
     }
-
-
     private ReservaNatural crearReservaNaturalConDatosFormulario() {
         //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
         ReservaNatural reservaCreada;
@@ -335,12 +498,13 @@ public class Fragment_Reserves_ABM extends Fragment{
                 et_fechaCreacion.getText().toString().trim(),
                 et_importancia.getText().toString().trim(),
                 et_instrumentoLegal.getText().toString().trim(),
-                et_acceso.getText().toString().trim()
+                et_acceso.getText().toString().trim(),
+                et_personal.getText().toString().trim()
         );
         return reservaCreada;
     }
-
     private void instanciarEditTextsFormulario(View v) {
+
         etNombre = v.findViewById(R.id.et_nombreAnp);
         etMunicipio = v.findViewById(R.id.et_municipio);
         etInstrumentoPlanificacion = v.findViewById(R.id.et_instrumentoPlanificacion);
@@ -359,6 +523,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 et_actividadesDelArea = v.findViewById(R.id.et_actividadesDelArea);
                 et_fauna = v.findViewById(R.id.et_fauna);
                 et_flora = v.findViewById(R.id.et_municipio);
+                et_personal = v.findViewById(R.id.et_personal);
                 et_clima = v.findViewById(R.id.et_clima);
                 et_geologia = v.findViewById(R.id.et_geologia);
                 et_superficie = v.findViewById(R.id.et_superficie);
@@ -369,7 +534,6 @@ public class Fragment_Reserves_ABM extends Fragment{
                 et_instrumentoLegal = v.findViewById(R.id.et_instrumentoLegal);
                 et_acceso = v.findViewById(R.id.et_acceso);
     }
-
     private boolean validarCampos() {
         Boolean bool = true;
         for (EditText editText : listaEditTexts) {
@@ -382,14 +546,12 @@ public class Fragment_Reserves_ABM extends Fragment{
         }
         return bool;
     }
-
     private void limpiarFormulario() {
         for (EditText editText: listaEditTexts) {
             editText.setHintTextColor(getResources().getColor(R.color.default_hint));
             editText.setText("");
         }
     }
-
     private void cargarFormularioItemSeleccionado() {
         ReservaNatural reservaNaturalSeleccionada;
         reservaNaturalSeleccionada = (ReservaNatural) spReserves.getSelectedItem();
@@ -419,13 +581,14 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_importancia.setText(reservaNaturalSeleccionada.getEt_importancia());
         et_instrumentoLegal.setText(reservaNaturalSeleccionada.getEt_instrumentoLegal());
         et_acceso.setText(reservaNaturalSeleccionada.getEt_acceso());
+        et_personal.setText(reservaNaturalSeleccionada.getEt_personal());
 
     }
-
     private void flujoAlta() {
         scrollView.setVisibility(View.VISIBLE);
         formLinearLayout.setVisibility(View.VISIBLE);
         btnConfirmar.setVisibility(View.VISIBLE);
+        btnImportarCSV.setVisibility(View.VISIBLE);
         btnModificar.setVisibility(View.GONE);
         btnEliminar.setVisibility(View.GONE);
         spReserves.setVisibility(View.GONE);
@@ -438,6 +601,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spReserves.setVisibility(View.VISIBLE);
         btnConfirmar.setVisibility(View.GONE);
         btnEliminar.setVisibility(View.GONE);
+        btnImportarCSV.setVisibility(View.GONE);
 
     }
     private void flujoBaja() {
@@ -447,6 +611,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         formLinearLayout.setVisibility(View.GONE);
         btnModificar.setVisibility(View.GONE);
         btnConfirmar.setVisibility(View.GONE);
+        btnImportarCSV.setVisibility(View.GONE);
     }
-
 }

@@ -43,4 +43,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.annotation:annotation'
+    implementation 'com.opencsv:opencsv:4.6'
 }

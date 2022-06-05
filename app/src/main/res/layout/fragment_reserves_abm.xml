@@ -87,6 +87,14 @@
                     android:inputType="textPersonName" />
 
                 <EditText
+                    android:id="@+id/et_personal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Personal"
+                    android:inputType="textPersonName" />
+
+                <EditText
                     android:id="@+id/et_administracionPublicaPrivada"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -280,11 +288,21 @@
                     android:inputType="textPersonName" />
             </LinearLayout>
         </ScrollView>
+
+        
         <Button
             android:id="@+id/btnConfirmar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Confirmar"
+            android:textAlignment="center"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnImportarCSV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Importar CSV"
             android:textAlignment="center"
             android:visibility="gone" />
 

@@ -17,7 +17,7 @@
     <string name="msg_Modificacion_ReservaNatural_Exito">Se ha actualizado con exito.</string>
     <string name="msg_Modificacion_ReservaNatural_Error">No se ha podido actualizar el recurso solicitado.</string>
 
-    <string-array name="municipios">
+    <string-array name="MUNICIPIOS">
         <item>25 de mayo</item>
         <item>Adolfo Alsina</item>
         <item>Adolfo González Chávez</item>
@@ -156,21 +156,21 @@
     </string-array>
 
     <string-array name="TIPO_ADMINISTRACION">
-        <item>Publico/Public</item>
-        <item>Privado/Private</item>
+        <item>Publico</item>
+        <item>Privado</item>
     </string-array>
 
-    <string-array name="COSTO">
-        <item>Gratuito/Free</item>
-        <item>Pago/Paid</item>
+    <string-array name="SI_NO">
+        <item>Si</item>
+        <item>No</item>
     </string-array>
 
     <string-array name="NIVELES_DIFICULTAD">
-        <item>Muy Facil/Very easy</item>
-        <item>Facil/Easy</item>
-        <item>Media/Medium</item>
-        <item>Dificil/Hard</item>
-        <item>Muy dificil/Very Hard</item>
+        <item>Muy facil</item>
+        <item>Facil</item>
+        <item>Media</item>
+        <item>Dificil</item>
+        <item>Muy dificil</item>
     </string-array>
 
 

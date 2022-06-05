@@ -1,5 +1,12 @@
 package com.example.pba_greenspots;
 
+import android.app.Activity;
+import android.content.Context;
+
+import com.google.protobuf.LazyStringArrayList;
+import com.google.rpc.context.AttributeContext;
+
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +41,7 @@ public class ReservaNatural {
     private String et_importancia;
     private String et_instrumentoLegal;
     private String et_acceso;
+    private String et_personal;
 
     public ReservaNatural(){}
 
@@ -63,6 +71,7 @@ public class ReservaNatural {
                           String et_fechaCreacion,
                           String et_importancia,
                           String et_instrumentoLegal,
+                          String et_personal,
                           String et_acceso) {
         this.nombreUnidad = nombreUnidad;
         this.instrumentoPlanificacion = instrumentoPlanificaicon;
@@ -91,6 +100,8 @@ public class ReservaNatural {
         this.et_importancia = et_importancia;
         this.et_instrumentoLegal = et_instrumentoLegal;
         this.et_acceso = et_acceso;
+        this.et_personal = et_personal;
+
 
     }
 
@@ -126,6 +137,14 @@ public class ReservaNatural {
 
     public void setEt_administracionPublicaPrivada(String et_administracionPublicaPrivada) {
         this.et_administracionPublicaPrivada = et_administracionPublicaPrivada;
+    }
+
+    public String getEt_personal() {
+        return et_personal;
+    }
+
+    public void setEt_personal(String et_personal) {
+        this.et_personal = et_personal;
     }
 
     public String getEt_zonaServicios() {
@@ -315,6 +334,18 @@ public class ReservaNatural {
     //Este metodo permite que el Spinner que carga las reservas muestre solo el nombreUnidad.
     public String toString(){
         return this.getNombreUnidad();
+    }
+
+    public boolean validarAtributo(String avalidar, String[] stringArray){
+        boolean result=false;
+        int i=0;
+        while(i<stringArray.length && !result){
+                if(avalidar.equalsIgnoreCase(stringArray[i])){
+                    result=true;
+                }
+                i++;
+        }
+        return result;
     }
 
 }
