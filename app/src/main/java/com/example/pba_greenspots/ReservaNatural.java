@@ -1,8 +1,5 @@
 package com.example.pba_greenspots;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ReservaNatural {
 
 
@@ -10,30 +7,30 @@ public class ReservaNatural {
     private String nombreUnidad;
     private String instrumentoPlanificacion;
     private String municipio;
-    private String et_administracionPublicaPrivada;
-    private String et_zonaServicios;
-    private String et_ingresoGratuitoPago;
-    private String et_dificultadSenderismo;
-    private String et_senializacion;
-    private String et_accesos;
-    private String et_horarios;
-    private String et_informacionAdicional;
-    private String et_gestionesDesarrollo;
-    private String et_telefono;
-    private String et_correoPagWeb;
-    private String et_infraestructura;
-    private String et_actividadesDelArea;
-    private String et_fauna;
-    private String et_flora;
-    private String et_clima;
-    private String et_geologia;
-    private String et_superficie;
-    private String et_geolocalizacion;
-    private String et_caracteristicasGenerales;
-    private String et_fechaCreacion;
-    private String et_importancia;
-    private String et_instrumentoLegal;
-    private String et_acceso;
+    private String administracionPublicaPrivada;
+    private String zonaServicios;
+    private String ingresoGratuitoPago;
+    private String dificultadSenderismo;
+    private String senializacion;
+    private String accesos;
+    private String horarios;
+    private String informacionAdicional;
+    private String gestionesDesarrollo;
+    private String telefono;
+    private String correoPagWeb;
+    private String infraestructura;
+    private String actividadesDelArea;
+    private String fauna;
+    private String flora;
+    private String clima;
+    private String geologia;
+    private String superficie;
+    private String geolocalizacion;
+    private String caracteristicasGenerales;
+    private String fechaCreacion;
+    private String importancia;
+    private String instrumentoLegal;
+    private String acceso;
 
     public ReservaNatural(){}
 
@@ -67,30 +64,30 @@ public class ReservaNatural {
         this.nombreUnidad = nombreUnidad;
         this.instrumentoPlanificacion = instrumentoPlanificaicon;
         this.municipio = municipio;
-        this.et_administracionPublicaPrivada = et_administracionPublicaPrivada;
-        this.et_zonaServicios = et_zonaServicios;
-        this.et_ingresoGratuitoPago = et_ingresoGratuitoPago;
-        this.et_dificultadSenderismo = et_dificultadSenderismo;
-        this.et_senializacion = et_senializacion;
-        this.et_accesos = et_accesos;
-        this.et_horarios = et_horarios;
-        this.et_informacionAdicional = et_informacionAdicional;
-        this.et_gestionesDesarrollo = et_gestionesDesarrollo;
-        this.et_telefono = et_telefono;
-        this.et_correoPagWeb = et_correoPagWeb;
-        this.et_infraestructura = et_infraestructura;
-        this.et_actividadesDelArea = et_actividadesDelArea;
-        this.et_fauna = et_fauna;
-        this.et_flora = et_flora;
-        this.et_clima = et_clima;
-        this.et_geologia = et_geologia;
-        this.et_superficie = et_superficie;
-        this.et_geolocalizacion = et_geolocalizacion;
-        this.et_caracteristicasGenerales = et_caracteristicasGenerales;
-        this.et_fechaCreacion = et_fechaCreacion;
-        this.et_importancia = et_importancia;
-        this.et_instrumentoLegal = et_instrumentoLegal;
-        this.et_acceso = et_acceso;
+        this.administracionPublicaPrivada = et_administracionPublicaPrivada;
+        this.zonaServicios = et_zonaServicios;
+        this.ingresoGratuitoPago = et_ingresoGratuitoPago;
+        this.dificultadSenderismo = et_dificultadSenderismo;
+        this.senializacion = et_senializacion;
+        this.accesos = et_accesos;
+        this.horarios = et_horarios;
+        this.informacionAdicional = et_informacionAdicional;
+        this.gestionesDesarrollo = et_gestionesDesarrollo;
+        this.telefono = et_telefono;
+        this.correoPagWeb = et_correoPagWeb;
+        this.infraestructura = et_infraestructura;
+        this.actividadesDelArea = et_actividadesDelArea;
+        this.fauna = et_fauna;
+        this.flora = et_flora;
+        this.clima = et_clima;
+        this.geologia = et_geologia;
+        this.superficie = et_superficie;
+        this.geolocalizacion = et_geolocalizacion;
+        this.caracteristicasGenerales = et_caracteristicasGenerales;
+        this.fechaCreacion = et_fechaCreacion;
+        this.importancia = et_importancia;
+        this.instrumentoLegal = et_instrumentoLegal;
+        this.acceso = et_acceso;
 
     }
 
@@ -120,196 +117,196 @@ public class ReservaNatural {
         this.municipio = municipio;
     }
 
-    public String getEt_administracionPublicaPrivada() {
-        return et_administracionPublicaPrivada;
+    public String getAdministracionPublicaPrivada() {
+        return administracionPublicaPrivada;
     }
 
-    public void setEt_administracionPublicaPrivada(String et_administracionPublicaPrivada) {
-        this.et_administracionPublicaPrivada = et_administracionPublicaPrivada;
+    public void setAdministracionPublicaPrivada(String administracionPublicaPrivada) {
+        this.administracionPublicaPrivada = administracionPublicaPrivada;
     }
 
-    public String getEt_zonaServicios() {
-        return et_zonaServicios;
+    public String getZonaServicios() {
+        return zonaServicios;
     }
 
-    public void setEt_zonaServicios(String et_zonaServicios) {
-        this.et_zonaServicios = et_zonaServicios;
+    public void setZonaServicios(String zonaServicios) {
+        this.zonaServicios = zonaServicios;
     }
 
-    public String getEt_ingresoGratuitoPago() {
-        return et_ingresoGratuitoPago;
+    public String getIngresoGratuitoPago() {
+        return ingresoGratuitoPago;
     }
 
-    public void setEt_ingresoGratuitoPago(String et_ingresoGratuitoPago) {
-        this.et_ingresoGratuitoPago = et_ingresoGratuitoPago;
+    public void setIngresoGratuitoPago(String ingresoGratuitoPago) {
+        this.ingresoGratuitoPago = ingresoGratuitoPago;
     }
 
-    public String getEt_dificultadSenderismo() {
-        return et_dificultadSenderismo;
+    public String getDificultadSenderismo() {
+        return dificultadSenderismo;
     }
 
-    public void setEt_dificultadSenderismo(String et_dificultadSenderismo) {
-        this.et_dificultadSenderismo = et_dificultadSenderismo;
+    public void setDificultadSenderismo(String dificultadSenderismo) {
+        this.dificultadSenderismo = dificultadSenderismo;
     }
 
-    public String getEt_senializacion() {
-        return et_senializacion;
+    public String getSenializacion() {
+        return senializacion;
     }
 
-    public void setEt_senializacion(String et_senializacion) {
-        this.et_senializacion = et_senializacion;
+    public void setSenializacion(String senializacion) {
+        this.senializacion = senializacion;
     }
 
-    public String getEt_accesos() {
-        return et_accesos;
+    public String getAccesos() {
+        return accesos;
     }
 
-    public void setEt_accesos(String et_accesos) {
-        this.et_accesos = et_accesos;
+    public void setAccesos(String accesos) {
+        this.accesos = accesos;
     }
 
-    public String getEt_horarios() {
-        return et_horarios;
+    public String getHorarios() {
+        return horarios;
     }
 
-    public void setEt_horarios(String et_horarios) {
-        this.et_horarios = et_horarios;
+    public void setHorarios(String horarios) {
+        this.horarios = horarios;
     }
 
-    public String getEt_informacionAdicional() {
-        return et_informacionAdicional;
+    public String getInformacionAdicional() {
+        return informacionAdicional;
     }
 
-    public void setEt_informacionAdicional(String et_informacionAdicional) {
-        this.et_informacionAdicional = et_informacionAdicional;
+    public void setInformacionAdicional(String informacionAdicional) {
+        this.informacionAdicional = informacionAdicional;
     }
 
-    public String getEt_gestionesDesarrollo() {
-        return et_gestionesDesarrollo;
+    public String getGestionesDesarrollo() {
+        return gestionesDesarrollo;
     }
 
-    public void setEt_gestionesDesarrollo(String et_gestionesDesarrollo) {
-        this.et_gestionesDesarrollo = et_gestionesDesarrollo;
+    public void setGestionesDesarrollo(String gestionesDesarrollo) {
+        this.gestionesDesarrollo = gestionesDesarrollo;
     }
 
-    public String getEt_telefono() {
-        return et_telefono;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setEt_telefono(String et_telefono) {
-        this.et_telefono = et_telefono;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public String getEt_correoPagWeb() {
-        return et_correoPagWeb;
+    public String getCorreoPagWeb() {
+        return correoPagWeb;
     }
 
-    public void setEt_correoPagWeb(String et_correoPagWeb) {
-        this.et_correoPagWeb = et_correoPagWeb;
+    public void setCorreoPagWeb(String correoPagWeb) {
+        this.correoPagWeb = correoPagWeb;
     }
 
-    public String getEt_infraestructura() {
-        return et_infraestructura;
+    public String getInfraestructura() {
+        return infraestructura;
     }
 
-    public void setEt_infraestructura(String et_infraestructura) {
-        this.et_infraestructura = et_infraestructura;
+    public void setInfraestructura(String infraestructura) {
+        this.infraestructura = infraestructura;
     }
 
-    public String getEt_actividadesDelArea() {
-        return et_actividadesDelArea;
+    public String getActividadesDelArea() {
+        return actividadesDelArea;
     }
 
-    public void setEt_actividadesDelArea(String et_actividadesDelArea) {
-        this.et_actividadesDelArea = et_actividadesDelArea;
+    public void setActividadesDelArea(String actividadesDelArea) {
+        this.actividadesDelArea = actividadesDelArea;
     }
 
-    public String getEt_fauna() {
-        return et_fauna;
+    public String getFauna() {
+        return fauna;
     }
 
-    public void setEt_fauna(String et_fauna) {
-        this.et_fauna = et_fauna;
+    public void setFauna(String fauna) {
+        this.fauna = fauna;
     }
 
-    public String getEt_flora() {
-        return et_flora;
+    public String getFlora() {
+        return flora;
     }
 
-    public void setEt_flora(String et_flora) {
-        this.et_flora = et_flora;
+    public void setFlora(String flora) {
+        this.flora = flora;
     }
 
-    public String getEt_clima() {
-        return et_clima;
+    public String getClima() {
+        return clima;
     }
 
-    public void setEt_clima(String et_clima) {
-        this.et_clima = et_clima;
+    public void setClima(String clima) {
+        this.clima = clima;
     }
 
-    public String getEt_geologia() {
-        return et_geologia;
+    public String getGeologia() {
+        return geologia;
     }
 
-    public void setEt_geologia(String et_geologia) {
-        this.et_geologia = et_geologia;
+    public void setGeologia(String geologia) {
+        this.geologia = geologia;
     }
 
-    public String getEt_superficie() {
-        return et_superficie;
+    public String getSuperficie() {
+        return superficie;
     }
 
-    public void setEt_superficie(String et_superficie) {
-        this.et_superficie = et_superficie;
+    public void setSuperficie(String superficie) {
+        this.superficie = superficie;
     }
 
-    public String getEt_geolocalizacion() {
-        return et_geolocalizacion;
+    public String getGeolocalizacion() {
+        return geolocalizacion;
     }
 
-    public void setEt_geolocalizacion(String et_geolocalizacion) {
-        this.et_geolocalizacion = et_geolocalizacion;
+    public void setGeolocalizacion(String geolocalizacion) {
+        this.geolocalizacion = geolocalizacion;
     }
 
-    public String getEt_caracteristicasGenerales() {
-        return et_caracteristicasGenerales;
+    public String getCaracteristicasGenerales() {
+        return caracteristicasGenerales;
     }
 
-    public void setEt_caracteristicasGenerales(String et_caracteristicasGenerales) {
-        this.et_caracteristicasGenerales = et_caracteristicasGenerales;
+    public void setCaracteristicasGenerales(String caracteristicasGenerales) {
+        this.caracteristicasGenerales = caracteristicasGenerales;
     }
 
-    public String getEt_fechaCreacion() {
-        return et_fechaCreacion;
+    public String getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setEt_fechaCreacion(String et_fechaCreacion) {
-        this.et_fechaCreacion = et_fechaCreacion;
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public String getEt_importancia() {
-        return et_importancia;
+    public String getImportancia() {
+        return importancia;
     }
 
-    public void setEt_importancia(String et_importancia) {
-        this.et_importancia = et_importancia;
+    public void setImportancia(String importancia) {
+        this.importancia = importancia;
     }
 
-    public String getEt_instrumentoLegal() {
-        return et_instrumentoLegal;
+    public String getInstrumentoLegal() {
+        return instrumentoLegal;
     }
 
-    public void setEt_instrumentoLegal(String et_instrumentoLegal) {
-        this.et_instrumentoLegal = et_instrumentoLegal;
+    public void setInstrumentoLegal(String instrumentoLegal) {
+        this.instrumentoLegal = instrumentoLegal;
     }
 
-    public String getEt_acceso() {
-        return et_acceso;
+    public String getAcceso() {
+        return acceso;
     }
 
-    public void setEt_acceso(String et_acceso) {
-        this.et_acceso = et_acceso;
+    public void setAcceso(String acceso) {
+        this.acceso = acceso;
     }
 
     //Este metodo permite que el Spinner que carga las reservas muestre solo el nombreUnidad.

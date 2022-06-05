@@ -25,7 +25,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
 public class Fragment_Reserves_ABM extends Fragment{
@@ -423,41 +423,41 @@ public class Fragment_Reserves_ABM extends Fragment{
             spMunicipios.setSelection(0);
         }
         try {
-            spTipoAdministracion.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getEt_administracionPublicaPrivada(), getContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION)));
+            spTipoAdministracion.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getAdministracionPublicaPrivada(), getContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION)));
         } catch (Exception e) {
             spTipoAdministracion.setSelection(0);
         }
-        et_zonaServicios.setText(reservaNaturalSeleccionada.getEt_zonaServicios());
+        et_zonaServicios.setText(reservaNaturalSeleccionada.getZonaServicios());
         try {
-            spCosto.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getEt_ingresoGratuitoPago(), getContext().getResources().getStringArray(R.array.COSTO)));
+            spCosto.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getIngresoGratuitoPago(), getContext().getResources().getStringArray(R.array.COSTO)));
         } catch (Exception e) {
             spCosto.setSelection(0);
         }
         try {
-            spNivelesDificultad.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getEt_dificultadSenderismo(), getContext().getResources().getStringArray(R.array.COSTO)));
+            spNivelesDificultad.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getDificultadSenderismo(), getContext().getResources().getStringArray(R.array.COSTO)));
         } catch (Exception e) {
             spNivelesDificultad.setSelection(0);
         }
-        et_senializacion.setText(reservaNaturalSeleccionada.getEt_senializacion());
-        et_accesos.setText(reservaNaturalSeleccionada.getEt_accesos());
-        et_horarios.setText(reservaNaturalSeleccionada.getEt_horarios());
-        et_informacionAdicional.setText(reservaNaturalSeleccionada.getEt_informacionAdicional());
-        et_gestionesDesarrollo.setText(reservaNaturalSeleccionada.getEt_gestionesDesarrollo());
-        et_telefono.setText(reservaNaturalSeleccionada.getEt_telefono());
-        et_correoPagWeb.setText(reservaNaturalSeleccionada.getEt_correoPagWeb());
-        et_infraestructura.setText(reservaNaturalSeleccionada.getEt_infraestructura());
-        et_actividadesDelArea.setText(reservaNaturalSeleccionada.getEt_actividadesDelArea());
-        et_fauna.setText(reservaNaturalSeleccionada.getEt_fauna());
-        et_flora.setText(reservaNaturalSeleccionada.getEt_flora());
-        et_clima.setText(reservaNaturalSeleccionada.getEt_clima());
-        et_geologia.setText(reservaNaturalSeleccionada.getEt_geologia());
-        et_superficie.setText(reservaNaturalSeleccionada.getEt_superficie());
-        et_geolocalizacion.setText(reservaNaturalSeleccionada.getEt_geolocalizacion());
-        et_caracteristicasGenerales.setText(reservaNaturalSeleccionada.getEt_caracteristicasGenerales());
-        et_fechaCreacion.setText(reservaNaturalSeleccionada.getEt_fechaCreacion());
-        et_importancia.setText(reservaNaturalSeleccionada.getEt_importancia());
-        et_instrumentoLegal.setText(reservaNaturalSeleccionada.getEt_instrumentoLegal());
-        et_acceso.setText(reservaNaturalSeleccionada.getEt_acceso());
+        et_senializacion.setText(reservaNaturalSeleccionada.getSenializacion());
+        et_accesos.setText(reservaNaturalSeleccionada.getAccesos());
+        et_horarios.setText(reservaNaturalSeleccionada.getHorarios());
+        et_informacionAdicional.setText(reservaNaturalSeleccionada.getInformacionAdicional());
+        et_gestionesDesarrollo.setText(reservaNaturalSeleccionada.getGestionesDesarrollo());
+        et_telefono.setText(reservaNaturalSeleccionada.getTelefono());
+        et_correoPagWeb.setText(reservaNaturalSeleccionada.getCorreoPagWeb());
+        et_infraestructura.setText(reservaNaturalSeleccionada.getInfraestructura());
+        et_actividadesDelArea.setText(reservaNaturalSeleccionada.getActividadesDelArea());
+        et_fauna.setText(reservaNaturalSeleccionada.getFauna());
+        et_flora.setText(reservaNaturalSeleccionada.getFlora());
+        et_clima.setText(reservaNaturalSeleccionada.getClima());
+        et_geologia.setText(reservaNaturalSeleccionada.getGeologia());
+        et_superficie.setText(reservaNaturalSeleccionada.getSuperficie());
+        et_geolocalizacion.setText(reservaNaturalSeleccionada.getGeolocalizacion());
+        et_caracteristicasGenerales.setText(reservaNaturalSeleccionada.getCaracteristicasGenerales());
+        et_fechaCreacion.setText(reservaNaturalSeleccionada.getFechaCreacion());
+        et_importancia.setText(reservaNaturalSeleccionada.getImportancia());
+        et_instrumentoLegal.setText(reservaNaturalSeleccionada.getInstrumentoLegal());
+        et_acceso.setText(reservaNaturalSeleccionada.getAcceso());
 
     }
 
