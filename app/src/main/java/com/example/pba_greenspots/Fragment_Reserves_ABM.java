@@ -33,13 +33,13 @@ public class Fragment_Reserves_ABM extends Fragment{
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Spinner spABM,
             spReserves,
-            spMunicipios;
+            spMunicipios,
+            spTipoAdministracion;
     private Button btnConfirmar,
             btnModificar,
             btnEliminar;
     private EditText etNombre,
             etInstrumentoPlanificacion,
-            et_administracionPublicaPrivada,
             et_zonaServicios,
             et_ingresoGratuitoPago,
             et_dificultadSenderismo,
@@ -89,6 +89,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spABM = view.findViewById(R.id.spABM);
         spReserves = view.findViewById(R.id.spReservas);
         spMunicipios = view.findViewById(R.id.spMunicipios);
+        spTipoAdministracion = view.findViewById(R.id.spTipoAdministracion);
 
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
@@ -96,6 +97,7 @@ public class Fragment_Reserves_ABM extends Fragment{
 
         METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerTipoAdministracion(spTipoAdministracion, requireContext());
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -163,7 +165,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(etNombre);
         listaEditTexts.add(etInstrumentoPlanificacion);
         listaEditTexts.add(spMunicipios);
-        listaEditTexts.add(et_administracionPublicaPrivada);
+        listaEditTexts.add(spTipoAdministracion);
         listaEditTexts.add(et_zonaServicios);
         listaEditTexts.add(et_ingresoGratuitoPago);
         listaEditTexts.add(et_dificultadSenderismo);
@@ -313,7 +315,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 etNombre.getText().toString().trim(),
                 spMunicipios.getSelectedItem().toString().trim(),
                 etInstrumentoPlanificacion.getText().toString().trim(),
-                et_administracionPublicaPrivada.getText().toString().trim(),
+                spTipoAdministracion.getSelectedItem().toString().trim(),
                 et_zonaServicios.getText().toString().trim(),
                 et_ingresoGratuitoPago.getText().toString().trim(),
                 et_dificultadSenderismo.getText().toString().trim(),
@@ -345,7 +347,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         etNombre = v.findViewById(R.id.et_nombreAnp);
         spMunicipios = v.findViewById(R.id.spMunicipios);
         etInstrumentoPlanificacion = v.findViewById(R.id.et_instrumentoPlanificacion);
-        et_administracionPublicaPrivada = v.findViewById(R.id.et_administracionPublicaPrivada);
+        spTipoAdministracion = v.findViewById(R.id.spTipoAdministracion);
                 et_zonaServicios = v.findViewById(R.id.et_zonaServicios);
                 et_ingresoGratuitoPago = v.findViewById(R.id.et_ingresoGratuitoPago);
                 et_dificultadSenderismo = v.findViewById(R.id.et_dificultadSenderismo);
@@ -414,6 +416,11 @@ public class Fragment_Reserves_ABM extends Fragment{
             spMunicipios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.municipios)));
         } catch (Exception e) {
             spMunicipios.setSelection(0);
+        }
+        try {
+            spTipoAdministracion.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION)));
+        } catch (Exception e) {
+            spTipoAdministracion.setSelection(0);
         }
         et_zonaServicios.setText(reservaNaturalSeleccionada.getEt_zonaServicios());
         et_ingresoGratuitoPago.setText(reservaNaturalSeleccionada.getEt_ingresoGratuitoPago());

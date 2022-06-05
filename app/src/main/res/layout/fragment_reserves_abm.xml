@@ -89,13 +89,14 @@
                     android:accessibilityLiveRegion="none"
                     android:visibility="visible" />
 
-                <EditText
-                    android:id="@+id/et_administracionPublicaPrivada"
+                <Spinner
+                    android:id="@+id/spTipoAdministracion"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:ems="10"
-                    android:hint="Administración pública o privada"
-                    android:inputType="textPersonName" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
 
                 <EditText
                     android:id="@+id/et_zonaServicios"

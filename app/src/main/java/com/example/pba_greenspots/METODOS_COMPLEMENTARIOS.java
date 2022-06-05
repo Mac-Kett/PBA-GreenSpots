@@ -20,4 +20,12 @@ public class METODOS_COMPLEMENTARIOS {
 
         return spinnerMunicipios;
     }
+
+    public static Spinner completarSpinnerTipoAdministracion(Spinner spinnerTipoAdministracion, Context context){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.TIPO_ADMINISTRACION, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTipoAdministracion.setAdapter(adapter);
+
+        return spinnerTipoAdministracion;
+    }
 }
