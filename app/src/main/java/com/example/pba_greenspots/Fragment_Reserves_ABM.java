@@ -428,9 +428,8 @@ public class Fragment_Reserves_ABM extends Fragment{
             spTipoAdministracion.setSelection(0);
         }
         et_zonaServicios.setText(reservaNaturalSeleccionada.getEt_zonaServicios());
-        //TODO reveer el .getMunicipio porque le tengo que pasar la lista que tiene que ver
         try {
-            spCosto.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.COSTO)));
+            spCosto.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getEt_ingresoGratuitoPago(), getContext().getResources().getStringArray(R.array.COSTO)));
         } catch (Exception e) {
             spCosto.setSelection(0);
         }
