@@ -39,7 +39,6 @@ public class Fragment_Reserves_ABM extends Fragment{
             btnEliminar;
     private EditText etNombre,
             etInstrumentoPlanificacion,
-            etMunicipio,
             et_administracionPublicaPrivada,
             et_zonaServicios,
             et_ingresoGratuitoPago,
@@ -66,7 +65,7 @@ public class Fragment_Reserves_ABM extends Fragment{
             et_acceso;
     private LinearLayout formLinearLayout;
     private ScrollView scrollView;
-    private ArrayList<EditText> listaEditTexts;
+    private ArrayList<Object> listaEditTexts;
     private static ArrayList<ReservaNatural> listaReservasNaturales;
 
     public Fragment_Reserves_ABM() {
@@ -97,10 +96,6 @@ public class Fragment_Reserves_ABM extends Fragment{
 
         METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
-
-
-
-
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -162,11 +157,12 @@ public class Fragment_Reserves_ABM extends Fragment{
         return view;
     }
 
+    //Éste Array es para el formulario (Alta, Baja, Mod)
     private void cargarArrayListEditTextsFormulario() {
         listaEditTexts = new ArrayList<>();
         listaEditTexts.add(etNombre);
         listaEditTexts.add(etInstrumentoPlanificacion);
-        listaEditTexts.add(etMunicipio);
+        listaEditTexts.add(spMunicipios);
         listaEditTexts.add(et_administracionPublicaPrivada);
         listaEditTexts.add(et_zonaServicios);
         listaEditTexts.add(et_ingresoGratuitoPago);
@@ -315,7 +311,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         ReservaNatural reservaCreada;
         reservaCreada = new ReservaNatural(
                 etNombre.getText().toString().trim(),
-                etMunicipio.getText().toString().trim(),
+                spMunicipios.getSelectedItem().toString().trim(),
                 etInstrumentoPlanificacion.getText().toString().trim(),
                 et_administracionPublicaPrivada.getText().toString().trim(),
                 et_zonaServicios.getText().toString().trim(),
@@ -347,7 +343,7 @@ public class Fragment_Reserves_ABM extends Fragment{
 
     private void instanciarEditTextsFormulario(View v) {
         etNombre = v.findViewById(R.id.et_nombreAnp);
-        etMunicipio = v.findViewById(R.id.et_municipio);
+        spMunicipios = v.findViewById(R.id.spMunicipios);
         etInstrumentoPlanificacion = v.findViewById(R.id.et_instrumentoPlanificacion);
         et_administracionPublicaPrivada = v.findViewById(R.id.et_administracionPublicaPrivada);
                 et_zonaServicios = v.findViewById(R.id.et_zonaServicios);
@@ -363,7 +359,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 et_infraestructura = v.findViewById(R.id.et_infraestructura);
                 et_actividadesDelArea = v.findViewById(R.id.et_actividadesDelArea);
                 et_fauna = v.findViewById(R.id.et_fauna);
-                et_flora = v.findViewById(R.id.et_municipio);
+                et_flora = v.findViewById(R.id.et_flora);
                 et_clima = v.findViewById(R.id.et_clima);
                 et_geologia = v.findViewById(R.id.et_geologia);
                 et_superficie = v.findViewById(R.id.et_superficie);
@@ -377,22 +373,36 @@ public class Fragment_Reserves_ABM extends Fragment{
 
     private boolean validarCampos() {
         Boolean bool = true;
-        for (EditText editText : listaEditTexts) {
-            if (editText.getText().toString().trim().isEmpty()) {
-                editText.setError(getString(R.string.msg_campoIncompleto));
-                editText.setHintTextColor(Color.RED);
-                bool = false;
-                break;
+        for (Object editText : listaEditTexts) {
+            if (editText instanceof EditText) {
+                if (((EditText) editText).getText().toString().trim().isEmpty()) {
+                    ((EditText) editText).setError(getString(R.string.msg_campoIncompleto));
+                    ((EditText) editText).setHintTextColor(Color.RED);
+                    bool = false;
+                    break;
+                }
             }
         }
-        return bool;
+            return bool;
     }
 
     private void limpiarFormulario() {
-        for (EditText editText: listaEditTexts) {
+        /*for (EditText editText: listaEditTexts) {
             editText.setHintTextColor(getResources().getColor(R.color.default_hint));
             editText.setText("");
         }
+        */
+        for (Object o: listaEditTexts) {
+            if(o instanceof EditText) {
+                ((EditText) o).setHintTextColor(getResources().getColor(R.color.default_hint));
+                ((EditText) o).setText("");
+            } else {
+                ((Spinner) o).setBackgroundColor(getResources().getColor(R.color.default_hint));
+                ((Spinner) o).setSelection(0);
+            }
+        }
+
+
     }
 
     private void cargarFormularioItemSeleccionado() {
@@ -400,7 +410,11 @@ public class Fragment_Reserves_ABM extends Fragment{
         reservaNaturalSeleccionada = (ReservaNatural) spReserves.getSelectedItem();
         etNombre.setText(reservaNaturalSeleccionada.getNombreUnidad());
         etInstrumentoPlanificacion.setText(reservaNaturalSeleccionada.getInstrumentoPlanificacion());
-        etMunicipio.setText(reservaNaturalSeleccionada.getMunicipio());
+        try {
+            spMunicipios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.municipios)));
+        } catch (Exception e) {
+            spMunicipios.setSelection(0);
+        }
         et_zonaServicios.setText(reservaNaturalSeleccionada.getEt_zonaServicios());
         et_ingresoGratuitoPago.setText(reservaNaturalSeleccionada.getEt_ingresoGratuitoPago());
         et_dificultadSenderismo.setText(reservaNaturalSeleccionada.getEt_dificultadSenderismo());
@@ -426,6 +440,24 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_acceso.setText(reservaNaturalSeleccionada.getEt_acceso());
 
     }
+
+    private int obtenerIndiceDelRecurso(String valorCampo, String[] lista){
+        int i=0;
+        int indiceBuscado=-1;
+
+        try{
+        while (i < lista.length && indiceBuscado == -1) {
+            if (valorCampo.equalsIgnoreCase(lista[i])){
+                indiceBuscado=i;
+            }
+            i++;
+        }
+
+        return indiceBuscado;
+        } catch (Exception e){
+        indiceBuscado=0;
+        return indiceBuscado;
+    }}
 
     private void flujoAlta() {
         scrollView.setVisibility(View.VISIBLE);
