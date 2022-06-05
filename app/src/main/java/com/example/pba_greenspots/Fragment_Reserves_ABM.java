@@ -35,14 +35,14 @@ public class Fragment_Reserves_ABM extends Fragment{
             spReserves,
             spMunicipios,
             spTipoAdministracion,
-            spCosto;
+            spCosto,
+            spNivelesDificultad;
     private Button btnConfirmar,
             btnModificar,
             btnEliminar;
     private EditText etNombre,
             etInstrumentoPlanificacion,
             et_zonaServicios,
-            et_dificultadSenderismo,
             et_senializacion,
             et_accesos,
             et_horarios,
@@ -91,6 +91,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spMunicipios = view.findViewById(R.id.spMunicipios);
         spTipoAdministracion = view.findViewById(R.id.spTipoAdministracion);
         spCosto = view.findViewById(R.id.spCosto);
+        spNivelesDificultad = view.findViewById(R.id.spNivelesDificultad);
 
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
@@ -100,6 +101,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerTipoAdministracion(spTipoAdministracion, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerCosto(spCosto, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerNivelesDificultad(spNivelesDificultad, requireContext());
 
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -171,7 +173,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(spTipoAdministracion);
         listaEditTexts.add(et_zonaServicios);
         listaEditTexts.add(spCosto);
-        listaEditTexts.add(et_dificultadSenderismo);
+        listaEditTexts.add(spNivelesDificultad);
         listaEditTexts.add(et_senializacion);
         listaEditTexts.add(et_accesos);
         listaEditTexts.add(et_horarios);
@@ -321,7 +323,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 spTipoAdministracion.getSelectedItem().toString().trim(),
                 et_zonaServicios.getText().toString().trim(),
                 spCosto.getSelectedItem().toString().trim(),
-                et_dificultadSenderismo.getText().toString().trim(),
+                spNivelesDificultad.getSelectedItem().toString().trim(),
                 et_senializacion.getText().toString().trim(),
                 et_accesos.getText().toString().trim(),
                 et_horarios.getText().toString().trim(),
@@ -353,7 +355,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spTipoAdministracion = v.findViewById(R.id.spTipoAdministracion);
                 et_zonaServicios = v.findViewById(R.id.et_zonaServicios);
                 spCosto = v.findViewById(R.id.spCosto);
-                et_dificultadSenderismo = v.findViewById(R.id.et_dificultadSenderismo);
+                spNivelesDificultad = v.findViewById(R.id.spNivelesDificultad);
                 et_senializacion = v.findViewById(R.id.et_senializacion);
                 et_accesos = v.findViewById(R.id.et_accesos);
                 et_horarios = v.findViewById(R.id.et_horarios);
@@ -433,7 +435,12 @@ public class Fragment_Reserves_ABM extends Fragment{
         } catch (Exception e) {
             spCosto.setSelection(0);
         }
-        et_dificultadSenderismo.setText(reservaNaturalSeleccionada.getEt_dificultadSenderismo());
+        //TODO reveer el .getMunicipio porque le tengo que pasar la lista que tiene que ver
+        try {
+            spNivelesDificultad.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.COSTO)));
+        } catch (Exception e) {
+            spNivelesDificultad.setSelection(0);
+        }
         et_senializacion.setText(reservaNaturalSeleccionada.getEt_senializacion());
         et_accesos.setText(reservaNaturalSeleccionada.getEt_accesos());
         et_horarios.setText(reservaNaturalSeleccionada.getEt_horarios());

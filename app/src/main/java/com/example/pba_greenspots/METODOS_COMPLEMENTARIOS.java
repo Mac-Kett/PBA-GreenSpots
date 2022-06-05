@@ -36,4 +36,12 @@ public class METODOS_COMPLEMENTARIOS {
 
         return spinnerCosto;
     }
+
+    public static Spinner completarSpinnerNivelesDificultad(Spinner spinnerNivelesDificultad, Context context){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.NIVELES_DIFICULTAD, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerNivelesDificultad.setAdapter(adapter);
+
+        return spinnerNivelesDificultad;
+    }
 }
