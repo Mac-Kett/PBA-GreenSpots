@@ -52,4 +52,12 @@ public class METODOS_COMPLEMENTARIOS {
 
         return spinnerSenializacion;
     }
+
+    public static Spinner completarSpinnerZonaServicios(Spinner spinnerZonaServicios, Context context){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.ZONA_DE_SERVICIOS, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerZonaServicios.setAdapter(adapter);
+
+        return spinnerZonaServicios;
+    }
 }

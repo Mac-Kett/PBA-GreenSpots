@@ -37,13 +37,13 @@ public class Fragment_Reserves_ABM extends Fragment{
             spTipoAdministracion,
             spCosto,
             spNivelesDificultad,
-            spSenializacionServicios;
+            spSenializacionServicios,
+            spZonaServicios;
     private Button btnConfirmar,
             btnModificar,
             btnEliminar;
     private EditText etNombre,
             etInstrumentoPlanificacion,
-            et_zonaServicios,
             et_accesos,
             et_horarios,
             et_informacionAdicional,
@@ -93,6 +93,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spCosto = view.findViewById(R.id.spCosto);
         spNivelesDificultad = view.findViewById(R.id.spNivelesDificultad);
         spSenializacionServicios = view.findViewById(R.id.spSenializacionServicios);
+        spZonaServicios = view.findViewById(R.id.spZonaServicios);
 
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
@@ -104,6 +105,8 @@ public class Fragment_Reserves_ABM extends Fragment{
         METODOS_COMPLEMENTARIOS.completarSpinnerCosto(spCosto, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerNivelesDificultad(spNivelesDificultad, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerSenializacionServicios(spSenializacionServicios, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerZonaServicios(spZonaServicios, requireContext());
+
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -172,7 +175,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(etInstrumentoPlanificacion);
         listaEditTexts.add(spMunicipios);
         listaEditTexts.add(spTipoAdministracion);
-        listaEditTexts.add(et_zonaServicios);
+        listaEditTexts.add(spZonaServicios);
         listaEditTexts.add(spCosto);
         listaEditTexts.add(spNivelesDificultad);
         listaEditTexts.add(spSenializacionServicios);
@@ -322,7 +325,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 spMunicipios.getSelectedItem().toString().trim(),
                 etInstrumentoPlanificacion.getText().toString().trim(),
                 spTipoAdministracion.getSelectedItem().toString().trim(),
-                et_zonaServicios.getText().toString().trim(),
+                spZonaServicios.getSelectedItem().toString().trim(),
                 spCosto.getSelectedItem().toString().trim(),
                 spNivelesDificultad.getSelectedItem().toString().trim(),
                 spSenializacionServicios.getSelectedItem().toString().trim(),
@@ -354,29 +357,29 @@ public class Fragment_Reserves_ABM extends Fragment{
         spMunicipios = v.findViewById(R.id.spMunicipios);
         etInstrumentoPlanificacion = v.findViewById(R.id.et_instrumentoPlanificacion);
         spTipoAdministracion = v.findViewById(R.id.spTipoAdministracion);
-                et_zonaServicios = v.findViewById(R.id.et_zonaServicios);
-                spCosto = v.findViewById(R.id.spCosto);
-                spNivelesDificultad = v.findViewById(R.id.spNivelesDificultad);
-                spSenializacionServicios = v.findViewById(R.id.spSenializacionServicios);
-                et_accesos = v.findViewById(R.id.et_accesos);
-                et_horarios = v.findViewById(R.id.et_horarios);
-                et_informacionAdicional = v.findViewById(R.id.et_informacionAdicional);
-                et_gestionesDesarrollo = v.findViewById(R.id.et_gestionesDesarrollo);
-                et_telefono = v.findViewById(R.id.et_telefono);
-                et_correoPagWeb = v.findViewById(R.id.et_correoPagWeb);
-                et_infraestructura = v.findViewById(R.id.et_infraestructura);
-                et_actividadesDelArea = v.findViewById(R.id.et_actividadesDelArea);
-                et_fauna = v.findViewById(R.id.et_fauna);
-                et_flora = v.findViewById(R.id.et_flora);
-                et_clima = v.findViewById(R.id.et_clima);
-                et_geologia = v.findViewById(R.id.et_geologia);
-                et_superficie = v.findViewById(R.id.et_superficie);
-                et_geolocalizacion = v.findViewById(R.id.et_geolocalizacion);
-                et_caracteristicasGenerales = v.findViewById(R.id.et_caracteristicasGenerales);
-                et_fechaCreacion = v.findViewById(R.id.et_fechaCreacion);
-                et_importancia = v.findViewById(R.id.et_importancia);
-                et_instrumentoLegal = v.findViewById(R.id.et_instrumentoLegal);
-                et_acceso = v.findViewById(R.id.et_acceso);
+        spZonaServicios = v.findViewById(R.id.spZonaServicios);
+        spCosto = v.findViewById(R.id.spCosto);
+        spNivelesDificultad = v.findViewById(R.id.spNivelesDificultad);
+        spSenializacionServicios = v.findViewById(R.id.spSenializacionServicios);
+        et_accesos = v.findViewById(R.id.et_accesos);
+        et_horarios = v.findViewById(R.id.et_horarios);
+        et_informacionAdicional = v.findViewById(R.id.et_informacionAdicional);
+        et_gestionesDesarrollo = v.findViewById(R.id.et_gestionesDesarrollo);
+        et_telefono = v.findViewById(R.id.et_telefono);
+        et_correoPagWeb = v.findViewById(R.id.et_correoPagWeb);
+        et_infraestructura = v.findViewById(R.id.et_infraestructura);
+        et_actividadesDelArea = v.findViewById(R.id.et_actividadesDelArea);
+        et_fauna = v.findViewById(R.id.et_fauna);
+        et_flora = v.findViewById(R.id.et_flora);
+        et_clima = v.findViewById(R.id.et_clima);
+        et_geologia = v.findViewById(R.id.et_geologia);
+        et_superficie = v.findViewById(R.id.et_superficie);
+        et_geolocalizacion = v.findViewById(R.id.et_geolocalizacion);
+        et_caracteristicasGenerales = v.findViewById(R.id.et_caracteristicasGenerales);
+        et_fechaCreacion = v.findViewById(R.id.et_fechaCreacion);
+        et_importancia = v.findViewById(R.id.et_importancia);
+        et_instrumentoLegal = v.findViewById(R.id.et_instrumentoLegal);
+        et_acceso = v.findViewById(R.id.et_acceso);
     }
 
     private boolean validarCampos() {
@@ -428,7 +431,11 @@ public class Fragment_Reserves_ABM extends Fragment{
         } catch (Exception e) {
             spTipoAdministracion.setSelection(0);
         }
-        et_zonaServicios.setText(reservaNaturalSeleccionada.getZonaServicios());
+        try {
+            spZonaServicios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getZonaServicios(), getContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION)));
+        } catch (Exception e) {
+            spZonaServicios.setSelection(0);
+        }
         try {
             spCosto.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getIngresoGratuitoPago(), getContext().getResources().getStringArray(R.array.COSTO)));
         } catch (Exception e) {
