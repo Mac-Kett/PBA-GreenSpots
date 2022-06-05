@@ -36,6 +36,15 @@
         android:visibility="visible"
         android:layout_marginBottom="5dp"
          />
+
+    <Spinner
+        android:id="@+id/spMunicipios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="10dp"
+        android:accessibilityLiveRegion="none"
+        android:visibility="visible" />
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

@@ -31,7 +31,9 @@ import java.util.ArrayList;
 public class Fragment_Reserves_ABM extends Fragment{
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Spinner spABM, spReserves;
+    private Spinner spABM,
+            spReserves,
+            spMunicipios;
     private Button btnConfirmar,
             btnModificar,
             btnEliminar;
@@ -87,12 +89,14 @@ public class Fragment_Reserves_ABM extends Fragment{
         btnEliminar = view.findViewById(R.id.btnEliminar);
         spABM = view.findViewById(R.id.spABM);
         spReserves = view.findViewById(R.id.spReservas);
+        spMunicipios = view.findViewById(R.id.spMunicipios);
 
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
 
 
         METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
 
 
 
@@ -128,6 +132,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 spABM.setBackgroundColor(Color.RED);
             }
         });
+
 
         configuracionEventosListenersBotones();
 
