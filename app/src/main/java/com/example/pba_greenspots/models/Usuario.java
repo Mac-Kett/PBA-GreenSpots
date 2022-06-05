@@ -2,46 +2,15 @@ package com.example.pba_greenspots.models;
 
 public class Usuario {
 
-   // private String nombreCompleto;
     private String mail;
     private String password;
     private String tipoUser;
-    //private int tipoUser;
-    //private String pais;
 
     public Usuario(){
 
     }
 
-
-    public Usuario(String mail, String password, int tipoUser) {
-        //setNombreCompleto(nombreCompleto);
-        setMail(mail);
-        this.password = password;
-        this.tipoUser = tipoUser;
-        // setContrasena(contrasena);
-        //setPais(pais);
-    }
-
-    public Usuario(String mail, String password, int tipoUser) {
-        //setNombreCompleto(nombreCompleto);
-        setMail(mail);
-        this.password = password;
-        this.tipoUser = tipoUser;
-       // setContrasena(contrasena);
-        //setPais(pais);
-    }
-
-    /*public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }*/
-
-
-    public String getmail() {
+    public String getMail() {
         return mail;
     }
 
@@ -49,21 +18,28 @@ public class Usuario {
         this.mail = mail;
     }
 
-   /* public String getContrasena() {
-        return contrasena;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getPais() {
-        return pais;
+    public String getTipoUser() {
+        return tipoUser;
     }
 
-    public void setPais(String pais) {
-        this.pais = pais;
-    }*/
+    public void setTipoUser(String tipoUser) {
+        this.tipoUser = tipoUser;
+    }
+
+    public Usuario(String mail, String password, String tipoUser) {
+        setMail(mail);
+        setPassword(password);
+        setTipoUser(tipoUser);
+    }
+
 
     @Override
     public String toString() {

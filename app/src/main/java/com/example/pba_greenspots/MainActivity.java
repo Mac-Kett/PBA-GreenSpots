@@ -25,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                //RegisterFragment register = new RegisterFragment();
-                RegisterFragment register2 = new RegisterFragment();
+                RegisterFragment register = new RegisterFragment();
+                //RegisterFragment register2 = new RegisterFragment();
                 //MiPerfil miPerfil = new MiPerfil();
                FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
-               //fragmentTransaction.replace(R.id.fragment_container, miPerfil);
-                //fragmentTransaction.replace(R.id.fragment_container, register);
-                fragmentTransaction.replace(R.id.fragment_container, register2);
+              // fragmentTransaction.replace(R.id.fragment_container, miPerfil);
+                fragmentTransaction.replace(R.id.fragment_container, register);
+               // fragmentTransaction.replace(R.id.fragment_container, register2);
                fragmentTransaction.commit();
 
 

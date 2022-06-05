@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class RegisterFragment extends Fragment {
@@ -29,6 +31,7 @@ public class RegisterFragment extends Fragment {
     private EditText email, contrasena, pais;
     private Button btnRegister;
     private FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -69,9 +72,9 @@ public class RegisterFragment extends Fragment {
     private void userRegister(View view) {
 
         //String nombre = nombreCompleto.getText().toString();
-        String mail = email.getText().toString();
-        String contra =contrasena.getText().toString();
-        int tipo = parseInt(pais.getText().toString());
+        String mail = email.getText().toString().trim();
+        String contra =contrasena.getText().toString().trim();
+        String tipo = pais.getText().toString().trim();
 
         mAuth.createUserWithEmailAndPassword(mail, contra)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -80,18 +83,27 @@ public class RegisterFragment extends Fragment {
                         if (task.isSuccessful()){
                             Usuario usuario = new Usuario(mail, contra, tipo);
                             //Log.d("usuario", {usuario})
-                            FirebaseDatabase.getInstance().getReference("Turista")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()){
-                                                Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
-                                            } else {
-                                                Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                    });
+                            db.collection("Users").add(usuario).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
+                                    }else{
+                                        Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+//                                   .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                                    .setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<Void> task) {
+//                                            if (task.isSuccessful()){
+//                                                Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
+//                                            } else {
+//                                                Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
+//                                            }
+//                                        }
+//                                    });
 
                         }else{
                             Toast.makeText(getActivity(),task.getException().getMessage(), Toast.LENGTH_SHORT).show();
