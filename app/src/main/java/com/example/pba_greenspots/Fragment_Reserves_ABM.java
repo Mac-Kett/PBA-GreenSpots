@@ -69,7 +69,6 @@ public class Fragment_Reserves_ABM extends Fragment{
             spZonaServicios;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private ActivityResultLauncher<String> requestPermissionLauncher;
-    private Spinner spABM, spReserves;
     private Button btnConfirmar,
             btnModificar,
             btnEliminar,
@@ -94,7 +93,8 @@ public class Fragment_Reserves_ABM extends Fragment{
             et_fechaCreacion,
             et_importancia,
             et_instrumentoLegal,
-            et_acceso;
+            et_acceso,
+            et_personal;
     private LinearLayout formLinearLayout;
     private ScrollView scrollView;
     private ArrayList<Object> listaEditTexts;
@@ -257,6 +257,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(et_importancia);
         listaEditTexts.add(et_instrumentoLegal);
         listaEditTexts.add(et_acceso);
+        listaEditTexts.add(et_personal);
     }
 
     private void actualizarSpinnerReservas() {
@@ -322,42 +323,44 @@ public class Fragment_Reserves_ABM extends Fragment{
                             //SET DEL ATRIBUTO, CAMPO POR CAMPO.
                             reservaActual.setNombreUnidad(splitted[0].trim());
                             reservaActual.setInstrumentoPlanificacion(splitted[1].trim());
-                            reservaActual.setEt_personal(splitted[2].trim());
-                            reservaActual.setEt_instrumentoLegal(splitted[3].trim());
-                            reservaActual.setEt_acceso(splitted[4].trim());
-                            reservaActual.setEt_importancia(splitted[5].trim());
-                            reservaActual.setEt_fechaCreacion(splitted[6].trim());
-                            reservaActual.setEt_caracteristicasGenerales(splitted[7].trim());
-                            reservaActual.setEt_geolocalizacion(splitted[8].trim());
-                            reservaActual.setEt_superficie(splitted[9].trim());
-                            reservaActual.setEt_geologia(splitted[10].trim());
-                            reservaActual.setEt_clima(splitted[11].trim());
-                            reservaActual.setEt_flora(splitted[12].trim());
-                            reservaActual.setEt_fauna(splitted[13].trim());
-                            reservaActual.setEt_actividadesDelArea(splitted[14].trim());
-                            reservaActual.setEt_infraestructura(splitted[15].trim());
-                            reservaActual.setEt_correoPagWeb(splitted[16].trim());
-                            reservaActual.setEt_telefono(splitted[17].trim());
-                            reservaActual.setEt_gestionesDesarrollo(splitted[18].trim());
-                            reservaActual.setEt_informacionAdicional(splitted[19].trim());
-                            reservaActual.setEt_horarios(splitted[20].trim());
-                            reservaActual.setEt_accesos(splitted[21].trim());
+                            reservaActual.setPersonal(splitted[2].trim());
+                            reservaActual.setInstrumentoLegal(splitted[3].trim());
+                            reservaActual.setAcceso(splitted[4].trim());
+                            reservaActual.setImportancia(splitted[5].trim());
+                            reservaActual.setFechaCreacion(splitted[6].trim());
+                            reservaActual.setCaracteristicasGenerales(splitted[7].trim());
+                            reservaActual.setGeolocalizacion(splitted[8].trim());
+                            reservaActual.setSuperficie(splitted[9].trim());
+                            reservaActual.setGeologia(splitted[10].trim());
+                            reservaActual.setClima(splitted[11].trim());
+                            reservaActual.setFlora(splitted[12].trim());
+                            reservaActual.setFauna(splitted[13].trim());
+                            reservaActual.setActividadesDelArea(splitted[14].trim());
+                            reservaActual.setInfraestructura(splitted[15].trim());
+                            reservaActual.setCorreoPagWeb(splitted[16].trim());
+                            reservaActual.setTelefono(splitted[17].trim());
+                            reservaActual.setGestionesDesarrollo(splitted[18].trim());
+                            reservaActual.setInformacionAdicional(splitted[19].trim());
+                            reservaActual.setHorarios(splitted[20].trim());
+                            reservaActual.setAccesos(splitted[21].trim());
+                            reservaActual.setPersonal(splitted[22].trim());
 
                             //VALIDAR QUE LOS STRINGS DE ESTOS CAMPOS COINCIDAN CON ALGUN STRING DENTRO DEL ARRAYSTRING DEL RECURSO EN VALUES->STRINGS.XML
-                            if (reservaActual.validarAtributo(splitted[22].trim(), requireContext().getResources().getStringArray(R.array.SI_NO))) {
-                                reservaActual.setEt_senializacion(splitted[22].trim());
+                            //TODO Reveer que los valores del Split en determinada posición coincidan con las listas que yo puse. ADRI
+                            if (reservaActual.validarAtributo(splitted[22].trim(), requireContext().getResources().getStringArray(R.array.SENIALIZACION_DE_SENDEROS))) {
+                                reservaActual.setSenializacion(splitted[22].trim());
                             }
                             if (reservaActual.validarAtributo(splitted[23].trim(), requireContext().getResources().getStringArray(R.array.NIVELES_DIFICULTAD))) {
-                                reservaActual.setEt_dificultadSenderismo(splitted[23].trim());
+                                reservaActual.setDificultadSenderismo(splitted[23].trim());
                             }
-                            if (reservaActual.validarAtributo(splitted[24].trim(), requireContext().getResources().getStringArray(R.array.SI_NO))) {
-                                reservaActual.setEt_ingresoGratuitoPago(splitted[24].trim());
+                            if (reservaActual.validarAtributo(splitted[24].trim(), requireContext().getResources().getStringArray(R.array.COSTO))) {
+                                reservaActual.setIngresoGratuitoPago(splitted[24].trim());
                             }
-                            if (reservaActual.validarAtributo(splitted[25].trim(), requireContext().getResources().getStringArray(R.array.SI_NO))) {
-                                reservaActual.setEt_zonaServicios(splitted[25].trim());
+                            if (reservaActual.validarAtributo(splitted[25].trim(), requireContext().getResources().getStringArray(R.array.ZONA_DE_SERVICIOS))) {
+                                reservaActual.setZonaServicios(splitted[25].trim());
                             }
                             if (reservaActual.validarAtributo(splitted[26].trim(), requireContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION))) {
-                                reservaActual.setEt_administracionPublicaPrivada(splitted[26].trim());
+                                reservaActual.setAdministracionPublicaPrivada(splitted[26].trim());
                             }
                             if (reservaActual.validarAtributo(splitted[27].trim(), requireContext().getResources().getStringArray(R.array.MUNICIPIOS))) {
                                 reservaActual.setMunicipio(splitted[27].trim());
@@ -552,6 +555,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_importancia = v.findViewById(R.id.et_importancia);
         et_instrumentoLegal = v.findViewById(R.id.et_instrumentoLegal);
         et_acceso = v.findViewById(R.id.et_acceso);
+        et_personal = v.findViewById(R.id.et_personal);
     }
 
     private boolean validarCampos() {
@@ -570,11 +574,7 @@ public class Fragment_Reserves_ABM extends Fragment{
     }
 
     private void limpiarFormulario() {
-        /*for (EditText editText: listaEditTexts) {
-            editText.setHintTextColor(getResources().getColor(R.color.default_hint));
-            editText.setText("");
-        }
-        */
+
         for (Object o: listaEditTexts) {
             if(o instanceof EditText) {
                 ((EditText) o).setHintTextColor(getResources().getColor(R.color.default_hint));
@@ -594,7 +594,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         etNombre.setText(reservaNaturalSeleccionada.getNombreUnidad());
         etInstrumentoPlanificacion.setText(reservaNaturalSeleccionada.getInstrumentoPlanificacion());
         try {
-            spMunicipios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.municipios)));
+            spMunicipios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getMunicipio(), getContext().getResources().getStringArray(R.array.MUNICIPIOS)));
         } catch (Exception e) {
             spMunicipios.setSelection(0);
         }
@@ -604,7 +604,7 @@ public class Fragment_Reserves_ABM extends Fragment{
             spTipoAdministracion.setSelection(0);
         }
         try {
-            spZonaServicios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getZonaServicios(), getContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION)));
+            spZonaServicios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getZonaServicios(), getContext().getResources().getStringArray(R.array.ZONA_DE_SERVICIOS)));
         } catch (Exception e) {
             spZonaServicios.setSelection(0);
         }
@@ -614,12 +614,12 @@ public class Fragment_Reserves_ABM extends Fragment{
             spCosto.setSelection(0);
         }
         try {
-            spNivelesDificultad.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getDificultadSenderismo(), getContext().getResources().getStringArray(R.array.COSTO)));
+            spNivelesDificultad.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getDificultadSenderismo(), getContext().getResources().getStringArray(R.array.NIVELES_DIFICULTAD)));
         } catch (Exception e) {
             spNivelesDificultad.setSelection(0);
         }
         try {
-            spSenializacionServicios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getSenializacion(), getContext().getResources().getStringArray(R.array.COSTO)));
+            spSenializacionServicios.setSelection(obtenerIndiceDelRecurso(reservaNaturalSeleccionada.getSenializacion(), getContext().getResources().getStringArray(R.array.SENIALIZACION_DE_SENDEROS)));
         } catch (Exception e) {
             spSenializacionServicios.setSelection(0);
         }

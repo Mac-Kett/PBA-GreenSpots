@@ -284,6 +284,14 @@
                     android:ems="10"
                     android:hint="Acceso"
                     android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_personal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Acceso"
+                    android:inputType="textPersonName" />
             </LinearLayout>
         </ScrollView>
         <Button

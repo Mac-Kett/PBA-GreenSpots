@@ -41,63 +41,67 @@ public class ReservaNatural {
     private String importancia;
     private String instrumentoLegal;
     private String acceso;
+    private String personal;
 
     public ReservaNatural(){}
 
     public ReservaNatural(String nombreUnidad,
                           String instrumentoPlanificaicon,
                           String municipio,
-                          String et_administracionPublicaPrivada,
-                          String et_zonaServicios,
-                          String et_ingresoGratuitoPago,
-                          String et_dificultadSenderismo,
-                          String et_senializacion,
-                          String et_accesos,
-                          String et_horarios,
-                          String et_informacionAdicional,
-                          String et_gestionesDesarrollo,
-                          String et_telefono,
-                          String et_correoPagWeb,
-                          String et_infraestructura,
-                          String et_actividadesDelArea,
-                          String et_fauna,
-                          String et_flora,
-                          String et_clima,
-                          String et_geologia,
-                          String et_superficie,
-                          String et_geolocalizacion,
-                          String et_caracteristicasGenerales,
-                          String et_fechaCreacion,
-                          String et_importancia,
-                          String et_instrumentoLegal,
-                          String et_acceso) {
+                          String administracionPublicaPrivada,
+                          String zonaServicios,
+                          String ingresoGratuitoPago,
+                          String dificultadSenderismo,
+                          String senializacion,
+                          String accesos,
+                          String horarios,
+                          String informacionAdicional,
+                          String gestionesDesarrollo,
+                          String telefono,
+                          String correoPagWeb,
+                          String infraestructura,
+                          String actividadesDelArea,
+                          String fauna,
+                          String flora,
+                          String clima,
+                          String geologia,
+                          String superficie,
+                          String geolocalizacion,
+                          String caracteristicasGenerales,
+                          String fechaCreacion,
+                          String importancia,
+                          String instrumentoLegal,
+                          String acceso,
+                          String personal
+                          ) {
         this.nombreUnidad = nombreUnidad;
         this.instrumentoPlanificacion = instrumentoPlanificaicon;
         this.municipio = municipio;
-        this.administracionPublicaPrivada = et_administracionPublicaPrivada;
-        this.zonaServicios = et_zonaServicios;
-        this.ingresoGratuitoPago = et_ingresoGratuitoPago;
-        this.dificultadSenderismo = et_dificultadSenderismo;
-        this.senializacion = et_senializacion;
-        this.accesos = et_accesos;
-        this.horarios = et_horarios;
-        this.informacionAdicional = et_informacionAdicional;
-        this.gestionesDesarrollo = et_gestionesDesarrollo;
-        this.telefono = et_telefono;
-        this.correoPagWeb = et_correoPagWeb;
-        this.infraestructura = et_infraestructura;
-        this.actividadesDelArea = et_actividadesDelArea;
-        this.fauna = et_fauna;
-        this.flora = et_flora;
-        this.clima = et_clima;
-        this.geologia = et_geologia;
-        this.superficie = et_superficie;
-        this.geolocalizacion = et_geolocalizacion;
-        this.caracteristicasGenerales = et_caracteristicasGenerales;
-        this.fechaCreacion = et_fechaCreacion;
-        this.importancia = et_importancia;
-        this.instrumentoLegal = et_instrumentoLegal;
-        this.acceso = et_acceso;
+        this.administracionPublicaPrivada = administracionPublicaPrivada;
+        this.zonaServicios = zonaServicios;
+        this.ingresoGratuitoPago = ingresoGratuitoPago;
+        this.dificultadSenderismo = dificultadSenderismo;
+        this.senializacion = senializacion;
+        this.accesos = accesos;
+        this.horarios = horarios;
+        this.informacionAdicional = informacionAdicional;
+        this.gestionesDesarrollo = gestionesDesarrollo;
+        this.telefono = telefono;
+        this.correoPagWeb = correoPagWeb;
+        this.infraestructura = infraestructura;
+        this.actividadesDelArea = actividadesDelArea;
+        this.fauna = fauna;
+        this.flora = flora;
+        this.clima = clima;
+        this.geologia = geologia;
+        this.superficie = superficie;
+        this.geolocalizacion = geolocalizacion;
+        this.caracteristicasGenerales = caracteristicasGenerales;
+        this.fechaCreacion = fechaCreacion;
+        this.importancia = importancia;
+        this.instrumentoLegal = instrumentoLegal;
+        this.acceso = acceso;
+        this.personal = personal;
 
     }
 
@@ -108,21 +112,27 @@ public class ReservaNatural {
     public void setId(String id) {
         this.id = id;
     }
-    public String getInstrumentoPlanificacion() {
-        return instrumentoPlanificacion;
-    }
-    public void setInstrumentoPlanificacion(String instrumentoPlanificacion) {
-        this.instrumentoPlanificacion = instrumentoPlanificacion;
-    }
+
     public String getNombreUnidad() {
         return nombreUnidad;
     }
+
     public void setNombreUnidad(String nombreUnidad) {
         this.nombreUnidad = nombreUnidad;
     }
+
+    public String getInstrumentoPlanificacion() {
+        return instrumentoPlanificacion;
+    }
+
+    public void setInstrumentoPlanificacion(String instrumentoPlanificacion) {
+        this.instrumentoPlanificacion = instrumentoPlanificacion;
+    }
+
     public String getMunicipio() {
         return municipio;
     }
+
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
     }
@@ -135,16 +145,6 @@ public class ReservaNatural {
         this.administracionPublicaPrivada = administracionPublicaPrivada;
     }
 
-    public String getEt_personal() {
-        return et_personal;
-    }
-
-    public void setEt_personal(String et_personal) {
-        this.et_personal = et_personal;
-    }
-
-    public String getEt_zonaServicios() {
-        return et_zonaServicios;
     public String getZonaServicios() {
         return zonaServicios;
     }
@@ -327,6 +327,14 @@ public class ReservaNatural {
 
     public void setAcceso(String acceso) {
         this.acceso = acceso;
+    }
+
+    public String getPersonal() {
+        return personal;
+    }
+
+    public void setPersonal(String personal) {
+        this.personal = personal;
     }
 
     //Este metodo permite que el Spinner que carga las reservas muestre solo el nombreUnidad.
