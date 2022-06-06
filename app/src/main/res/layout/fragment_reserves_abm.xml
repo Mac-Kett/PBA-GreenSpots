@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment_Reserves_ABM">
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="28dp"
+        android:text="ABM Reservas"
+        android:textAlignment="center"
+        android:textSize="28sp" />
+
+    <Spinner
+        android:id="@+id/spABM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="10dp"
+        android:accessibilityLiveRegion="none"
+        android:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/spReservas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="10dp"
+        android:accessibilityLiveRegion="none"
+        android:visibility="visible"
+        android:layout_marginBottom="5dp"
+         />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/formLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/et_nombreAnp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Nombre de la unidad de conservación"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_instrumentoPlanificacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Instrumento de planificación"
+                    android:inputType="textPersonName" />
+
+                <Spinner
+                    android:id="@+id/spMunicipios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
+
+                <Spinner
+                    android:id="@+id/spTipoAdministracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
+
+                <Spinner
+                    android:id="@+id/spZonaServicios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
+
+                <Spinner
+                    android:id="@+id/spCosto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
+
+                <Spinner
+                    android:id="@+id/spNivelesDificultad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
+
+                <Spinner
+                    android:id="@+id/spSenializacionServicios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
+
+
+                <EditText
+                    android:id="@+id/et_accesos"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Accesos"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_horarios"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Horarios"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_informacionAdicional"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Información Adicional"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_gestionesDesarrollo"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Gestiones en desarrollo"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_telefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Teléfono de contacto"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_correoPagWeb"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Correo y página web"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_infraestructura"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Infraestructura"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_actividadesDelArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Actividades del área"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_fauna"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Fauna Emblemática"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_flora"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Flora Emblemática"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_clima"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Clima"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_geologia"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Geología"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_superficie"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Superficie"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_geolocalizacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Geolocalización"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_caracteristicasGenerales"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Características Generales"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_fechaCreacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Fecha de creación"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_importancia"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="importancia"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_instrumentoLegal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Instrumento legal"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_acceso"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Acceso"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_personal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Acceso"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
+        </ScrollView>
+        <Button
+            android:id="@+id/btnConfirmar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirmar"
+            android:textAlignment="center"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnImportarCSV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Importar CSV"
+            android:textAlignment="center"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eliminar"
+            android:textAlignment="center"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnModificar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modificar"
+            android:textAlignment="center"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>
