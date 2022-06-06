@@ -36,8 +36,6 @@
         android:visibility="visible"
         android:layout_marginBottom="5dp"
          />
-
-
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -293,6 +291,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Confirmar"
+            android:textAlignment="center"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnImportarCSV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Importar CSV"
             android:textAlignment="center"
             android:visibility="gone" />
 

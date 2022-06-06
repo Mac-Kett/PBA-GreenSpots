@@ -17,7 +17,7 @@
     <string name="msg_Modificacion_ReservaNatural_Exito">Se ha actualizado con exito.</string>
     <string name="msg_Modificacion_ReservaNatural_Error">No se ha podido actualizar el recurso solicitado.</string>
 
-    <string-array name="municipios">
+    <string-array name="MUNICIPIOS">
         <item>25 de mayo</item>
         <item>Adolfo Alsina</item>
         <item>Adolfo González Chávez</item>
@@ -181,5 +181,7 @@
         <item>si</item>
         <item>no</item>
     </string-array>
+
+
 
 </resources>

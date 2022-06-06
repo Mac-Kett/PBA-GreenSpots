@@ -1,5 +1,15 @@
 package com.example.pba_greenspots;
 
+import android.app.Activity;
+import android.content.Context;
+
+import com.google.protobuf.LazyStringArrayList;
+import com.google.rpc.context.AttributeContext;
+
+import java.lang.reflect.Array;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ReservaNatural {
 
 
@@ -125,6 +135,16 @@ public class ReservaNatural {
         this.administracionPublicaPrivada = administracionPublicaPrivada;
     }
 
+    public String getEt_personal() {
+        return et_personal;
+    }
+
+    public void setEt_personal(String et_personal) {
+        this.et_personal = et_personal;
+    }
+
+    public String getEt_zonaServicios() {
+        return et_zonaServicios;
     public String getZonaServicios() {
         return zonaServicios;
     }
@@ -312,6 +332,18 @@ public class ReservaNatural {
     //Este metodo permite que el Spinner que carga las reservas muestre solo el nombreUnidad.
     public String toString(){
         return this.getNombreUnidad();
+    }
+
+    public boolean validarAtributo(String avalidar, String[] stringArray){
+        boolean result=false;
+        int i=0;
+        while(i<stringArray.length && !result){
+                if(avalidar.equalsIgnoreCase(stringArray[i])){
+                    result=true;
+                }
+                i++;
+        }
+        return result;
     }
 
 }
