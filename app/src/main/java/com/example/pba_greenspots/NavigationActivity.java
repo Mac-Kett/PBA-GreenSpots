@@ -8,13 +8,18 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.example.pba_greenspots.databinding.ActivityMainBinding;
-import com.example.pba_greenspots.fragments.AccountFragment;
+
 import com.example.pba_greenspots.fragments.HomeFragment;
+import com.example.pba_greenspots.fragments.PerfilUsuarioFragment;
+
+import com.example.pba_greenspots.fragments.RegisterFragment;
 import com.example.pba_greenspots.fragments.SearchFragment;
 
-public class MainActivity extends AppCompatActivity {
+
+public class NavigationActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SearchFragment());
                     break;
                 case R.id.account:
-                    replaceFragment(new AccountFragment());
+                    replaceFragment(new PerfilUsuarioFragment());
                     break;
             }
 
@@ -47,4 +52,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_layout, fragment);
         fragmentTransaction.commit();
     }
+
 }
