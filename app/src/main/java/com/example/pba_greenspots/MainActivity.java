@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //RegisterFragment register = new RegisterFragment();
 
-             PerfilUsuarioFragment perfil = new PerfilUsuarioFragment();
+            PerfilUsuarioFragment perfil = new PerfilUsuarioFragment();
              FragmentTransaction fragmentTransaction =getSupportFragmentManager().beginTransaction();
              fragmentTransaction.replace(R.id.fragment_container, perfil);
              fragmentTransaction.commit();
