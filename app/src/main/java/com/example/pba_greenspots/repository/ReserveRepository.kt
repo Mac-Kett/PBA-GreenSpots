@@ -8,15 +8,15 @@ class ReserveRepository {
     var reserveList : MutableList<Reserve> = mutableListOf()
 
     fun getReserves () : MutableList<Reserve>{
-        reserveList.add(Reserve("RESERVA1", "Luminoso y familiar", "San Andres de Giles"))
-        reserveList.add(Reserve("RESERVA2", "familiar", "San Giles"))
-        reserveList.add(Reserve("RESERVA3", "Luminoso", "Andres de Giles"))
-        reserveList.add(Reserve("RESERVA4", "Luminoso y familiar", "San Andres de Giles"))
-        reserveList.add(Reserve("RESERVA5", "familiar", "San Andres"))
-        reserveList.add(Reserve("RESERVA6", "Luminoso", "San Giles"))
-        reserveList.add(Reserve("RESERVA7", "Luminoso y familiar", "San Giles"))
-        reserveList.add(Reserve("RESERVA8", "familiar", "San Andres"))
-        reserveList.add(Reserve("RESERVA9", "Luminoso", "San Andres de Giles"))
+        reserveList.add(Reserve("Luminoso y familiar", "San Andres de Giles", "sdf"))
+        reserveList.add(Reserve("familiar", "San Giles", "sdf"))
+        reserveList.add(Reserve("Luminoso", "Andres de Giles", "sdf"))
+        reserveList.add(Reserve("Luminoso y familiar", "San Andres de Giles", "sdf"))
+        reserveList.add(Reserve("familiar", "San Andres", "sdf"))
+        reserveList.add(Reserve("Luminoso", "San Giles", "sdf"))
+        reserveList.add(Reserve("Luminoso y familiar", "San Giles", "sdf"))
+        reserveList.add(Reserve("familiar", "San Andres", "sdf"))
+        reserveList.add(Reserve("Luminoso", "San Andres de Giles", "sdf"))
 
         return reserveList
     }

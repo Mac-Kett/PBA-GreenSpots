@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pba_greenspots.R
 import com.example.pba_greenspots.entities.Reserve
 
-class ReserveAdapter (var reserveList : MutableList<Reserve>,
+class ReserveAdapter (var listaDB : MutableList<Reserve>,
                       val onItemClick : (Int) -> Unit ) // unit es el void de KT
     : RecyclerView.Adapter<ReserveAdapter.ReserveHolder>(){
 
@@ -22,14 +22,14 @@ class ReserveAdapter (var reserveList : MutableList<Reserve>,
     }
 
     override fun onBindViewHolder(holder: ReserveAdapter.ReserveHolder, position: Int) {
-        holder.setName(reserveList[position].name)
+        holder.setName(listaDB[position].municipio)
         holder.getCardView().setOnClickListener{
             onItemClick (position)
         }
     }
 
     override fun getItemCount(): Int {
-        return reserveList.size
+        return listaDB.size
     }
 
     class ReserveHolder(v: View): RecyclerView.ViewHolder(v){
