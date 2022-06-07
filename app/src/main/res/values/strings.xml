@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">PBA-GreenSpots</string>
+    <!--  Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="registrarse">Registrarse</string>
     <string name="nombre">Nombre</string>
     <string name="apellido">Apellido</string>
@@ -8,4 +10,186 @@
     <string name="contrase_a">Contraseña</string>
     <string name="editar_perfil">Editar Perfil</string>
     <string name="btnComenzar">Comenzar</string>
+
+    <string-array name="ABM">
+        <item>Alta</item>
+        <item>Baja</item>
+        <item>Modificacion</item>
+    </string-array>
+
+    <string name="msg_campoIncompleto">Campo obligatorio incompleto!</string>
+    <string name="msg_Alta_ReservaNatural_Exito">Se ha registrado con exito!</string>
+    <string name="msg_Alta_ReservaNatural_Error">ERROR. No pudimos guardar su registro!</string>
+    <string name="msg_Baja_ReservaNatural_Exito">Se ha eliminado con exito:</string>
+    <string name="msg_Baja_ReservaNatural_Error">No se ha podido eliminar el recurso solicitado:</string>
+    <string name="msg_Modificacion_ReservaNatural_Exito">Se ha actualizado con exito.</string>
+    <string name="msg_Modificacion_ReservaNatural_Error">No se ha podido actualizar el recurso solicitado.</string>
+
+    <string-array name="MUNICIPIOS">
+        <item>25 de mayo</item>
+        <item>Adolfo Alsina</item>
+        <item>Adolfo González Chávez</item>
+        <item>Alberti</item>
+        <item>Almirante Brown</item>
+        <item>Arrecifes</item>
+        <item>Avellaneda</item>
+        <item>Ayacucho</item>
+        <item>Azul</item>
+        <item>Bahía Blanca</item>
+        <item>Balcarce</item>
+        <item>Baradero</item>
+        <item>Beníto Juárez</item>
+        <item>Berazategui</item>
+        <item>Berisso</item>
+        <item>Bolívar</item>
+        <item>Bragado</item>
+        <item>Campana</item>
+        <item>Cañuelas</item>
+        <item>Capitán Sarmiento</item>
+        <item>Carlos Casares</item>
+        <item>Carlos Tejedor</item>
+        <item>Carmen De Areco</item>
+        <item>Castelli</item>
+        <item>Chacabuco</item>
+        <item>Chascomús</item>
+        <item>Chivilcoy</item>
+        <item>Colón</item>
+        <item>Coronel Brandsen</item>
+        <item>Coronel Bogado</item>
+        <item>Coronel Leonardo</item>
+        <item>Rosales</item>
+        <item>Coronel Pringles</item>
+        <item>Coronel Suárez</item>
+        <item>Daireaux</item>
+        <item>Dolores</item>
+        <item>Ensenada</item>
+        <item>Escobar</item>
+        <item>Esteban Echeverría</item>
+        <item>Exaltación De La Cruz</item>
+        <item>Ezeiza</item>
+        <item>Florencio Varela</item>
+        <item>Florentino Ameghino</item>
+        <item>General Alvarado</item>
+        <item>General Alvear</item>
+        <item>General Arenales</item>
+        <item>General Belgrano</item>
+        <item>General Guido</item>
+        <item>General Juan Madariaga</item>
+        <item>General Lamadrid</item>
+        <item>General Las Heras</item>
+        <item>General Lavalle</item>
+        <item>General Paz</item>
+        <item>General Pinto</item>
+        <item>General Pueyrredón</item>
+        <item>General Rodríguez</item>
+        <item>General San Martín</item>
+        <item>General Viamonte</item>
+        <item>General Villegas</item>
+        <item>Gobierno de la Ciudad</item>
+        <item>Guamini</item>
+        <item>Hipólito Yrigoyen</item>
+        <item>Hurlingham</item>
+        <item>Ituzaingó</item>
+        <item>José C. Paz</item>
+        <item>Junín</item>
+        <item>La Costa</item>
+        <item>La Matanza</item>
+        <item>La Plata</item>
+        <item>Lanus</item>
+        <item>Laprida</item>
+        <item>Las Flores</item>
+        <item>Leandro N. Alem</item>
+        <item>Lincoln</item>
+        <item>Lobería</item>
+        <item>Lobos</item>
+        <item>Lomas de Zamora</item>
+        <item>Luján</item>
+        <item>Magdalena</item>
+        <item>Maipú</item>
+        <item>Malvinas Argenitnas</item>
+        <item>Mar Chiquita</item>
+        <item>Marcos Paz</item>
+        <item>Mercedes</item>
+        <item>Merlo</item>
+        <item>Monte</item>
+        <item>Monte Hermoso</item>
+        <item>Moreno</item>
+        <item>Morón</item>
+        <item>Navarro</item>
+        <item>Necochea</item>
+        <item>Nueve de Julio</item>
+        <item>Olavarría</item>
+        <item>Patagones</item>
+        <item>Pehuajó</item>
+        <item>Pellegrini</item>
+        <item>Pergamino</item>
+        <item>Pila</item>
+        <item>Pilar</item>
+        <item>Pinamar</item>
+        <item>Presidente Perón</item>
+        <item>Puán</item>
+        <item>Punta Indio</item>
+        <item>Quilmes</item>
+        <item>Ramallo</item>
+        <item>Rauch</item>
+        <item>Rivadavia</item>
+        <item>Rojas</item>
+        <item>Roque Pérez</item>
+        <item>Saavedra</item>
+        <item>Saladillo</item>
+        <item>Salliquelo</item>
+        <item>Salto</item>
+        <item>San Andrés de Giles</item>
+        <item>San Antonio de Areco</item>
+        <item>San Cayetano</item>
+        <item>San Fernando</item>
+        <item>San Isidro</item>
+        <item>San Miguel Joaquín</item>
+        <item>San Nicolás</item>
+        <item>San Pedro</item>
+        <item>San Vicente</item>
+        <item>Suipacha</item>
+        <item>Tandil</item>
+        <item>Tapalque</item>
+        <item>Tigre</item>
+        <item>Tordillo</item>
+        <item>Tornquist</item>
+        <item>Trenque launquen</item>
+        <item>Tres Arroyos</item>
+        <item>Tres de Febrero</item>
+        <item>Tres Lomas</item>
+        <item>Vicente López</item>
+        <item>Villa Gesell</item>
+        <item>Villarino</item>
+    </string-array>
+
+    <string-array name="TIPO_ADMINISTRACION">
+        <item>Publico/Public</item>
+        <item>Privado/Private</item>
+        <item>Mixto</item>
+    </string-array>
+
+    <string-array name="COSTO">
+        <item>Gratuito/Free</item>
+        <item>Pago/Paid</item>
+    </string-array>
+
+    <string-array name="NIVELES_DIFICULTAD">
+        <item>Facil/Easy</item>
+        <item>Media/Medium</item>
+        <item>Dificil/Hard</item>
+    </string-array>
+
+    <string-array name="SENIALIZACION_DE_SENDEROS">
+        <item>No</item>
+        <item>Si</item>
+    </string-array>
+
+    <string-array name="ZONA_DE_SERVICIOS">
+        <item>si</item>
+        <item>no</item>
+    </string-array>
+
+
+
 </resources>

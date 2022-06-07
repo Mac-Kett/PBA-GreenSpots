@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "618405842721",
+    "firebase_url": "https://pba-greenspots-default-rtdb.firebaseio.com",
     "project_id": "pba-greenspots",
     "storage_bucket": "pba-greenspots.appspot.com"
   },
