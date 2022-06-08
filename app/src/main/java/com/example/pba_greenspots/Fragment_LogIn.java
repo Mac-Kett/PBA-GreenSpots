@@ -48,15 +48,15 @@ public class Fragment_LogIn extends Fragment {
     }
 
     private void login(View view){
-        CollectionReference usersCol = FirebaseFirestore.getInstance().collection("User");
+        CollectionReference usersCol = FirebaseFirestore.getInstance().collection("Users");
 
         String mail=etMail.getText().toString();
         String pass =etPass.getText().toString();
 
         if (!mail.equals("")&&!pass.equals("")){
-            usersCol.whereEqualTo("Mail", mail)
+            usersCol.whereEqualTo("mail", mail)
                     .limit(1)
-                    .whereEqualTo("Password", pass)
+                    .whereEqualTo("password", pass)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override

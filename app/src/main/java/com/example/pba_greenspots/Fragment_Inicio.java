@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.pba_greenspots.fragments.RegisterFragment;
+import com.example.pba_greenspots.fragments.ReservesFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -73,7 +75,7 @@ public class Fragment_Inicio extends Fragment {
             @Override
             public void onClick(View view) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.navHostFr_MainActivity, registro.class, null)
+                        .replace(R.id.navHostFr_MainActivity, RegisterFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(null)
                         .commit();
@@ -135,8 +137,8 @@ public class Fragment_Inicio extends Fragment {
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(requireContext());
         if (gAccount != null){
             fragmentManager.beginTransaction()
-                    // SI ESTA LOGUEADO, LO MANDO AL LOGIN (SOLO PORQUE TODAVIA NO TENGO EL HOME.
-                    .replace(R.id.navHostFr_MainActivity, Fragment_LogIn.class, null )
+                    // SI ESTA LOGUEADO, LO MANDO AL HOME -  recycler
+                    .replace(R.id.navHostFr_MainActivity, ReservesFragment.class, null )
                     .setReorderingAllowed(true)
                     .addToBackStack(null)
                     .commit();
