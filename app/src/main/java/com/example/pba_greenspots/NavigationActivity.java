@@ -13,6 +13,7 @@ import com.example.pba_greenspots.fragments.HomeFragment;
 import com.example.pba_greenspots.fragments.PerfilUsuarioFragment;
 
 import com.example.pba_greenspots.fragments.RegisterFragment;
+import com.example.pba_greenspots.fragments.ReservesFragment;
 import com.example.pba_greenspots.fragments.SearchFragment;
 
 
@@ -32,7 +33,7 @@ public class NavigationActivity extends AppCompatActivity {
 
             switch (item.getItemId()){
                 case R.id.home:
-                    replaceFragment(new HomeFragment());
+                    replaceFragment(new ReservesFragment());
                     break;
                 case R.id.search:
                     replaceFragment(new SearchFragment());
