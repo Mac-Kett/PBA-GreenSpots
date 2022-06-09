@@ -27,6 +27,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Fragment_Inicio extends Fragment {
     View inicio;
@@ -35,7 +37,6 @@ public class Fragment_Inicio extends Fragment {
     FragmentManager fragmentManager;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-
 
     public Fragment_Inicio() {
         // Required empty public constructor
@@ -48,11 +49,20 @@ public class Fragment_Inicio extends Fragment {
         inicio = inflater.inflate(R.layout.fragment_inicio,container,false);
 
         fragmentManager=getParentFragmentManager();
-        btnGoogleSignIn = inicio.findViewById(R.id.btnGoogleSignIn);
-        btnLogin = inicio.findViewById(R.id.btnLogin);
-        btnRegister = inicio.findViewById(R.id.btnRegister);
 
+        inicializarBotones();
 
+        if (estaLogueado()){
+            enviarAHome();
+        }
+
+        configurarOnClickListeners();
+
+        configurarGoogleSignIn();
+
+        return inicio;
+    }
+    private void configurarOnClickListeners() {
         btnGoogleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,17 +91,34 @@ public class Fragment_Inicio extends Fragment {
                         .commit();
             }
         });
-
+    }
+    private void configurarGoogleSignIn() {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestProfile()
                 .build();
 
         gsc = GoogleSignIn.getClient(getContext(), gso);
-
-        return inicio;
     }
-
+    private void inicializarBotones() {
+        btnGoogleSignIn = inicio.findViewById(R.id.btnGoogleSignIn);
+        btnLogin = inicio.findViewById(R.id.btnLogin);
+        btnRegister = inicio.findViewById(R.id.btnRegister);
+    }
+    private void enviarAHome() {
+        fragmentManager.beginTransaction()
+                // SI ESTA LOGUEADO, LO MANDO AL HOME -  recycler
+                .replace(R.id.navHostFr_MainActivity, ReservesFragment.class, null )
+                .setReorderingAllowed(true)
+                .addToBackStack(null)
+                .commit();
+    }
+    private boolean estaLogueado() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(requireContext());
+        FirebaseUser mAuth = firebaseAuth.getCurrentUser();
+        return (gAccount != null || mAuth!=null);
+    }
 
     ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
@@ -107,23 +134,15 @@ public class Fragment_Inicio extends Fragment {
                     assert account != null;
 
                     Toast.makeText(getContext(),"Inicio se sesion exitoso!", Toast.LENGTH_LONG);
-                    //GUARDAR LOS DATOS CON SHAREDPREFERENCES
 
                     fragmentManager.beginTransaction()
-                                .replace(R.id.navHostFr_MainActivity, Fragment_LogIn.class, null)
+                                .replace(R.id.navHostFr_MainActivity, ReservesFragment.class, null)
                             .addToBackStack(null)
                             .setReorderingAllowed(true)
                             .commit();
 
-
                 } catch (ApiException e) {
                     e.printStackTrace();
-//                    fragmentManager.beginTransaction()
-//                                    .replace(R.id.navHostFr_MainActivity, Fragment_Inicio.class, null)
-//                                    .setReorderingAllowed(true)
-//                                    .addToBackStack(null)
-//                                    .commit();
-
                     Toast.makeText(getContext(),"No se ha podido iniciar sesion!", Toast.LENGTH_LONG);
                     Log.d(getTag(), e.getMessage());
                 }
@@ -131,18 +150,4 @@ public class Fragment_Inicio extends Fragment {
         }
     });
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(requireContext());
-        if (gAccount != null){
-            fragmentManager.beginTransaction()
-                    // SI ESTA LOGUEADO, LO MANDO AL HOME -  recycler
-                    .replace(R.id.navHostFr_MainActivity, ReservesFragment.class, null )
-                    .setReorderingAllowed(true)
-                    .addToBackStack(null)
-                    .commit();
-        }
-
-    }
 }
