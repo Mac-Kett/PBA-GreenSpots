@@ -60,18 +60,20 @@ public class PerfilUsuarioFragment extends Fragment {
        firebaseAuth = FirebaseAuth.getInstance();
        user =  firebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        idUser = user.getUid();
+       // idUser = user.getUid();
 
-        //idUser= "uLUvRr66zLry5357udoS" forzamos la consulta a la db por un id para comprobar que se traen los datos pedidos
+        idUser= "uLUvRr66zLry5357udoS";
+    //forzamos la consulta a la db por un id para comprobar que se traen los datos pedidos
 
         db.collection("Users").document(idUser).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot docSnapshot) {
-                if (docSnapshot.exists())
-                fullname.setText(docSnapshot.getString("nombre"));
-                pais.setText(docSnapshot.getString("pais"));
-                mail.setText(docSnapshot.getString("mail"));
-                password.setText(docSnapshot.getString("password"));
+                if (docSnapshot.exists()) {
+                    fullname.setText(docSnapshot.getString("nombre"));
+                    pais.setText(docSnapshot.getString("pais"));
+                    mail.setText(docSnapshot.getString("mail"));
+                    password.setText(docSnapshot.getString("password"));
+                }
             }
         });
         // Inflate the layout for this fragment

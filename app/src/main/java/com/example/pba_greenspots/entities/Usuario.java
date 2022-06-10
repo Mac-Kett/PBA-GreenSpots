@@ -7,6 +7,7 @@ public class Usuario {
     private String mail;
     private String password;
     private String pais;
+    private String typeUser;
 
     public Usuario(){
 
@@ -52,12 +53,21 @@ public class Usuario {
         this.pais = pais;
     }
 
-    public Usuario(String id, String nombre, String mail, String password, String pais) {
+    public String getTypeUser() {
+        return typeUser;
+    }
+
+    public void setTypeUser(String typeUser) {
+        this.typeUser = typeUser;
+    }
+
+    public Usuario(String id, String nombre, String mail, String password, String pais, String typeUser) {
         setId(id);
         setNombre(nombre);
         setMail(mail);
         setPassword(password);
         setPais(pais);
+        setTypeUser(typeUser);
     }
 
     @Override

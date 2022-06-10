@@ -97,7 +97,9 @@ class ReservesFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    fun onItemClick (position : Int){ //deberia llevar al fragment detalle de la reseva
+    fun onItemClick (position : Int){
+
+        //deberia llevar al fragment detalle de la reseva
     Snackbar.make(v, "ReservaOK", Snackbar.LENGTH_SHORT).show()
     //Snackbar.make(v, reserveRepository.getReserves()[position].municipio, Snackbar.LENGTH_SHORT).show()
     }

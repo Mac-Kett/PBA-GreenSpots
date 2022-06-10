@@ -76,6 +76,7 @@ public class RegisterFragment extends Fragment {
         String mail = email.getText().toString().trim();
         String contra =contrasena.getText().toString().trim();
         String country = pais.getText().toString().trim();
+        String typeUser = "3";
 
         mAuth.createUserWithEmailAndPassword(mail, contra)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -85,7 +86,7 @@ public class RegisterFragment extends Fragment {
                             mAuth = FirebaseAuth.getInstance();
                             user =  mAuth.getCurrentUser();
                             idUser = user.getUid();
-                            Usuario usuario = new Usuario(idUser,nombre,mail, contra, country);
+                            Usuario usuario = new Usuario(idUser,nombre,mail, contra, country, typeUser);
                             //Log.d("usuario", {usuario})
                             db.collection("Users").add(usuario).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override

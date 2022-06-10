@@ -21,11 +21,13 @@
         <item
             android:id="@+id/abmreservas"
             android:title="ABM Reserva"
+            android:visible="false"
             android:icon="@drawable/ic_baseline_list"
             />
         <item
             android:id="@+id/abmgestores"
             android:title="ABM Gestores"
+            android:visible="false"
             android:icon="@drawable/ic_baseline_people_alt_24"
             />
     </group>
@@ -42,6 +44,7 @@
 
                     android:id="@+id/logout"
                     android:title="Cerrar cesion"
+
                     android:icon="@drawable/ic_baseline_close_24"
                     />
 
