@@ -16,14 +16,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-/*        btnComenzar.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(getApplicationContext(), registro.class);
-            //es un metodo para iniciar otro layout
-            startActivity(intent);
-        }*/
-
-
-
 }

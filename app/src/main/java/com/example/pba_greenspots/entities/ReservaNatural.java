@@ -1,4 +1,4 @@
-package com.example.pba_greenspots;
+package com.example.pba_greenspots.entities;
 
 import android.app.Activity;
 import android.content.Context;

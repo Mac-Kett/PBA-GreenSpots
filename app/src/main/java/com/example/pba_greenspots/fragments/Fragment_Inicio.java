@@ -1,4 +1,4 @@
-package com.example.pba_greenspots;
+package com.example.pba_greenspots.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,8 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.pba_greenspots.fragments.RegisterFragment;
-import com.example.pba_greenspots.fragments.ReservesFragment;
+import com.example.pba_greenspots.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

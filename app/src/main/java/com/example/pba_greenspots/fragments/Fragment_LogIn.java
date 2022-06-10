@@ -1,5 +1,6 @@
-package com.example.pba_greenspots;
+package com.example.pba_greenspots.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.example.pba_greenspots.MainActivity;
+import com.example.pba_greenspots.NavigationActivity;
+import com.example.pba_greenspots.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -40,7 +45,11 @@ public class Fragment_LogIn extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 login(view);
+                startActivity(new Intent(getActivity(), NavigationActivity.class));
+
+
             }
         });
 
