@@ -1,14 +1,24 @@
-package com.example.pba_greenspots.models;
+package com.example.pba_greenspots.entities;
 
 public class Usuario {
 
+    private String id;
     private String nombre;
     private String mail;
     private String password;
     private String pais;
+    private String typeUser;
 
     public Usuario(){
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -43,16 +53,27 @@ public class Usuario {
         this.pais = pais;
     }
 
-    public Usuario(String nombre, String mail, String password, String pais) {
+    public String getTypeUser() {
+        return typeUser;
+    }
+
+    public void setTypeUser(String typeUser) {
+        this.typeUser = typeUser;
+    }
+
+    public Usuario(String id, String nombre, String mail, String password, String pais, String typeUser) {
+        setId(id);
         setNombre(nombre);
         setMail(mail);
         setPassword(password);
         setPais(pais);
+        setTypeUser(typeUser);
     }
 
     @Override
     public String toString() {
         return "Usuario{" +
+                "id='" + id + '\'' +
                 "nombre='" + nombre + '\'' +
                 ", mail='" + mail + '\'' +
                 ", password='" + password + '\'' +

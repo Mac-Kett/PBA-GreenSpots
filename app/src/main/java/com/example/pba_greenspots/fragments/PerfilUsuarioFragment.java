@@ -29,14 +29,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.concurrent.Executor;
 
 public class PerfilUsuarioFragment extends Fragment {
 
     private TextView fullname, pais, mail, password;
     FirebaseFirestore db;
-    //FirebaseAuth firebaseAuth;
-   // FirebaseUser user;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
     private String idUser;
 
     public PerfilUsuarioFragment() {
@@ -58,28 +57,30 @@ public class PerfilUsuarioFragment extends Fragment {
         mail = v.findViewById(R.id.textViewEmail);
         password = v.findViewById(R.id.textViewPassword);
 
-       // firebaseAuth = FirebaseAuth.getInstance();
-       // user =  firebaseAuth.getCurrentUser();
+       firebaseAuth = FirebaseAuth.getInstance();
+       user =  firebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        //idUser = user.getUid();
+       // idUser = user.getUid();
+
         idUser= "uLUvRr66zLry5357udoS";
-// forzamos la consulta a la db por un id para comprobar que se traen los datos pedidos
-        db.collection("Users").document("dyrdZd41UmAUJiLPfi3n").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+    //forzamos la consulta a la db por un id para comprobar que se traen los datos pedidos
+
+        db.collection("Users").document(idUser).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot docSnapshot) {
-                if (docSnapshot.exists())
-                fullname.setText(docSnapshot.getString("nombre"));
-                pais.setText(docSnapshot.getString("pais"));
-                mail.setText(docSnapshot.getString("mail"));
-                password.setText(docSnapshot.getString("password"));
+                if (docSnapshot.exists()) {
+                    fullname.setText(docSnapshot.getString("nombre"));
+                    pais.setText(docSnapshot.getString("pais"));
+                    mail.setText(docSnapshot.getString("mail"));
+                    password.setText(docSnapshot.getString("password"));
+                }
             }
         });
-
         // Inflate the layout for this fragment
         return v;
     }
 
-    public void getDbInfo (){
+   /* public void getDbInfo (){
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -95,7 +96,7 @@ public class PerfilUsuarioFragment extends Fragment {
                         }
                     }
                 });
-    }
+    }*/
 
 
 }

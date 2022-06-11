@@ -1,4 +1,4 @@
-package com.example.pba_greenspots.entities;
+package com.example.pba_greenspots;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,7 @@ import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Reserve {
+public class ReservaNatural {
 
 
     private String id;
@@ -43,36 +43,36 @@ public class Reserve {
     private String acceso;
     private String personal;
 
-    public Reserve(){}
+    public ReservaNatural(){}
 
-    public Reserve(String nombreUnidad,
-                   String instrumentoPlanificaicon,
-                   String municipio,
-                   String administracionPublicaPrivada,
-                   String zonaServicios,
-                   String ingresoGratuitoPago,
-                   String dificultadSenderismo,
-                   String senializacion,
-                   String accesos,
-                   String horarios,
-                   String informacionAdicional,
-                   String gestionesDesarrollo,
-                   String telefono,
-                   String correoPagWeb,
-                   String infraestructura,
-                   String actividadesDelArea,
-                   String fauna,
-                   String flora,
-                   String clima,
-                   String geologia,
-                   String superficie,
-                   String geolocalizacion,
-                   String caracteristicasGenerales,
-                   String fechaCreacion,
-                   String importancia,
-                   String instrumentoLegal,
-                   String acceso,
-                   String personal
+    public ReservaNatural(String nombreUnidad,
+                          String instrumentoPlanificaicon,
+                          String municipio,
+                          String administracionPublicaPrivada,
+                          String zonaServicios,
+                          String ingresoGratuitoPago,
+                          String dificultadSenderismo,
+                          String senializacion,
+                          String accesos,
+                          String horarios,
+                          String informacionAdicional,
+                          String gestionesDesarrollo,
+                          String telefono,
+                          String correoPagWeb,
+                          String infraestructura,
+                          String actividadesDelArea,
+                          String fauna,
+                          String flora,
+                          String clima,
+                          String geologia,
+                          String superficie,
+                          String geolocalizacion,
+                          String caracteristicasGenerales,
+                          String fechaCreacion,
+                          String importancia,
+                          String instrumentoLegal,
+                          String acceso,
+                          String personal
                           ) {
         this.nombreUnidad = nombreUnidad;
         this.instrumentoPlanificacion = instrumentoPlanificaicon;

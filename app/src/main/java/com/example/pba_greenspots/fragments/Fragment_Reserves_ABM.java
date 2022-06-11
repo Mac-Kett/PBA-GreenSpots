@@ -1,13 +1,11 @@
-package com.example.pba_greenspots;
+package com.example.pba_greenspots.fragments;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.CursorJoiner;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -32,7 +30,9 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.Batch;
+import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
+import com.example.pba_greenspots.R;
+import com.example.pba_greenspots.entities.ReservaNatural;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,20 +41,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.ThrowOnExtraProperties;
-import com.google.firebase.firestore.WriteBatch;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.security.Permission;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 public class Fragment_Reserves_ABM extends Fragment{
 
