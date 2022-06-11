@@ -11,7 +11,6 @@ import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.os.Environment
 import android.text.TextPaint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +20,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.pba_greenspots.entities.Reserve
+import com.example.pba_greenspots.fragments.ReservesFragment
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import java.io.File
 import java.io.FileOutputStream
@@ -41,7 +41,7 @@ class DetailsReserveFragment : Fragment() {
 
 
     companion object {
-
+        fun newInstance() = DetailsReserveFragment()
 
     }
 
@@ -57,7 +57,7 @@ class DetailsReserveFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         //lista que emula la db
-        listaDB.add(Reserve("parq1","descripcion algo", "matanza"))
+        listaDB.add(Reserve("Instrumento Planif: ","Matanza", "Nombre del parque"))
 
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_details_reserve, container, false)

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">PBA-GreenSpots</string>
+
     <!--  Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -182,5 +183,17 @@
         <item>no</item>
     </string-array>
 
+
+
+    <string name="registrarse">Registrarse</string>
+    <string name="nombre">Nombre Completo</string>
+    <string name="pais">Pais</string>
+    <string name="email">Email</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="editar_perfil">Editar Perfil</string>
+    <string name="btnComenzar">Comenzar</string>
+
+
+    <string name="imagen_perfil">Imagen_Perfil</string>
 
 </resources>
