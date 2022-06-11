@@ -5,18 +5,18 @@ import android.widget.SearchView;
 import com.example.pba_greenspots.Reserve;
 
 public class FiltroNombreUnidad implements IFiltro{
-    private String textoBuscador;
+    private SearchView searchView;
 
-    public FiltroNombreUnidad(String textoBuscador){
-        this.textoBuscador = textoBuscador;
+    public FiltroNombreUnidad(SearchView searchView){
+        this.searchView = searchView;
     }
 
     @Override
     public boolean aplicarFiltro(Reserve reserve) {
         boolean resultado = true;
         String nombre= reserve.getNombreUnidad();
-        if (!textoBuscador.isEmpty()) {
-            resultado = reserve.getNombreUnidad().equalsIgnoreCase(textoBuscador);
+        if (!searchView.getQuery().toString().isEmpty()) {
+            resultado = reserve.getNombreUnidad().equalsIgnoreCase(searchView.getQuery().toString());
         }
         return resultado;
     }

@@ -13,7 +13,7 @@ public class FiltroSenializacionSenderos extends FiltroSpinner{
 
     @Override
     public boolean aplicarFiltro(Reserve reserva) {
-        return reserva.getSenializacion().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
+        return reserva.getSenializacion() != null && reserva.getSenializacion().trim().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
     }
 
     @Override

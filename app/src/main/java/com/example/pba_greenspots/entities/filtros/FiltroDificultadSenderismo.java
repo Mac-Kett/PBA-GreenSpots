@@ -13,7 +13,7 @@ public class FiltroDificultadSenderismo extends FiltroSpinner{
 
     @Override
     public boolean aplicarFiltro(Reserve reserva) {
-        return reserva.getDificultadSenderismo().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
+        return reserva.getDificultadSenderismo() != null && reserva.getDificultadSenderismo().trim().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
     }
 
     @Override

@@ -13,7 +13,7 @@ public class FiltroGratuitoPago extends FiltroSpinner{
 
     @Override
     public boolean aplicarFiltro(Reserve reserva) {
-        return reserva.getIngresoGratuitoPago().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
+        return reserva.getIngresoGratuitoPago() != null && reserva.getIngresoGratuitoPago().trim().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
     }
 
     @Override

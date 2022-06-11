@@ -13,7 +13,7 @@ public class FiltroMunicipio extends FiltroSpinner {
 
     @Override
     public boolean aplicarFiltro(Reserve reserva) {
-        return reserva.getMunicipio().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
+        return reserva.getMunicipio() != null && reserva.getMunicipio().trim().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
     }
 
     @Override

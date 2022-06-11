@@ -13,7 +13,7 @@ public class FiltroZonaServicios extends FiltroSpinner{
 
     @Override
     public boolean aplicarFiltro(Reserve reserva) {
-        return reserva.getZonaServicios().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
+        return reserva.getAdministracionPublicaPrivada() != null && reserva.getAdministracionPublicaPrivada().trim().equalsIgnoreCase(getSpinner().getSelectedItem().toString());
     }
 
     @Override

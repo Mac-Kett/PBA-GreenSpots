@@ -1,11 +1,14 @@
 package com.example.pba_greenspots.fragments
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +19,7 @@ import com.example.pba_greenspots.adapters.ReserveAdapter
 import com.example.pba_greenspots.entities.filtros.*
 import com.example.pba_greenspots.viewmodels.ReservesViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.collection.LLRBNode
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -54,6 +58,7 @@ class ReservesFragment : Fragment() {
         tvFiltros = v.findViewById(R.id.tvFiltros)
         btnBuscar = v.findViewById(R.id.btnBuscar)
         cntFiltros = v.findViewById(R.id.cntFiltros)
+        //svBuscador = v.findViewById(R.id.svBuscador)
         svBuscador = v.findViewById(R.id.svBuscador)
         inicializarFiltros()
 
@@ -62,7 +67,7 @@ class ReservesFragment : Fragment() {
     }
 
     private fun inicializarFiltros() {
-        listaFiltros.add(FiltroNombreUnidad(svBuscador.query.toString()))
+        listaFiltros.add(FiltroNombreUnidad(svBuscador))
         listaFiltros.add(FiltroMunicipio(v.findViewById(R.id.cbMunicipio),v.findViewById(R.id.spnMunicipio)))
         listaFiltros.add(FiltroDificultadSenderismo(v.findViewById(R.id.cbDificultadSenderismo), v.findViewById(R.id.spnDificultadSenderismo)))
         listaFiltros.add(FiltroZonaServicios(v.findViewById(R.id.cbZonaServicios), v.findViewById(R.id.spnZonaServicios)))
@@ -86,6 +91,7 @@ class ReservesFragment : Fragment() {
 //            }
 //    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
@@ -114,12 +120,10 @@ class ReservesFragment : Fragment() {
         btnBuscar.setOnClickListener{
             buscar()
         }
-        svBuscador.setOnSearchClickListener{
-            buscar()
-        }
-
+        svBuscador.queryHint = "Buscar por nombre..."
 
     }
+
 
     private fun buscar() {
         //1) se limpia la lista; 2) por cada reserva en la lista original se compara con cada Filtro hasta que alguno no sea compatible. Si todos lo son, se agrega a la lista.
@@ -147,9 +151,8 @@ class ReservesFragment : Fragment() {
                 onItemClick(pos)
             }
 
-
-
-
+        //OCULTO LOS FILTROS DSP DE BUSCAR.
+        cntFiltros.visibility = View.GONE
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -181,3 +184,4 @@ class ReservesFragment : Fragment() {
 
 
 }
+
