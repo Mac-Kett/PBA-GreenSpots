@@ -3,7 +3,7 @@ package com.example.pba_greenspots.entities
 import android.os.Parcel
 import android.os.Parcelable
 
-class Reserve (    //var id: String = " ",
+class Reserve2 (    //var id: String = " ",
                    var instrumentoPlanificacion: String= " ",
                    var municipio: String= " ",
                    var nombreUnidad: String= " ") : Parcelable {
@@ -27,12 +27,12 @@ class Reserve (    //var id: String = " ",
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Reserve> {
-        override fun createFromParcel(parcel: Parcel): Reserve {
-            return Reserve(parcel)
+    companion object CREATOR : Parcelable.Creator<Reserve2> {
+        override fun createFromParcel(parcel: Parcel): Reserve2 {
+            return Reserve2(parcel)
         }
 
-        override fun newArray(size: Int): Array<Reserve?> {
+        override fun newArray(size: Int): Array<Reserve2?> {
             return arrayOfNulls(size)
         }
     }
