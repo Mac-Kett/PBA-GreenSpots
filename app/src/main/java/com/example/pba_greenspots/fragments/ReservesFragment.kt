@@ -14,12 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pba_greenspots.R
-import com.example.pba_greenspots.Reserve
 import com.example.pba_greenspots.adapters.ReserveAdapter
+import com.example.pba_greenspots.entities.Reserve
 import com.example.pba_greenspots.entities.filtros.*
 import com.example.pba_greenspots.viewmodels.ReservesViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.collection.LLRBNode
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase

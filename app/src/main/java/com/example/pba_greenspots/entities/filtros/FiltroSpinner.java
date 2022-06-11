@@ -4,7 +4,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 
-import com.example.pba_greenspots.Reserve;
+import com.example.pba_greenspots.entities.Reserve;
 
 public abstract class FiltroSpinner implements IFiltro {
     private CheckBox checkBox;

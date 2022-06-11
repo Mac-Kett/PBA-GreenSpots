@@ -14,7 +14,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -32,7 +31,7 @@ import android.widget.Toast;
 
 import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.R;
-import com.example.pba_greenspots.entities.ReservaNatural;
+import com.example.pba_greenspots.entities.Reserve;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -90,7 +89,7 @@ public class Fragment_Reserves_ABM extends Fragment{
     private LinearLayout formLinearLayout;
     private ScrollView scrollView;
     private ArrayList<Object> listaEditTexts;
-    private static ArrayList<ReservaNatural> listaReservasNaturales;
+    private static ArrayList<Reserve> listaReservasNaturales;
 
     public Fragment_Reserves_ABM() {
         // Required empty public constructor
@@ -104,9 +103,9 @@ public class Fragment_Reserves_ABM extends Fragment{
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == Activity.RESULT_OK){
-                    ArrayList<ReservaNatural> listaReservas = obtenerReservasNaturalesCSV(result.getData().getData());
-                    for (ReservaNatural reservaNatural:listaReservas) {
-                        putReservaNatural(reservaNatural);
+                    ArrayList<Reserve> listaReservas = obtenerReservasNaturalesCSV(result.getData().getData());
+                    for (Reserve Reserve:listaReservas) {
+                        putReservaNatural(Reserve);
                     }
                 }else{
                     Toast.makeText(getContext(), "Ocurrio un error.", Toast.LENGTH_LONG).show();
@@ -200,10 +199,10 @@ public class Fragment_Reserves_ABM extends Fragment{
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            listaReservasNaturales=new ArrayList<ReservaNatural>();
-                            ReservaNatural reservaNaturalActual;
+                            listaReservasNaturales=new ArrayList<Reserve>();
+                            Reserve reservaNaturalActual;
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                                reservaNaturalActual = documentSnapshot.toObject(ReservaNatural.class);
+                                reservaNaturalActual = documentSnapshot.toObject(Reserve.class);
                                 reservaNaturalActual.setId(documentSnapshot.getId());
                                 listaReservasNaturales.add(reservaNaturalActual);
                                 Log.d(getTag(), String.valueOf(listaReservasNaturales));
@@ -254,7 +253,7 @@ public class Fragment_Reserves_ABM extends Fragment{
 
     private void actualizarSpinnerReservas() {
         //ACTUALIZAR AL SPINNER DE RESERVAS
-        ArrayAdapter<ReservaNatural> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaReservasNaturales);
+        ArrayAdapter<Reserve> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaReservasNaturales);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spReserves.setAdapter(arrayAdapter);
     }
@@ -289,11 +288,11 @@ public class Fragment_Reserves_ABM extends Fragment{
         });
     }
 
-    private ArrayList<ReservaNatural> obtenerReservasNaturalesCSV(Uri uri){
+    private ArrayList<Reserve> obtenerReservasNaturalesCSV(Uri uri){
         BufferedReader bufferedReader = null;
         String line;
-        ArrayList<ReservaNatural> listaReservasNaturales = new ArrayList<>();
-        ReservaNatural reservaActual;
+        ArrayList<Reserve> listaReservasNaturales = new ArrayList<>();
+        Reserve reservaActual;
         try
         {
             InputStream inputStream = requireActivity().getContentResolver().openInputStream(uri);
@@ -306,7 +305,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 //Es una manera de sacar a la primera fila (son los titulos de los campos).
                 if (i>0){
                     try {
-                        reservaActual = new ReservaNatural();
+                        reservaActual = new Reserve();
 
                         //SI ALGUNO DE LOS CAMPOS OBLIGATORIOS ES NULL NO SE DEBE SUMAR EL OBJETO A LA LISTA. ES POR ESO QUE SE LANZA UN ERROR.
                         if(splitted[0].isEmpty() || splitted[27].isEmpty()){
@@ -397,12 +396,12 @@ public class Fragment_Reserves_ABM extends Fragment{
         if (!validarCampos()){
             Toast.makeText(getContext(),"Revise el formulario", Toast.LENGTH_LONG).show();
         }else{
-            ReservaNatural reservaNatural = crearReservaNaturalConDatosFormulario();
+            Reserve reservaNatural = crearReservaNaturalConDatosFormulario();
             putReservaNatural(reservaNatural);
         }
     }
 
-    private void putReservaNatural(ReservaNatural reservaNatural) {
+    private void putReservaNatural(Reserve reservaNatural) {
         db.collection("Reserves")
                 .add(reservaNatural)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -427,8 +426,8 @@ public class Fragment_Reserves_ABM extends Fragment{
 
 
     private void eliminarReserva() {
-        ReservaNatural reservaEliminar;
-        reservaEliminar= (ReservaNatural) spReserves.getSelectedItem();
+        Reserve reservaEliminar;
+        reservaEliminar= (Reserve) spReserves.getSelectedItem();
 
         db.collection("Reserves")
                 .document(reservaEliminar.getId())
@@ -450,8 +449,8 @@ public class Fragment_Reserves_ABM extends Fragment{
                 });
     }
     private void modificarReserva() {
-        ReservaNatural reservaNaturalFormulario = crearReservaNaturalConDatosFormulario();
-        ReservaNatural reservaNaturalSeleccionada = (ReservaNatural) spReserves.getSelectedItem();
+        Reserve reservaNaturalFormulario = crearReservaNaturalConDatosFormulario();
+        Reserve reservaNaturalSeleccionada = (Reserve) spReserves.getSelectedItem();
 
         reservaNaturalFormulario.setId(reservaNaturalSeleccionada.getId());
 
@@ -482,10 +481,10 @@ public class Fragment_Reserves_ABM extends Fragment{
     }
 
 
-    private ReservaNatural crearReservaNaturalConDatosFormulario() {
+    private Reserve crearReservaNaturalConDatosFormulario() {
         //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
-        ReservaNatural reservaCreada;
-        reservaCreada = new ReservaNatural(
+        Reserve reservaCreada;
+        reservaCreada = new Reserve(
                 etNombre.getText().toString().trim(),
                 spMunicipios.getSelectedItem().toString().trim(),
                 etInstrumentoPlanificacion.getText().toString().trim(),
@@ -581,8 +580,8 @@ public class Fragment_Reserves_ABM extends Fragment{
     }
 
     private void cargarFormularioItemSeleccionado() {
-        ReservaNatural reservaNaturalSeleccionada;
-        reservaNaturalSeleccionada = (ReservaNatural) spReserves.getSelectedItem();
+        Reserve reservaNaturalSeleccionada;
+        reservaNaturalSeleccionada = (Reserve) spReserves.getSelectedItem();
         etNombre.setText(reservaNaturalSeleccionada.getNombreUnidad());
         etInstrumentoPlanificacion.setText(reservaNaturalSeleccionada.getInstrumentoPlanificacion());
         try {
