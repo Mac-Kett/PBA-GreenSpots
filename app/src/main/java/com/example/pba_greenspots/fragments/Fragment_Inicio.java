@@ -29,7 +29,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 public class Fragment_Inicio extends Fragment {
     View inicio;
     Button btnLogin, btnRegister;
