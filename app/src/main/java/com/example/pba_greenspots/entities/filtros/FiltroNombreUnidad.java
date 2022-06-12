@@ -3,6 +3,8 @@ package com.example.pba_greenspots.entities.filtros;
 import android.widget.SearchView;
 import com.example.pba_greenspots.entities.Reserve;
 
+import java.util.Locale;
+
 public class FiltroNombreUnidad implements IFiltro{
     private SearchView searchView;
 
@@ -13,9 +15,9 @@ public class FiltroNombreUnidad implements IFiltro{
     @Override
     public boolean aplicarFiltro(Reserve reserve) {
         boolean resultado = true;
-        String nombre= reserve.getNombreUnidad();
+        String nombreUnidad= reserve.getNombreUnidad().toLowerCase(Locale.ROOT);
         if (!searchView.getQuery().toString().isEmpty()) {
-            resultado = reserve.getNombreUnidad().equalsIgnoreCase(searchView.getQuery().toString());
+            resultado = nombreUnidad.contains(searchView.getQuery().toString().toLowerCase(Locale.ROOT));
         }
         return resultado;
     }
