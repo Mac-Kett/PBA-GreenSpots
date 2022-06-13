@@ -1,13 +1,16 @@
 package com.example.pba_greenspots.fragments
 
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pba_greenspots.DetailsReserveFragment
@@ -40,6 +43,7 @@ class ReservesFragment : Fragment() {
     private var listaDB : MutableList<Reserve> = mutableListOf()
     private lateinit var reserva : Reserve
 
+
     //var reserveList : MutableList<Reserve> = mutableListOf()
 
 
@@ -49,7 +53,7 @@ class ReservesFragment : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_reserves2, container, false)
         recycler = v.findViewById(R.id.recReserve)
-        reserva = listaDB[0]
+
         return v
     }
 
@@ -101,10 +105,24 @@ class ReservesFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+
     fun onItemClick (position : Int){
+        reserva = listaDB[position]
+        lateinit var bundle : Bundle
+
+        bundle = Bundle()
+        var detalle : DetailsReserveFragment = DetailsReserveFragment()
+
+        bundle.putParcelable("Reserve", reserva)
+
+        //detalle.arguments(bundle)
 
 
-
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, detalle)
+            .setReorderingAllowed(true)
+            .addToBackStack(null)
+            .commit()
 
 
         //deberia llevar al fragment detalle de la reseva
