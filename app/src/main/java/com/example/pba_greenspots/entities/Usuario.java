@@ -2,12 +2,12 @@ package com.example.pba_greenspots.entities;
 
 public class Usuario {
 
-    private String id;
-    private String nombre;
-    private String mail;
-    private String password;
-    private String pais;
-    private String typeUser;
+    protected String id;
+    protected String nombre;
+    protected String mail;
+    protected String password;
+    protected String pais;
+    protected String typeUser;
 
     public Usuario(){
 
