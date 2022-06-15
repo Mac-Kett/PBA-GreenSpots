@@ -118,8 +118,8 @@ class DetailsReserveFragment : Fragment() {
         var canvas = pagina1.canvas
 
         var bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_people)
-        //var bitmapEscala = Bitmap.createScaledBitmap(bitmap, 80,80, false)
-        //canvas.drawBitmap(bitmapEscala, 368f, 20f, paint)
+        var bitmapEscala = Bitmap.createScaledBitmap(bitmap, 80,80, false)
+        canvas.drawBitmap(bitmapEscala, 368f, 20f, paint)
 
         titulo.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD))
         titulo.textSize = 20f
