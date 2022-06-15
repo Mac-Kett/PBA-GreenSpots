@@ -9,8 +9,50 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ec0ee54-d6e8-48cc-a486-13ea961f9e14" name="Changes" comment="Documento con Logo incluido y funcionando">
+    <list default="true" id="4ec0ee54-d6e8-48cc-a486-13ea961f9e14" name="Changes" comment="Documento con Logo incluido y funcionando v.2">
+      <change afterPath="$PROJECT_DIR$/.idea/navEditor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_1_2_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_2_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_2_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_2_0_1_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_solver_2_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_5_0_rc01_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_core_1_2_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_espresso_espresso_core_3_1_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_espresso_espresso_idling_resource_3_1_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_ext_junit_1_1_1_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_monitor_1_2_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_runner_1_1_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_auth_api_phone_17_4_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_material_material_1_4_0_beta01_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_sf_kxml_kxml2_2_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/DetailsReserveFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/fragments/DetailsReserveFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/ReservaNatural.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/ReserveParaBorrar.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/adapters/ReserveAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/adapters/ReserveAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/Reserve.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/Reserve.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/Reserve.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/Reserve2.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroDificultadSenderismo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroDificultadSenderismo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroGratuitoPago.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroGratuitoPago.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroMunicipio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroMunicipio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroNombreUnidad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroNombreUnidad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroSenializacionSenderos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroSenializacionSenderos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroSpinner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroSpinner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroTipoAdministracion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroTipoAdministracion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroZonaServicios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/FiltroZonaServicios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/IFiltro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/entities/filtros/IFiltro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/fragments/Fragment_Reserves_ABM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/fragments/Fragment_Reserves_ABM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/fragments/ReservesFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/fragments/ReservesFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/models/Usuario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/repository/ReserveRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_details_reserve.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_details_reserve.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/navigation/main_nav.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/navigation/navgraph.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +100,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Z2021_2cuat/2021_TallerProgramacion3/EmpanadApp/EmpanadApp" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.example.pba_greenspots.fragments" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
@@ -136,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655255643948</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Documento con Logo incluido y funcionando v.2">
+      <created>1655256799907</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1655256799907</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -153,14 +208,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Documento con Logo incluido y funcionando" />
-    <option name="LAST_COMMIT_MESSAGE" value="Documento con Logo incluido y funcionando" />
+    <MESSAGE value="Documento con Logo incluido y funcionando v.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Documento con Logo incluido y funcionando v.2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/pba_greenspots/fragments/ReservesFragment.kt</url>
-          <line>70</line>
+          <line>69</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

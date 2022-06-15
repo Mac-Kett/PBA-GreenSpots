@@ -1,6 +1,8 @@
 package com.example.pba_greenspots.entities.filtros;
 
 import android.widget.SearchView;
+
+import com.example.pba_greenspots.entities.Reserve;
 import com.example.pba_greenspots.entities.Reserve;
 
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package com.example.pba_greenspots
+package com.example.pba_greenspots.fragments
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -11,7 +11,6 @@ import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.os.Environment
 import android.text.TextPaint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +20,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.pba_greenspots.R
 import com.example.pba_greenspots.entities.Reserve
-import com.example.pba_greenspots.fragments.ReservesFragment
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.io.File
@@ -58,10 +57,11 @@ class DetailsReserveFragment : Fragment() {
     ): View? {
 
         //lista que emula la db
-        listaDB.add(Reserve("Instrumento Planif: ","Matanza", "Nombre del parque"))
+      //  listaDB.add(Reserve("Instrumento Planif: ","Matanza", "Nombre del parque"))
         lateinit var reserve : Reserve
-        reserve = arguments?.getParcelable<Reserve>("reserve")!!
+         reserve = (arguments?.getSerializable("reserve") as Reserve?)!!
 
+       // reserve = (arguments?.getSerializable
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_details_reserve, container, false)
 

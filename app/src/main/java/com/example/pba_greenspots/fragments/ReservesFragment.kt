@@ -1,6 +1,5 @@
 package com.example.pba_greenspots.fragments
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -102,7 +101,8 @@ class ReservesFragment : Fragment() {
                     Log.d("test", document.toObject<Reserve>().toString())
                    listaDB.add(document.toObject())
                 }
-                recycler.adapter = ReserveAdapter(listaDB){pos->
+                reservasMostrar.addAll(listaDB)
+                recycler.adapter = ReserveAdapter(reservasMostrar){pos->
                     onItemClick(pos)
                 }
                 Log.d("test", "123")
@@ -161,6 +161,24 @@ class ReservesFragment : Fragment() {
     }
 
     fun onItemClick (position : Int){
+
+        lateinit var bundle : Bundle
+        bundle = Bundle()
+
+        lateinit var detalle : Reserve
+        detalle = reservasMostrar[position]
+
+        lateinit var detailsReserveFragment : DetailsReserveFragment
+        detailsReserveFragment = DetailsReserveFragment()
+
+        bundle.putSerializable("reserve", detalle)
+        detailsReserveFragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.navHostFr_MainActivity, detailsReserveFragment)
+            .setReorderingAllowed(true)
+            .addToBackStack(null)
+            .commit()
 
         //deberia llevar al fragment detalle de la reseva
     Snackbar.make(v, "ReservaOK", Snackbar.LENGTH_SHORT).show()

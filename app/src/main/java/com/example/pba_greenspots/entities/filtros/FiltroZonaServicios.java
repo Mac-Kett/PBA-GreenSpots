@@ -5,6 +5,7 @@ import android.widget.Spinner;
 
 import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.entities.Reserve;
+import com.example.pba_greenspots.entities.Reserve;
 
 public class FiltroZonaServicios extends FiltroSpinner{
     public FiltroZonaServicios(CheckBox checkBox, Spinner spinner) {

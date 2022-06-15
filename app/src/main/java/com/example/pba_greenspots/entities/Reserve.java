@@ -2,15 +2,17 @@ package com.example.pba_greenspots.entities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Parcelable;
 
 import com.google.protobuf.LazyStringArrayList;
 import com.google.rpc.context.AttributeContext;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Reserve {
+public class Reserve implements Serializable {
 
 
     private String id;
