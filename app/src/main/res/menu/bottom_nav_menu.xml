@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:title="Inicio"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:checked="true"
+            />
+        <item
+            android:id="@+id/search"
+            android:title="Buscar"
+            android:icon="@drawable/ic_baseline_search_24"
+            />
+        <item
+            android:id="@+id/account"
+            android:title="Perfil"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            />
+        <item
+            android:id="@+id/abmreservas"
+            android:title="ABM Reserva"
+            android:visible="false"
+            android:icon="@drawable/ic_baseline_list"
+            />
+        <item
+            android:id="@+id/abmgestores"
+            android:title="ABM Gestores"
+            android:visible="false"
+            android:icon="@drawable/ic_baseline_people_alt_24"
+            />
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/setting"
+                    android:title="Configuraciones"
+                    android:icon="@drawable/ic_baseline_settings"
+                    />
+                <item
+
+                    android:id="@+id/logout"
+                    android:title="Cerrar cesion"
+
+                    android:icon="@drawable/ic_baseline_close_24"
+                    />
+
+            </group>
+        </menu>
+
+    </item>
+
+
+</menu>

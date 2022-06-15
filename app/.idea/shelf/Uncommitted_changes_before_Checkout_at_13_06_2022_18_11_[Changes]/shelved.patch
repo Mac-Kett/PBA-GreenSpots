@@ -1,0 +1,50 @@
+Index: src/main/java/com/example/pba_greenspots/fragments/ReservesFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pba_greenspots.fragments\r\n\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.fragment.app.FragmentManager\r\nimport androidx.fragment.app.FragmentTransaction\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.pba_greenspots.DetailsReserveFragment\r\nimport com.example.pba_greenspots.R\r\nimport com.example.pba_greenspots.adapters.ReserveAdapter\r\nimport com.example.pba_greenspots.entities.Reserve\r\nimport com.example.pba_greenspots.repository.ReserveRepository\r\nimport com.example.pba_greenspots.viewmodels.ReservesViewModel\r\nimport com.google.android.material.snackbar.Snackbar\r\n\r\n//import com.google.firebase.firestore.ktx.toObject\r\n\r\nimport com.google.firebase.firestore.ktx.firestore\r\nimport com.google.firebase.firestore.ktx.toObject\r\nimport com.google.firebase.ktx.Firebase\r\nimport android.os.Bundle as Bundle\r\n\r\nclass ReservesFragment : Fragment() {\r\n\r\n    companion object {\r\n        fun newInstance() = ReservesFragment()\r\n    }\r\n\r\n    private lateinit var viewModel: ReservesViewModel\r\n    lateinit var v: View\r\n    lateinit var recycler : RecyclerView\r\n    lateinit var adapter : ReserveAdapter\r\n    private val reserveRepository = ReserveRepository ()\r\n    var db = Firebase.firestore\r\n    private var listaDB : MutableList<Reserve> = mutableListOf()\r\n    private lateinit var reserva : Reserve\r\n\r\n    //var reserveList : MutableList<Reserve> = mutableListOf()\r\n\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        v = inflater.inflate(R.layout.fragment_reserves2, container, false)\r\n        recycler = v.findViewById(R.id.recReserve)\r\n        reserva = listaDB[0]\r\n        return v\r\n    }\r\n\r\n//    private fun obtenerReservasNaturales() {\r\n//\r\n//    db.collection(\"Reverves\")\r\n//            .get()\r\n//            .addOnSuccessListener { result ->\r\n//                for (document in result) {\r\n//                    listaDB.add(document.toObject())\r\n//                }\r\n//                Log.d(\"doc\", listaDB.toString())\r\n//            }\r\n//            .addOnFailureListener { exception ->\r\n//                Log.d(\"doc\", \"Error getting documents.\", exception)\r\n//            }\r\n//    }\r\n\r\n    override fun onStart() {\r\n        super.onStart()\r\n\r\n        //obtenerReservasNaturales();\r\n        db.collection(\"Reserves\")\r\n            .get()\r\n            .addOnSuccessListener {\r\n                for (document in it) {\r\n                    Log.d(\"test\", document.toObject<Reserve>().toString())\r\n                   listaDB.add(document.toObject())\r\n                }\r\n                recycler.adapter = ReserveAdapter(listaDB){pos->\r\n                    onItemClick(pos)\r\n                }\r\n                Log.d(\"test\", \"123\")\r\n            }\r\n            .addOnFailureListener { exception ->\r\n                Log.d(\"test\", \"Error getting documents.\", exception)\r\n            }\r\n\r\n        recycler.setHasFixedSize(true)\r\n        recycler.layoutManager = LinearLayoutManager(context)\r\n       // recycler.adapter = ReserveAdapter(reserveRepository.getReserves()){pos->\r\n\r\n\r\n    }\r\n\r\n    override fun onActivityCreated(savedInstanceState: Bundle?) {\r\n        super.onActivityCreated(savedInstanceState)\r\n        viewModel = ViewModelProvider(this).get(ReservesViewModel::class.java)\r\n        // TODO: Use the ViewModel\r\n    }\r\n\r\n    fun onItemClick (position : Int){\r\n\r\n\r\n\r\n\r\n\r\n        //deberia llevar al fragment detalle de la reseva\r\n    Snackbar.make(v, \"ReservaOK\", Snackbar.LENGTH_SHORT).show()\r\n    //Snackbar.make(v, reserveRepository.getReserves()[position].municipio, Snackbar.LENGTH_SHORT).show()\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/pba_greenspots/fragments/ReservesFragment.kt b/src/main/java/com/example/pba_greenspots/fragments/ReservesFragment.kt
+--- a/src/main/java/com/example/pba_greenspots/fragments/ReservesFragment.kt	(revision 2d2eecfc253d5d3a595405d33ded634c79f093a9)
++++ b/src/main/java/com/example/pba_greenspots/fragments/ReservesFragment.kt	(date 1655152833911)
+@@ -103,7 +103,7 @@
+ 
+     fun onItemClick (position : Int){
+ 
+-
++        childFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, DetailsReserveFragment()).commit()
+ 
+ 
+ 
+Index: src/main/res/navigation/navgraph.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<navigation xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/navgraph\"\r\n    app:startDestination=\"@id/reservesFragment\">\r\n\r\n    <fragment\r\n        android:id=\"@+id/reservesFragment\"\r\n        android:name=\"com.example.pba_greenspots.fragments.ReservesFragment\"\r\n        android:label=\"fragment_reserves\"\r\n        tools:layout=\"@layout/fragment_reserves\" />\r\n</navigation>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/res/navigation/navgraph.xml b/src/main/res/navigation/navgraph.xml
+--- a/src/main/res/navigation/navgraph.xml	(revision 2d2eecfc253d5d3a595405d33ded634c79f093a9)
++++ b/src/main/res/navigation/navgraph.xml	(date 1655152738884)
+@@ -9,5 +9,18 @@
+         android:id="@+id/reservesFragment"
+         android:name="com.example.pba_greenspots.fragments.ReservesFragment"
+         android:label="fragment_reserves"
+-        tools:layout="@layout/fragment_reserves" />
++        tools:layout="@layout/fragment_reserves" >
++        <action
++            android:id="@+id/action_reservesFragment_to_detailsReserveFragment"
++            app:destination="@id/detailsReserveFragment" />
++    </fragment>
++    <fragment
++        android:id="@+id/detailsReserveFragment"
++        android:name="com.example.pba_greenspots.DetailsReserveFragment"
++        android:label="fragment_details_reserve"
++        tools:layout="@layout/fragment_details_reserve" >
++        <argument
++            android:name="reserva"
++            app:argType="com.example.pba_greenspots.entities.Reserve" />
++    </fragment>
+ </navigation>
+\ No newline at end of file

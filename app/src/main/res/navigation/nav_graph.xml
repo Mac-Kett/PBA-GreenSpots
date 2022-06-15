@@ -6,7 +6,7 @@
     app:startDestination="@id/fragment_Inicio">
     <fragment
         android:id="@+id/fragment_Inicio"
-        android:name="com.example.pba_greenspots.Fragment_Inicio"
+        android:name="com.example.pba_greenspots.fragments.Fragment_Inicio"
         android:label="fragment__inicio"
         tools:layout="@layout/fragment_inicio" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_LogIn"
-        android:name="com.example.pba_greenspots.Fragment_LogIn"
+        android:name="com.example.pba_greenspots.fragments.Fragment_LogIn"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" />
     <fragment
