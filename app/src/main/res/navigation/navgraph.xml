@@ -9,5 +9,5 @@
         android:id="@+id/reservesFragment"
         android:name="com.example.pba_greenspots.fragments.ReservesFragment"
         android:label="fragment_reserves"
-        tools:layout="@layout/fragment_reserves2" />
+        tools:layout="@layout/fragment_reserves" />
 </navigation>
