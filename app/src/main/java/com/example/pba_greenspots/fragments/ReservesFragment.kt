@@ -93,23 +93,32 @@ class ReservesFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        //obtenerReservasNaturales();
-        db.collection("Reserves")
-            .get()
-            .addOnSuccessListener {
-                for (document in it) {
-                    Log.d("test", document.toObject<Reserve>().toString())
-                   listaDB.add(document.toObject())
-                }
-                reservasMostrar.addAll(listaDB)
-                recycler.adapter = ReserveAdapter(reservasMostrar){pos->
-                    onItemClick(pos)
-                }
-                Log.d("test", "123")
+        //PARA NO VOLVER A LLAMAR A LA BD UNA VEZ QUE YA OBTUVIMOS LA LISTA POR PRIMERA VEZ.
+        if(listaDB.size==0) {
+            //obtenerReservasNaturales();
+            db.collection("Reserves")
+                    .get()
+                    .addOnSuccessListener {
+                        for (document in it) {
+                            Log.d("test", document.toObject<Reserve>().toString())
+                            listaDB.add(document.toObject())
+                        }
+                        reservasMostrar.addAll(listaDB)
+                        recycler.adapter = ReserveAdapter(reservasMostrar) { pos ->
+                            onItemClick(pos)
+                        }
+                        Log.d("test", "123")
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.d("test", "Error getting documents.", exception)
+                        Toast.makeText(context,exception.message,Toast.LENGTH_SHORT).show()
+                    }
+        }else{
+            recycler.adapter = ReserveAdapter(reservasMostrar) { pos ->
+                onItemClick(pos)
             }
-            .addOnFailureListener { exception ->
-                Log.d("test", "Error getting documents.", exception)
-            }
+        }
+
         recycler.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(context)
        // recycler.adapter = ReserveAdapter(reserveRepository.getReserves()){pos->
@@ -162,16 +171,13 @@ class ReservesFragment : Fragment() {
 
     fun onItemClick (position : Int){
 
-        lateinit var bundle : Bundle
-        bundle = Bundle()
-
-        lateinit var detalle : Reserve
-        detalle = reservasMostrar[position]
+        var bundle = Bundle()
+        var reserveSeleccionada = reservasMostrar[position]
 
         lateinit var detailsReserveFragment : DetailsReserveFragment
         detailsReserveFragment = DetailsReserveFragment()
 
-        bundle.putSerializable("reserve", detalle)
+        bundle.putSerializable("reserve", reserveSeleccionada)
         detailsReserveFragment.arguments = bundle
 
         parentFragmentManager.beginTransaction()

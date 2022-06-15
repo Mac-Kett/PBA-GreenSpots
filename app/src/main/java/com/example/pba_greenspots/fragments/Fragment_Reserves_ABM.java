@@ -86,7 +86,14 @@ public class Fragment_Reserves_ABM extends Fragment{
             et_importancia,
             et_instrumentoLegal,
             et_acceso,
-            et_personal;
+            et_personal,
+            et_imagen_Uno,
+            et_imagen_Dos,
+            et_imagen_Tres,
+            et_imagen_Cuatro,
+            et_imagen_Cinco,
+            et_imagen_Seis,
+            et_imagen_Siete;
     private LinearLayout formLinearLayout;
     private ScrollView scrollView;
     private ArrayList<Object> listaEditTexts;
@@ -119,7 +126,7 @@ public class Fragment_Reserves_ABM extends Fragment{
             public void onActivityResult(Boolean result) {
                 if (result){
                     Toast.makeText(requireContext(), "Permiso otorgado", Toast.LENGTH_SHORT).show();
-                    seleccionadorDeArchivos();
+                    seleccionadorDeArchivosCSV();
                 }else{
                     Toast.makeText(requireContext(), "Permitanos acceder para poder realizar la importacion.", Toast.LENGTH_LONG).show();
                 }
@@ -378,12 +385,12 @@ public class Fragment_Reserves_ABM extends Fragment{
                 requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED) {
             Log.d(getTag(), "Permiso ya otorgado previamente!", null);
-            seleccionadorDeArchivos();
+            seleccionadorDeArchivosCSV();
         } else {
             requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
-    private void seleccionadorDeArchivos() {
+    private void seleccionadorDeArchivosCSV() {
 
         Intent intent = new Intent()
                 .setAction(Intent.ACTION_OPEN_DOCUMENT)

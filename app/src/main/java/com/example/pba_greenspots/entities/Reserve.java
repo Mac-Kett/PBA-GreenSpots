@@ -44,6 +44,7 @@ public class Reserve implements Serializable {
     private String instrumentoLegal;
     private String acceso;
     private String personal;
+    private String imagen_Uno, imagen_Dos, imagen_Tres, imagen_Cuatro, imagen_Cinco, imagen_Seis, imagen_Siete;
 
     public Reserve(){}
 
