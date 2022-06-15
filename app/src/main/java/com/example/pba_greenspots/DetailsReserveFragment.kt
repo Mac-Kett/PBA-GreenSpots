@@ -11,6 +11,7 @@ import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.os.Environment
 import android.text.TextPaint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,6 @@ class DetailsReserveFragment : Fragment() {
     lateinit var btnPdf : Button
 
 
-
     companion object {
         fun newInstance() = DetailsReserveFragment()
 
@@ -56,8 +56,11 @@ class DetailsReserveFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         //lista que emula la db
         listaDB.add(Reserve("Instrumento Planif: ","Matanza", "Nombre del parque"))
+        lateinit var reserve : Reserve
+        reserve = arguments?.getParcelable<Reserve>("reserve")!!
 
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_details_reserve, container, false)
@@ -71,9 +74,13 @@ class DetailsReserveFragment : Fragment() {
         btnPdf = v.findViewById(R.id.generarPDF)
 
         // seteo los TextView con los datos de la db
-        name.text = listaDB[0].nombreUnidad
-        desc.text = listaDB[0].instrumentoPlanificacion
-        muni.text = listaDB[0].municipio
+//        name.text = listaDB[0].nombreUnidad
+//        desc.text = listaDB[0].instrumentoPlanificacion
+//        muni.text = listaDB[0].municipio
+
+        name.text = reserve.nombreUnidad
+        desc.text = reserve.instrumentoPlanificacion
+        muni.text = reserve.municipio
 
         //pregunto si estan los permisos
         if(checkPermission()) {
@@ -104,14 +111,15 @@ class DetailsReserveFragment : Fragment() {
         var descripcion = TextPaint()
         var municipio = TextPaint()
 
+
         var paginaInfo = PdfDocument.PageInfo.Builder(816, 1054, 1).create()
         var pagina1 = pdfDocument.startPage(paginaInfo)
 
         var canvas = pagina1.canvas
 
         var bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_people)
-        var bitmapEscala = Bitmap.createScaledBitmap(bitmap, 80,80, false)
-        canvas.drawBitmap(bitmapEscala, 368f, 20f, paint)
+        //var bitmapEscala = Bitmap.createScaledBitmap(bitmap, 80,80, false)
+        //canvas.drawBitmap(bitmapEscala, 368f, 20f, paint)
 
         titulo.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD))
         titulo.textSize = 20f

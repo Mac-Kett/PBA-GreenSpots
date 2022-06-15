@@ -113,8 +113,9 @@ class ReservesFragment : Fragment() {
         bundle = Bundle()
         var detalle : DetailsReserveFragment = DetailsReserveFragment()
 
-        bundle.putParcelable("Reserve", reserva)
+        bundle.putParcelable("reserve", reserva)
 
+        detalle.arguments = bundle
         //detalle.arguments(bundle)
 
 
