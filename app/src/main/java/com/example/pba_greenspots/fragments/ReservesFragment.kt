@@ -181,7 +181,7 @@ class ReservesFragment : Fragment() {
         detailsReserveFragment.arguments = bundle
 
         parentFragmentManager.beginTransaction()
-            .replace(R.id.navHostFr_MainActivity, detailsReserveFragment)
+            .replace(R.id.content_fragments, detailsReserveFragment)
             .setReorderingAllowed(true)
             .addToBackStack(null)
             .commit()
