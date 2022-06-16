@@ -10,14 +10,34 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-    <TextView
         android:id="@+id/abmGestorTV"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:text="ABM Gestores" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/hello_blank_fragment" />
+
+            <Spinner
+                android:id="@+id/spMunicipios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="10dp"
+                android:accessibilityLiveRegion="none"
+                android:visibility="visible" />
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
