@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.pba_greenspots.MainActivity;
 import com.example.pba_greenspots.NavigationActivity;
 import com.example.pba_greenspots.R;
+import com.example.pba_greenspots.entities.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -45,11 +46,7 @@ public class Fragment_LogIn extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 login(view);
-                startActivity(new Intent(getActivity(), NavigationActivity.class));
-
-
             }
         });
 
@@ -71,13 +68,13 @@ public class Fragment_LogIn extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                if (task.getResult().getDocuments().size()!=0) {
+                                if (task.getResult().getDocuments().size()==1) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Object obj = document.getData();
-
+                                        Usuario usuario = document.toObject(Usuario.class);
                                         Log.d("Fragment_LogIn", document.getId() + " => " + document.getData());
                                         Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
                                     }
+                                    startActivity(new Intent(getActivity(), NavigationActivity.class));
                                 } else{
                                     Log.d("Fragment_LogIn", "No hay documento coincidente");
                                     Toast.makeText(getContext(), "No se encontro!", Toast.LENGTH_LONG).show();
