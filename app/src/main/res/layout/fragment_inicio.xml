@@ -47,11 +47,11 @@
                 android:layout_toRightOf="@id/btnLogin"/>
         </LinearLayout>
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/btnGoogleSignIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30px"/>
+<!--        <com.google.android.gms.common.SignInButton-->
+<!--            android:id="@+id/btnGoogleSignIn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="30px"/>-->
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

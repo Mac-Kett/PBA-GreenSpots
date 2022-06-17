@@ -1,6 +1,7 @@
 package com.example.pba_greenspots.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.pba_greenspots.NavigationActivity;
 import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -85,6 +87,7 @@ public class RegisterFragment extends Fragment {
                         if (task.isSuccessful()){
                             mAuth = FirebaseAuth.getInstance();
                             user =  mAuth.getCurrentUser();
+                            assert user != null;
                             idUser = user.getUid();
                             Usuario usuario = new Usuario(idUser,nombre,mail, contra, country, typeUser);
                             //Log.d("usuario", {usuario})
@@ -93,6 +96,8 @@ public class RegisterFragment extends Fragment {
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                     if (task.isSuccessful()){
                                         Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(getActivity(), NavigationActivity.class));
+                                        requireActivity().finish();
                                     }else{
                                         Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
                                     }

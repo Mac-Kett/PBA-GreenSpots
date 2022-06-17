@@ -19,16 +19,25 @@ import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Objects;
+
 public class Fragment_LogIn extends Fragment {
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private Button btn1;
     private EditText etMail, etPass;
+    private Usuario user;
 
     public Fragment_LogIn() {
         // Required empty public constructor
@@ -39,20 +48,71 @@ public class Fragment_LogIn extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_log_in, container, false);
-        etMail = (EditText) v.findViewById(R.id.etMail);
-        etPass = (EditText) v.findViewById(R.id.etPass);
-        btn1 = (Button) v.findViewById(R.id.btn1);
+        etMail = v.findViewById(R.id.etMail);
+        etPass = v.findViewById(R.id.etPass);
+        btn1 = v.findViewById(R.id.btn1);
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login(view);
-            }
-        });
+        btn1.setOnClickListener(this::loginFirebaseAuth);
 
         return v;
     }
 
+    private void loginFirebaseAuth(View view){
+        String mail=etMail.getText().toString();
+        String pass =etPass.getText().toString();
+
+        if (!mail.equals("")&&!pass.equals("")){
+            firebaseAuth.signInWithEmailAndPassword(mail,pass)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                obtenerUsuarioFirebaseFiresStore(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                                Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getActivity(), NavigationActivity.class));
+                                requireActivity().finish();
+                            }else{
+                                Toast.makeText(getContext(), "No se ha podido iniciar sesion!", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+        }else{
+            Toast.makeText(this.getContext(), "Ingrese ambos datos, por favor!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void obtenerUsuarioFirebaseFiresStore(String id){
+
+        db.collection("Users")
+                .whereEqualTo("id", id)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        //si es succesfull si o si tuvo que haber encontrado al menos 1 item. El limit(1) hace que me retorne uno solo.
+                        user = task.getResult().getDocuments().get(0).toObject(Usuario.class);
+                    }else{
+                        Log.d(getTag(), "No se ha podido completar la carga del usuario", null);
+                    }
+                });
+
+        //ESTE METODO SIRVE SI EL Uid DE FIREBASEAUTH, EN EL REGISTRO, LO GUARDAN COMO ID DEL DOCUMENTO EN FIRESTORE.
+        //        DocumentReference docRef = db.collection("Users").document(docId);
+//        docRef.get()
+//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                        if(task.isSuccessful()){
+//                            user = task.getResult().toObject(Usuario.class);
+//                        } else{
+//                            Log.d(getTag(), "No se ha podido completar la carga del usuario", null);
+//                        }
+//                    }
+//                });
+
+    }
+
+/*  METODO INICIAL DE LOGIN. IGNORABA FIREBASEAUTH.
     private void login(View view){
         CollectionReference usersCol = FirebaseFirestore.getInstance().collection("Users");
 
@@ -64,31 +124,29 @@ public class Fragment_LogIn extends Fragment {
                     .limit(1)
                     .whereEqualTo("password", pass)
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                if (task.getResult().getDocuments().size()==1) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Usuario usuario = document.toObject(Usuario.class);
-                                        Log.d("Fragment_LogIn", document.getId() + " => " + document.getData());
-                                        Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
-                                    }
-                                    startActivity(new Intent(getActivity(), NavigationActivity.class));
-                                } else{
-                                    Log.d("Fragment_LogIn", "No hay documento coincidente");
-                                    Toast.makeText(getContext(), "No se encontro!", Toast.LENGTH_LONG).show();
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().getDocuments().size()==1) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Usuario usuario = document.toObject(Usuario.class);
+                                    Log.d("Fragment_LogIn", document.getId() + " => " + document.getData());
+                                    Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
                                 }
-
-                            } else {
-                                Log.d("Fragment_LogIn", "Error getting documents: ", task.getException());
+                                startActivity(new Intent(getActivity(), NavigationActivity.class));
+                            } else{
+                                Log.d("Fragment_LogIn", "No hay documento coincidente");
+                                Toast.makeText(getContext(), "No se encontro!", Toast.LENGTH_LONG).show();
                             }
+
+                        } else {
+                            Log.d("Fragment_LogIn", "Error getting documents: ", task.getException());
                         }
                     });
         }else{
             Toast.makeText(this.getContext(), "Ingrese ambos datos, por favor!", Toast.LENGTH_LONG).show();
         }
     }
+*/
 
     public void onStart() {
         super.onStart();
