@@ -66,13 +66,18 @@ public class Fragment_LogIn extends Fragment {
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                obtenerUsuarioFirebaseFiresStore(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-                                Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getActivity(), NavigationActivity.class));
-                                requireActivity().finish();
-                            }else{
-                                Toast.makeText(getContext(), "No se ha podido iniciar sesion!", Toast.LENGTH_LONG).show();
+                            try {
+                                if (task.isSuccessful()) {
+                                    obtenerUsuarioFirebaseFiresStore(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                                    Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(getActivity(), NavigationActivity.class));
+                                    requireActivity().finish();
+                                } else {
+                                    Toast.makeText(getContext(), "No se ha podido iniciar sesion!", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (Exception e){
+                                Toast.makeText(getContext(), "Hubo un error. Contacte con el administrador.", Toast.LENGTH_LONG).show();
+                                Log.d(getTag(),"Las dos bases no están sincronizadas, chequear ok en firebaseAuth y fail en Firestore");
                             }
                         }
                     });
