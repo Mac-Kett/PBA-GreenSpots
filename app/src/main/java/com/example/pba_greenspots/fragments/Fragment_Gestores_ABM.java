@@ -32,16 +32,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class Fragment_Gestores_ABM extends Fragment {
 
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser user;
 
     private Spinner spMunicipios,
     spABM,
@@ -299,7 +304,7 @@ public class Fragment_Gestores_ABM extends Fragment {
         //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
         Gestor gestorNuevo;
         gestorNuevo = new Gestor(
-                //De dónde saco el ID?
+                FirebaseAuth.getInstance().getCurrentUser().getUid(),
                 et_Nombre.getText().toString().trim(),
                 et_email.getText().toString().trim(),
                 et_contrasenia.getText().toString().trim(),
