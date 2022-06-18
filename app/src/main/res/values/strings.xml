@@ -34,6 +34,12 @@
     <string name="logogreenspots">pba green spots</string>
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+    <string name="msg_Alta_Ok">Alta ok</string>
+    <string name="msg_Alta_Error">Hubo un error en el alta</string>
+    <string name="msg_Baja_OK">Baja ok</string>
+    <string name="msg_Baja_Error">Hubo un error en la baja</string>
+    <string name="msg_Modificacion_Ok">¡Modificación exitosa!</string>
+    <string name="msg_Modificacion_Error">Hubo un error en la modificación</string>
 
     <string-array name="MUNICIPIOS">
         <item>25 de mayo</item>
@@ -199,6 +205,8 @@
         <item>si</item>
         <item>no</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

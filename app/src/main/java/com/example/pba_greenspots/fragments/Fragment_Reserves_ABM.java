@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,7 @@ import android.widget.Toast;
 import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.ABM_Reserve.FilaImagen;
+import com.example.pba_greenspots.entities.Reserve;
 import com.example.pba_greenspots.entities.Reserve;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -225,6 +225,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
 
+
         METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerTipoAdministracion(spTipoAdministracion, requireContext());
@@ -232,6 +233,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         METODOS_COMPLEMENTARIOS.completarSpinnerNivelesDificultad(spNivelesDificultad, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerSenializacionServicios(spSenializacionServicios, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerZonaServicios(spZonaServicios, requireContext());
+
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -325,6 +327,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(et_acceso);
         listaEditTexts.add(et_personal);
     }
+
     private void actualizarSpinnerReservas() {
         //ACTUALIZAR AL SPINNER DE RESERVAS
         ArrayAdapter<Reserve> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaReservasNaturales);
@@ -378,6 +381,7 @@ public class Fragment_Reserves_ABM extends Fragment{
             public void onClick(View v) {requestPermission(false);}
         });
     }
+
     private ArrayList<Reserve> obtenerReservasNaturalesCSV(Uri uri){
         BufferedReader bufferedReader = null;
         String line;
@@ -532,7 +536,6 @@ public class Fragment_Reserves_ABM extends Fragment{
                         }
                     });
         }
-
     }
 
     private void putReservaNatural(Reserve reservaNatural) {
@@ -557,6 +560,8 @@ public class Fragment_Reserves_ABM extends Fragment{
                     }
                 });
     }
+
+
     private void eliminarReserva() {
         Reserve reservaEliminar;
         reservaEliminar= (Reserve) spReserves.getSelectedItem();
@@ -611,7 +616,10 @@ public class Fragment_Reserves_ABM extends Fragment{
             Toast.makeText(getContext(), "No ha modificado ningun campo!", Toast.LENGTH_LONG).show();
         }
     }
+
+
     private Reserve crearReservaNaturalConDatosFormulario() {
+        //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
         Reserve reservaCreada;
         reservaCreada = new Reserve(
                 etNombre.getText().toString().trim(),
@@ -642,7 +650,6 @@ public class Fragment_Reserves_ABM extends Fragment{
                 et_instrumentoLegal.getText().toString().trim(),
                 et_acceso.getText().toString().trim(),
                 et_personal.getText().toString().trim()
-                //LAS IMAGENES LAS MANEJO POR SEPARADO.
         );
         return reservaCreada;
     }
@@ -678,6 +685,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_acceso = v.findViewById(R.id.et_acceso);
         et_personal = v.findViewById(R.id.et_personal);
     }
+
     private boolean validarCampos() {
         Boolean bool = true;
         for (Object editText : listaEditTexts) {
@@ -692,6 +700,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         }
             return bool;
     }
+
     private void limpiarFormulario() {
 
         for (Object o: listaEditTexts) {
@@ -708,6 +717,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaURLs.clear();
 
     }
+
     private void cargarFormularioItemSeleccionado() {
         Reserve reservaNaturalSeleccionada;
         reservaNaturalSeleccionada = (Reserve) spReserves.getSelectedItem();
@@ -763,9 +773,8 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_instrumentoLegal.setText(reservaNaturalSeleccionada.getInstrumentoLegal());
         et_acceso.setText(reservaNaturalSeleccionada.getAcceso());
 
-
-
     }
+
     private int obtenerIndiceDelRecurso(String valorCampo, String[] lista){
         int i=0;
         int indiceBuscado=-1;
@@ -783,6 +792,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         indiceBuscado=0;
         return indiceBuscado;
     }}
+
     private void flujoAlta() {
         scrollView.setVisibility(View.VISIBLE);
         formLinearLayout.setVisibility(View.VISIBLE);
@@ -792,7 +802,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         btnModificar.setVisibility(View.GONE);
         btnEliminar.setVisibility(View.GONE);
         spReserves.setVisibility(View.GONE);
-
         limpiarFormulario();
     }
     private void flujoModificacion() {
