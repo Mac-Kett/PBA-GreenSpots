@@ -68,7 +68,6 @@ public class Fragment_Reserves_ABM extends Fragment{
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-
     private Spinner spABM,
             spReserves,
             spMunicipios,
@@ -330,7 +329,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(et_acceso);
         listaEditTexts.add(et_personal);
     }
-
     private void actualizarSpinnerReservas() {
         //ACTUALIZAR AL SPINNER DE RESERVAS
         ArrayAdapter<Reserve> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaReservasNaturales);
@@ -384,7 +382,6 @@ public class Fragment_Reserves_ABM extends Fragment{
             public void onClick(View v) {requestPermission(false);}
         });
     }
-
     private ArrayList<Reserve> obtenerReservasNaturalesCSV(Uri uri){
         BufferedReader bufferedReader = null;
         String line;
@@ -511,7 +508,6 @@ public class Fragment_Reserves_ABM extends Fragment{
 
         }
     }
-
     private void impactarStorage_BaseDatos(Reserve reservaNatural){
         for (Uri uri: listaUrisImagenes){
             String[] nombre= uri.getLastPathSegment().split("/");
@@ -540,7 +536,6 @@ public class Fragment_Reserves_ABM extends Fragment{
                     });
         }
     }
-
     private void putReservaNatural(Reserve reservaNatural) {
         db.collection("Reserves")
                 .add(reservaNatural)
@@ -563,8 +558,6 @@ public class Fragment_Reserves_ABM extends Fragment{
                     }
                 });
     }
-
-
     private void eliminarReserva() {
         Reserve reservaEliminar;
         reservaEliminar= (Reserve) spReserves.getSelectedItem();
@@ -619,8 +612,6 @@ public class Fragment_Reserves_ABM extends Fragment{
             Toast.makeText(getContext(), "No ha modificado ningun campo!", Toast.LENGTH_LONG).show();
         }
     }
-
-
     private Reserve crearReservaNaturalConDatosFormulario() {
         //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
         Reserve reservaCreada;
@@ -656,7 +647,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         );
         return reservaCreada;
     }
-
     private void instanciarEditTextsFormulario(View v) {
 
         etNombre = v.findViewById(R.id.et_nombreAnp);
@@ -667,7 +657,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spCosto = v.findViewById(R.id.spCosto);
         spNivelesDificultad = v.findViewById(R.id.spNivelesDificultad);
         spSenializacionServicios = v.findViewById(R.id.spSenializacionServicios);
-        et_accesos = v.findViewById(R.id.et_acceso);
+        et_accesos = v.findViewById(R.id.et_accesos);
         et_horarios = v.findViewById(R.id.et_horarios);
         et_informacionAdicional = v.findViewById(R.id.et_informacionAdicional);
         et_gestionesDesarrollo = v.findViewById(R.id.et_gestionesDesarrollo);
@@ -688,7 +678,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_acceso = v.findViewById(R.id.et_acceso);
         et_personal = v.findViewById(R.id.et_personal);
     }
-
     private boolean validarCampos() {
         Boolean bool = true;
         for (Object editText : listaEditTexts) {
@@ -703,7 +692,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         }
             return bool;
     }
-
     private void limpiarFormulario() {
 
         for (Object o: listaEditTexts) {
@@ -720,7 +708,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaURLs.clear();
 
     }
-
     private void cargarFormularioItemSeleccionado() {
         Reserve reservaNaturalSeleccionada;
         reservaNaturalSeleccionada = (Reserve) spReserves.getSelectedItem();
@@ -777,7 +764,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_acceso.setText(reservaNaturalSeleccionada.getAcceso());
 
     }
-
     private int obtenerIndiceDelRecurso(String valorCampo, String[] lista){
         int i=0;
         int indiceBuscado=-1;
@@ -795,7 +781,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         indiceBuscado=0;
         return indiceBuscado;
     }}
-
     private void flujoAlta() {
         scrollView.setVisibility(View.VISIBLE);
         formLinearLayout.setVisibility(View.VISIBLE);
