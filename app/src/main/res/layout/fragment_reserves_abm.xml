@@ -290,8 +290,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:ems="10"
-                    android:hint="Acceso"
+                    android:hint="Personal"
                     android:inputType="textPersonName" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imagenesLayoutContainer"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnImagenes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Imagenes"
+                    />
             </LinearLayout>
         </ScrollView>
         <Button

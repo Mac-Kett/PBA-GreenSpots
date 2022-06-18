@@ -2,6 +2,7 @@ package com.example.pba_greenspots.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -31,26 +34,38 @@ import android.widget.Toast;
 
 import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.R;
-import com.example.pba_greenspots.entities.Reserve;
+import com.example.pba_greenspots.entities.ABM_Reserve.FilaImagen;
 import com.example.pba_greenspots.entities.Reserve;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import io.grpc.Context;
 
 public class Fragment_Reserves_ABM extends Fragment{
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
+
+
     private Spinner spABM,
             spReserves,
             spMunicipios,
@@ -59,12 +74,14 @@ public class Fragment_Reserves_ABM extends Fragment{
             spNivelesDificultad,
             spSenializacionServicios,
             spZonaServicios;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<Intent> activityResultLauncherCSV;
+    private ActivityResultLauncher<Intent> activityResultLauncherImagenes;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     private Button btnConfirmar,
             btnModificar,
             btnEliminar,
-            btnImportarCSV;
+            btnImportarCSV,
+            btnImagenes;
     private EditText etNombre,
             etInstrumentoPlanificacion,
             et_accesos,
@@ -86,18 +103,15 @@ public class Fragment_Reserves_ABM extends Fragment{
             et_importancia,
             et_instrumentoLegal,
             et_acceso,
-            et_personal,
-            et_imagen_Uno,
-            et_imagen_Dos,
-            et_imagen_Tres,
-            et_imagen_Cuatro,
-            et_imagen_Cinco,
-            et_imagen_Seis,
-            et_imagen_Siete;
-    private LinearLayout formLinearLayout;
+            et_personal;
+    private LinearLayout formLinearLayout, imagenesLinearLayoutContainer;
     private ScrollView scrollView;
     private ArrayList<Object> listaEditTexts;
-    private static ArrayList<Reserve> listaReservasNaturales;
+    private ArrayList<Uri> listaUrisImagenes;
+    private ArrayList<String> listaURLs;
+    private ArrayList<Reserve> listaReservasNaturales;
+    private StorageReference storageReference;
+    private int cantImagenes;
 
     public Fragment_Reserves_ABM() {
         // Required empty public constructor
@@ -106,8 +120,11 @@ public class Fragment_Reserves_ABM extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        storageReference=storage.getReference();
+        //la lista que contendra las URIs de las imagenes que se carguen desde el movil (para el ALTA).
+        listaUrisImagenes = new ArrayList<>();
+        listaURLs = new ArrayList<>();
+        activityResultLauncherCSV = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == Activity.RESULT_OK){
@@ -117,6 +134,21 @@ public class Fragment_Reserves_ABM extends Fragment{
                     }
                 }else{
                     Toast.makeText(getContext(), "Ocurrio un error.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        activityResultLauncherImagenes = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode()== Activity.RESULT_OK){
+                    assert result.getData() != null;
+                    listaUrisImagenes.addAll(obtenerListaUrisImagenes(result.getData()));
+                    generarImageViews();
+
+                }else{
+                    //NO SELECCIONO NADA O VOLVIO PARA ATRAS.
+                    Log.d(getTag(), "RESULT CODE != OK ++ ERROR?", null);
                 }
             }
         });
@@ -134,16 +166,53 @@ public class Fragment_Reserves_ABM extends Fragment{
         });
     }
 
+    private void generarImageViews() {
+        //hacer lista de imageviews como atributo de la clase
+        imagenesLinearLayoutContainer.removeAllViews();
+        for (int i=0; i<listaUrisImagenes.size(); i++) {
+            Uri uriActual = listaUrisImagenes.get(i);
+
+            LinearLayout lyActual = new LinearLayout(getContext());
+            lyActual.setOrientation(LinearLayout.HORIZONTAL);
+            lyActual.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            ImageView imageView = new ImageView(getContext());
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            imageView.setImageURI(uriActual);
+
+            Button btnQuitarActual = new Button(getContext());
+            btnQuitarActual.setText("-");
+            btnQuitarActual.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            btnQuitarActual.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imagenesLinearLayoutContainer.removeView(lyActual);
+                    listaUrisImagenes.remove(uriActual);
+                }
+            });
+            lyActual.addView(imageView);
+            lyActual.addView(btnQuitarActual);
+            lyActual.setVisibility(View.VISIBLE);
+            imagenesLinearLayoutContainer.addView(lyActual);
+        }
+        imagenesLinearLayoutContainer.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_reserves_abm, container, false);
         scrollView = view.findViewById(R.id.scrollView);
         formLinearLayout = view.findViewById(R.id.formLinearLayout);
+        imagenesLinearLayoutContainer = view.findViewById(R.id.imagenesLayoutContainer);
+
         btnConfirmar = view.findViewById(R.id.btnConfirmar);
         btnModificar = view.findViewById(R.id.btnModificar);
         btnEliminar = view.findViewById(R.id.btnEliminar);
         btnImportarCSV = view.findViewById(R.id.btnImportarCSV);
+        btnImagenes = view.findViewById(R.id.btnImagenes);
+
         spABM = view.findViewById(R.id.spABM);
         spReserves = view.findViewById(R.id.spReservas);
         spMunicipios = view.findViewById(R.id.spMunicipios);
@@ -156,7 +225,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
 
-
         METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerTipoAdministracion(spTipoAdministracion, requireContext());
@@ -164,7 +232,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         METODOS_COMPLEMENTARIOS.completarSpinnerNivelesDificultad(spNivelesDificultad, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerSenializacionServicios(spSenializacionServicios, requireContext());
         METODOS_COMPLEMENTARIOS.completarSpinnerZonaServicios(spZonaServicios, requireContext());
-
 
         spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -258,14 +325,25 @@ public class Fragment_Reserves_ABM extends Fragment{
         listaEditTexts.add(et_acceso);
         listaEditTexts.add(et_personal);
     }
-
     private void actualizarSpinnerReservas() {
         //ACTUALIZAR AL SPINNER DE RESERVAS
         ArrayAdapter<Reserve> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaReservasNaturales);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spReserves.setAdapter(arrayAdapter);
     }
-
+    private ArrayList<Uri> obtenerListaUrisImagenes(Intent data) {
+        //O SELECCIONO UNA, O SELECCIONO VARIAS.
+        ArrayList<Uri> listaUris = new ArrayList<>();
+        if (data.getData()!=null){
+            listaUris.add(data.getData());
+        } else{
+            ClipData clipData = data.getClipData();
+            for (int i=0; i < clipData.getItemCount(); i++){
+                listaUris.add(clipData.getItemAt(i).getUri());
+            }
+        }
+        return listaUris;
+    }
     private void configuracionEventosListenersBotones() {
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,11 +369,15 @@ public class Fragment_Reserves_ABM extends Fragment{
         btnImportarCSV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestPermission();
+                requestPermission(true);
             }
         });
-    }
 
+        btnImagenes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {requestPermission(false);}
+        });
+    }
     private ArrayList<Reserve> obtenerReservasNaturalesCSV(Uri uri){
         BufferedReader bufferedReader = null;
         String line;
@@ -380,15 +462,28 @@ public class Fragment_Reserves_ABM extends Fragment{
         }
         return listaReservasNaturales;
     }
-    private void requestPermission(){
+    private void requestPermission(boolean bool){
         if (ContextCompat.checkSelfPermission(
                 requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED) {
             Log.d(getTag(), "Permiso ya otorgado previamente!", null);
-            seleccionadorDeArchivosCSV();
+            if(bool){
+                seleccionadorDeArchivosCSV();
+            }else{
+                seleccionadorDeArchivosImagenes();
+            }
+
         } else {
             requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
+    }
+    private void seleccionadorDeArchivosImagenes() {
+        Intent intent = new Intent()
+                .setAction(Intent.ACTION_GET_CONTENT)
+                .setType("image/*")
+                .addCategory(Intent.CATEGORY_OPENABLE)
+                .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        activityResultLauncherImagenes.launch(intent);
     }
     private void seleccionadorDeArchivosCSV() {
 
@@ -397,7 +492,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 .setType("text/comma-separated-values")
                 .addCategory(Intent.CATEGORY_OPENABLE);
 
-        activityResultLauncher.launch(intent);
+        activityResultLauncherCSV.launch(intent);
     }
     private void crearReserva() {
         //Valido campos
@@ -405,8 +500,39 @@ public class Fragment_Reserves_ABM extends Fragment{
             Toast.makeText(getContext(),"Revise el formulario", Toast.LENGTH_LONG).show();
         }else{
             Reserve reservaNatural = crearReservaNaturalConDatosFormulario();
-            putReservaNatural(reservaNatural);
+            impactarStorage_BaseDatos(reservaNatural);
+
         }
+    }
+
+    private void impactarStorage_BaseDatos(Reserve reservaNatural){
+        for (Uri uri: listaUrisImagenes){
+            String[] nombre= uri.getLastPathSegment().split("/");
+            StorageReference refImagen = storageReference.child("images/"+reservaNatural.getId()+"/"+nombre[nombre.length-1]);
+
+            refImagen.putFile(uri)
+                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            cantImagenes++;
+                            if (task.isSuccessful()){
+                                String urlString = refImagen.getDownloadUrl().toString();
+                                Log.d(getTag(),urlString, null);
+                                listaURLs.add(urlString);
+
+                                //Si el contador es igual a la cantidad de imagenes que se van a subir, se ejecuta lo siguiente.
+                                if (cantImagenes==listaUrisImagenes.size()){
+                                    reservaNatural.setListaImagenes(listaURLs);
+                                    putReservaNatural(reservaNatural);
+                                    cantImagenes=0;
+                                }
+                            }else{
+                                Log.d(getTag(), "Failed : "+task.getResult().getError() ,null);
+                            }
+                        }
+                    });
+        }
+
     }
 
     private void putReservaNatural(Reserve reservaNatural) {
@@ -431,8 +557,6 @@ public class Fragment_Reserves_ABM extends Fragment{
                     }
                 });
     }
-
-
     private void eliminarReserva() {
         Reserve reservaEliminar;
         reservaEliminar= (Reserve) spReserves.getSelectedItem();
@@ -487,10 +611,7 @@ public class Fragment_Reserves_ABM extends Fragment{
             Toast.makeText(getContext(), "No ha modificado ningun campo!", Toast.LENGTH_LONG).show();
         }
     }
-
-
     private Reserve crearReservaNaturalConDatosFormulario() {
-        //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
         Reserve reservaCreada;
         reservaCreada = new Reserve(
                 etNombre.getText().toString().trim(),
@@ -521,6 +642,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 et_instrumentoLegal.getText().toString().trim(),
                 et_acceso.getText().toString().trim(),
                 et_personal.getText().toString().trim()
+                //LAS IMAGENES LAS MANEJO POR SEPARADO.
         );
         return reservaCreada;
     }
@@ -556,7 +678,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_acceso = v.findViewById(R.id.et_acceso);
         et_personal = v.findViewById(R.id.et_personal);
     }
-
     private boolean validarCampos() {
         Boolean bool = true;
         for (Object editText : listaEditTexts) {
@@ -571,7 +692,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         }
             return bool;
     }
-
     private void limpiarFormulario() {
 
         for (Object o: listaEditTexts) {
@@ -583,10 +703,11 @@ public class Fragment_Reserves_ABM extends Fragment{
                 ((Spinner) o).setSelection(0);
             }
         }
-
+        imagenesLinearLayoutContainer.removeAllViews();
+        listaUrisImagenes.clear();
+        listaURLs.clear();
 
     }
-
     private void cargarFormularioItemSeleccionado() {
         Reserve reservaNaturalSeleccionada;
         reservaNaturalSeleccionada = (Reserve) spReserves.getSelectedItem();
@@ -642,8 +763,9 @@ public class Fragment_Reserves_ABM extends Fragment{
         et_instrumentoLegal.setText(reservaNaturalSeleccionada.getInstrumentoLegal());
         et_acceso.setText(reservaNaturalSeleccionada.getAcceso());
 
-    }
 
+
+    }
     private int obtenerIndiceDelRecurso(String valorCampo, String[] lista){
         int i=0;
         int indiceBuscado=-1;
@@ -661,15 +783,16 @@ public class Fragment_Reserves_ABM extends Fragment{
         indiceBuscado=0;
         return indiceBuscado;
     }}
-
     private void flujoAlta() {
         scrollView.setVisibility(View.VISIBLE);
         formLinearLayout.setVisibility(View.VISIBLE);
         btnConfirmar.setVisibility(View.VISIBLE);
         btnImportarCSV.setVisibility(View.VISIBLE);
+        imagenesLinearLayoutContainer.setVisibility(View.VISIBLE);
         btnModificar.setVisibility(View.GONE);
         btnEliminar.setVisibility(View.GONE);
         spReserves.setVisibility(View.GONE);
+
         limpiarFormulario();
     }
     private void flujoModificacion() {
@@ -677,6 +800,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         formLinearLayout.setVisibility(View.VISIBLE);
         btnModificar.setVisibility(View.VISIBLE);
         spReserves.setVisibility(View.VISIBLE);
+        imagenesLinearLayoutContainer.setVisibility(View.VISIBLE);
         btnConfirmar.setVisibility(View.GONE);
         btnEliminar.setVisibility(View.GONE);
         btnImportarCSV.setVisibility(View.GONE);
@@ -690,6 +814,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         btnModificar.setVisibility(View.GONE);
         btnConfirmar.setVisibility(View.GONE);
         btnImportarCSV.setVisibility(View.GONE);
+        imagenesLinearLayoutContainer.setVisibility(View.GONE);
     }
 
 }

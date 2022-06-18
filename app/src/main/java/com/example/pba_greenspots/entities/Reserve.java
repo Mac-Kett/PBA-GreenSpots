@@ -1,20 +1,10 @@
 package com.example.pba_greenspots.entities;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Parcelable;
-
-import com.google.protobuf.LazyStringArrayList;
-import com.google.rpc.context.AttributeContext;
-
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class Reserve implements Serializable {
-
-
     private String id;
     private String nombreUnidad;
     private String instrumentoPlanificacion;
@@ -44,7 +34,7 @@ public class Reserve implements Serializable {
     private String instrumentoLegal;
     private String acceso;
     private String personal;
-    private String imagen_Uno, imagen_Dos, imagen_Tres, imagen_Cuatro, imagen_Cinco, imagen_Seis, imagen_Siete;
+    private ArrayList<String> listaImagenes;
 
     public Reserve(){}
 
@@ -77,6 +67,8 @@ public class Reserve implements Serializable {
                    String acceso,
                    String personal
                           ) {
+        //genera un ID automatico String y random.
+        this.id = UUID.randomUUID().toString();
         this.nombreUnidad = nombreUnidad;
         this.instrumentoPlanificacion = instrumentoPlanificaicon;
         this.municipio = municipio;
@@ -105,6 +97,7 @@ public class Reserve implements Serializable {
         this.instrumentoLegal = instrumentoLegal;
         this.acceso = acceso;
         this.personal = personal;
+        this.listaImagenes = new ArrayList<>();
 
     }
 
@@ -343,6 +336,14 @@ public class Reserve implements Serializable {
     //Este metodo permite que el Spinner que carga las reservas muestre solo el nombreUnidad.
     public String toString(){
         return this.getNombreUnidad();
+    }
+
+    public ArrayList<String> getListaImagenes() {
+        return listaImagenes;
+    }
+
+    public void setListaImagenes(ArrayList<String> listaImagenes) {
+        this.listaImagenes = listaImagenes;
     }
 
     public boolean validarAtributo(String avalidar, String[] stringArray){
