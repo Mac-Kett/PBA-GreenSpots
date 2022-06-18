@@ -35,11 +35,11 @@ import java.util.Objects;
 
 public class Fragment_Inicio extends Fragment {
     View inicio;
-    Button btnLogin, btnRegister;
+    private Button btnLogin, btnRegister;
     //SignInButton btnGoogleSignIn;
-    FragmentManager fragmentManager;
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
+    private FragmentManager fragmentManager;
+    //private GoogleSignInOptions gso;
+    //private GoogleSignInClient gsc;
 
     public Fragment_Inicio() {
         // Required empty public constructor
@@ -92,7 +92,6 @@ public class Fragment_Inicio extends Fragment {
                         .commit();
             }
         });
-
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +103,7 @@ public class Fragment_Inicio extends Fragment {
             }
         });
     }
+
 //    private void configurarGoogleSignIn() {
 //        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //                .requestEmail()
@@ -129,34 +129,34 @@ public class Fragment_Inicio extends Fragment {
         return mAuth!=null;
     }
 
-    ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-
-            if (result.getResultCode() == Activity.RESULT_OK){
-                Intent intent = result.getData();
-
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
-                try {
-                    //succesful login
-                    GoogleSignInAccount account = task.getResult(ApiException.class);
-                    assert account != null;
-
-                    Toast.makeText(getContext(),"Inicio se sesion exitoso!", Toast.LENGTH_LONG).show();
-
-                    fragmentManager.beginTransaction()
-                                .replace(R.id.navHostFr_MainActivity, ReservesFragment.class, null)
-                            .addToBackStack(null)
-                            .setReorderingAllowed(true)
-                            .commit();
-
-                } catch (ApiException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getContext(),"No se ha podido iniciar sesion!", Toast.LENGTH_LONG).show();
-                    Log.d(getTag(), e.getMessage());
-                }
-            }
-        }
-    });
+//    ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+//        @Override
+//        public void onActivityResult(ActivityResult result) {
+//
+//            if (result.getResultCode() == Activity.RESULT_OK){
+//                Intent intent = result.getData();
+//
+//                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+//                try {
+//                    //succesful login
+//                    GoogleSignInAccount account = task.getResult(ApiException.class);
+//                    assert account != null;
+//
+//                    Toast.makeText(getContext(),"Inicio se sesion exitoso!", Toast.LENGTH_LONG).show();
+//
+//                    fragmentManager.beginTransaction()
+//                                .replace(R.id.navHostFr_MainActivity, ReservesFragment.class, null)
+//                            .addToBackStack(null)
+//                            .setReorderingAllowed(true)
+//                            .commit();
+//
+//                } catch (ApiException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(getContext(),"No se ha podido iniciar sesion!", Toast.LENGTH_LONG).show();
+//                    Log.d(getTag(), e.getMessage());
+//                }
+//            }
+//        }
+//    });
 
 }
