@@ -34,6 +34,11 @@
     <string name="logogreenspots">pba green spots</string>
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+    <string name="msg_Alta_Ok">Alta ok</string>
+    <string name="msg_Alta_Error">Hubo un error en el alta</string>
+    <string name="msg_Baja_OK">Baja ok</string>
+    <string name="msg_Baja_Error">Hubo un error en la baja</string>
+
 
     <string-array name="MUNICIPIOS">
         <item>25 de mayo</item>
