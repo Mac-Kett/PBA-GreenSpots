@@ -49,6 +49,7 @@ public class Fragment_Gestores_ABM extends Fragment {
     private EditText et_Nombre,
     et_email,
     et_pais,
+    et_contrasenia,
     et_typeUser;
     private Button btnConfirmar,
             btnModificar,
@@ -121,8 +122,6 @@ public class Fragment_Gestores_ABM extends Fragment {
         }
     });
         configuracionEventosListenersBotones();
-        //TODO hay que hacer ésto pero para los gestores
-        // OBTENGO RESERVAS NATURALES Y LAS CARGO AL SPINNER CORRESPONDIENTE
         db.collection("Users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -152,6 +151,7 @@ public class Fragment_Gestores_ABM extends Fragment {
     private void cargarArrayListEditTextsFormulario() {
         listaEditTexts = new ArrayList<>();
         listaEditTexts.add(et_Nombre);
+        listaEditTexts.add(et_contrasenia);
         listaEditTexts.add(et_email);
         listaEditTexts.add(spMunicipios);
         listaEditTexts.add(spABM);
@@ -247,7 +247,6 @@ public class Fragment_Gestores_ABM extends Fragment {
                 });
     }
 
-    //TODO modificar gestor
     private void modificarGestor() {
         Gestor gestorFormulario = crearGestorConDatosFormulario();
         Gestor gestorSeleccionado = (Gestor) spGestores.getSelectedItem();
@@ -264,14 +263,14 @@ public class Fragment_Gestores_ABM extends Fragment {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getContext(), R.string.msg_Modificacion_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), R.string.msg_Modificacion_Ok, Toast.LENGTH_LONG).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.d(getTag(), e.getMessage());
-                                Toast.makeText(getContext(), R.string.msg_Modificacion_ReservaNatural_Error, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), R.string.msg_Modificacion_Error, Toast.LENGTH_LONG).show();
                             }
                         });
             }
@@ -300,11 +299,13 @@ public class Fragment_Gestores_ABM extends Fragment {
         //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
         Gestor gestorNuevo;
         gestorNuevo = new Gestor(
+                //De dónde saco el ID?
                 et_Nombre.getText().toString().trim(),
-                spMunicipios.getSelectedItem().toString().trim(),
                 et_email.getText().toString().trim(),
+                et_contrasenia.getText().toString().trim(),
                 et_pais.toString().trim(),
-                et_typeUser.toString().trim()
+                et_typeUser.toString().trim(),
+                spMunicipios.getSelectedItem().toString().trim()
         );
         return gestorNuevo;
     }
@@ -313,6 +314,7 @@ public class Fragment_Gestores_ABM extends Fragment {
 
         spMunicipios = v.findViewById(R.id.spMunicipios);
         et_Nombre = v.findViewById(R.id.et_nombre);
+        et_contrasenia = v.findViewById(R.id.et_contrasenia);
         et_email = v.findViewById(R.id.et_email);
         et_pais = v.findViewById(R.id.et_pais);
         et_typeUser = v.findViewById(R.id.et_typeUser);
@@ -322,7 +324,7 @@ public class Fragment_Gestores_ABM extends Fragment {
         Gestor gestorSeleccionado;
         gestorSeleccionado = (Gestor) spGestores.getSelectedItem();
         et_Nombre.setText(gestorSeleccionado.getNombre());
-
+        et_contrasenia.setText(gestorSeleccionado.getPassword());
         try {
             spMunicipios.setSelection(obtenerIndiceDelRecurso(gestorSeleccionado.getMunicipio(), getContext().getResources().getStringArray(R.array.MUNICIPIOS)));
         } catch (Exception e) {

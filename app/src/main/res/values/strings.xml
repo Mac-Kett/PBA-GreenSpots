@@ -38,7 +38,8 @@
     <string name="msg_Alta_Error">Hubo un error en el alta</string>
     <string name="msg_Baja_OK">Baja ok</string>
     <string name="msg_Baja_Error">Hubo un error en la baja</string>
-
+    <string name="msg_Modificacion_Ok">¡Modificación exitosa!</string>
+    <string name="msg_Modificacion_Error">Hubo un error en la modificación</string>
 
     <string-array name="MUNICIPIOS">
         <item>25 de mayo</item>

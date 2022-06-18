@@ -57,9 +57,7 @@
                 android:orientation="vertical"
                 android:padding="5dp"
                 android:textAlignment="center"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:visibility="visible">
 
                 <Spinner
                     android:id="@+id/spMunicipios"
@@ -102,6 +100,14 @@
                     android:ems="10"
                     android:hint="Type User"
                     android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_contrasenia"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Contraseña"
+                    android:inputType="text" />
 
             </LinearLayout>
         </ScrollView>
