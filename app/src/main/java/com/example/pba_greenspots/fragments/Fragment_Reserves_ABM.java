@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.R;
-import com.example.pba_greenspots.entities.ABM_Reserve.FilaImagen;
+//import com.example.pba_greenspots.entities.ABM_Reserve.FilaImagen;
 import com.example.pba_greenspots.entities.Reserve;
 import com.example.pba_greenspots.entities.Reserve;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +49,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+//import com.google.firebase.storage.FirebaseStorage;
+//import com.google.firebase.storage.StorageReference;
+//import com.google.firebase.storage.UploadTask;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -664,7 +667,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         spCosto = v.findViewById(R.id.spCosto);
         spNivelesDificultad = v.findViewById(R.id.spNivelesDificultad);
         spSenializacionServicios = v.findViewById(R.id.spSenializacionServicios);
-        et_accesos = v.findViewById(R.id.et_accesos);
+        et_accesos = v.findViewById(R.id.et_acceso);
         et_horarios = v.findViewById(R.id.et_horarios);
         et_informacionAdicional = v.findViewById(R.id.et_informacionAdicional);
         et_gestionesDesarrollo = v.findViewById(R.id.et_gestionesDesarrollo);
