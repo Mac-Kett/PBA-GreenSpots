@@ -304,6 +304,7 @@ public class Fragment_Gestores_ABM extends Fragment {
         //DENTRO DEL CONSTRUCTOR VAN LOS CAMPOS OBLIGATORIOS. LOS QUE NO LO SON, VAN FUERA USANDO SETTERS.
         Gestor gestorNuevo;
         gestorNuevo = new Gestor(
+                //TODO chequear
                 FirebaseAuth.getInstance().getCurrentUser().getUid(),
                 et_Nombre.getText().toString().trim(),
                 et_email.getText().toString().trim(),

@@ -16,26 +16,7 @@
         android:textAlignment="center"
         android:textSize="28sp" />
 
-<Spinner
-    android:id="@+id/spABM"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:layout_marginHorizontal="10dp"
-    android:accessibilityLiveRegion="none"
-    android:visibility="visible" />
-
-<Spinner
-    android:id="@+id/spGestores"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:layout_marginHorizontal="10dp"
-    android:accessibilityLiveRegion="none"
-    android:visibility="visible"
-    android:layout_marginBottom="5dp"
-    />
-<ScrollView
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -43,6 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
+
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -60,14 +42,33 @@
                 android:visibility="visible">
 
                 <Spinner
-                    android:id="@+id/spMunicipios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:id="@+id/spABM"
+                    android:layout_width="402dp"
+                    android:layout_height="82dp"
                     android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="12dp"
                     android:accessibilityLiveRegion="none"
                     android:visibility="visible" />
 
+                <Spinner
+                    android:id="@+id/spMunicipios"
+                    android:layout_width="393dp"
+                    android:layout_height="70dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="12dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
+
+
+                <Spinner
+                    android:id="@+id/spGestores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="5dp"
+                    android:accessibilityLiveRegion="none"
+                    android:visibility="visible" />
 
                 <EditText
                     android:id="@+id/et_nombre"
@@ -111,6 +112,7 @@
 
             </LinearLayout>
         </ScrollView>
+
         <Button
             android:id="@+id/btnConfirmar"
             android:layout_width="wrap_content"
