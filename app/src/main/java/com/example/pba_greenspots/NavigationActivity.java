@@ -111,6 +111,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
             firebaseAuth.signOut();
             //vamos a cambiar de activity
             signOutUser();
+//            startActivity(new Intent(this ,MainActivity.class));
+//            this.finish();
         }
         return true;
     }

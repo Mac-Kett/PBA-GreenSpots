@@ -3,6 +3,7 @@ package com.example.pba_greenspots.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.pba_greenspots.MainActivity;
 import com.example.pba_greenspots.NavigationActivity;
 import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.Usuario;
@@ -21,13 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
@@ -35,7 +29,7 @@ public class Fragment_LogIn extends Fragment {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private Button btn1;
+    private Button btnEntrar;
     private EditText etMail, etPass;
     private Usuario user;
 
@@ -50,40 +44,49 @@ public class Fragment_LogIn extends Fragment {
         View v = inflater.inflate(R.layout.fragment_log_in, container, false);
         etMail = v.findViewById(R.id.etMail);
         etPass = v.findViewById(R.id.etPass);
-        btn1 = v.findViewById(R.id.btn1);
+        btnEntrar = v.findViewById(R.id.btnEntrar);
 
-        btn1.setOnClickListener(this::loginFirebaseAuth);
+        btnEntrar.setOnClickListener(this::loginFirebaseAuth);
 
         return v;
     }
 
     private void loginFirebaseAuth(View view){
-        String mail=etMail.getText().toString();
-        String pass =etPass.getText().toString();
+        String email=etMail.getText().toString().trim();
+        String password =etPass.getText().toString();
 
-        if (!mail.equals("")&&!pass.equals("")){
-            firebaseAuth.signInWithEmailAndPassword(mail,pass)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            try {
-                                if (task.isSuccessful()) {
-                                    obtenerUsuarioFirebaseFiresStore(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-                                    Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(getActivity(), NavigationActivity.class));
-                                    requireActivity().finish();
-                                } else {
-                                    Toast.makeText(getContext(), "No se ha podido iniciar sesion!", Toast.LENGTH_LONG).show();
+        if (validEmail(email)){
+            if (!password.equals("")){
+                firebaseAuth.signInWithEmailAndPassword(email,password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                try {
+                                    if (task.isSuccessful()) {
+                                        obtenerUsuarioFirebaseFiresStore(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                                        Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(getActivity(), NavigationActivity.class));
+                                        requireActivity().finish();
+                                    } else {
+                                        Toast.makeText(getContext(), "No se ha podido iniciar sesion!", Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (Exception e){
+                                    Toast.makeText(getContext(), "Hubo un error. Contacte con el administrador.", Toast.LENGTH_LONG).show();
+                                    Log.d(getTag(),"Las dos bases no están sincronizadas, chequear ok en firebaseAuth y fail en Firestore");
                                 }
-                            } catch (Exception e){
-                                Toast.makeText(getContext(), "Hubo un error. Contacte con el administrador.", Toast.LENGTH_LONG).show();
-                                Log.d(getTag(),"Las dos bases no están sincronizadas, chequear ok en firebaseAuth y fail en Firestore");
                             }
-                        }
-                    });
+                        });
+            }else{
+                Toast.makeText(this.getContext(), "Ingrese contraseña!", Toast.LENGTH_LONG).show();
+            }
         }else{
-            Toast.makeText(this.getContext(), "Ingrese ambos datos, por favor!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), "Ingrese email valido!", Toast.LENGTH_LONG).show();
         }
+
+    }
+
+    private boolean validEmail(String email) {
+        return !email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private void obtenerUsuarioFirebaseFiresStore(String id){
