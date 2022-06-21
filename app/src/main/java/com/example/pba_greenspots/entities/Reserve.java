@@ -101,13 +101,17 @@ public class Reserve implements Serializable {
 
     }
 
+    public void setId(String id){
+        this.id=id;
+    }
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+//    public void setId(String id) {
+//        this.id = id;
+//    }
 
     public String getNombreUnidad() {
         return nombreUnidad;

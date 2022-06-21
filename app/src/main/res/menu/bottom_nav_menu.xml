@@ -43,7 +43,7 @@
                 <item
 
                     android:id="@+id/logout"
-                    android:title="Cerrar cesion"
+                    android:title="Cerrar sesion"
 
                     android:icon="@drawable/ic_baseline_close_24"
                     />
