@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.pba_greenspots.fragments.Fragment_Gestores_ABM;
 import com.example.pba_greenspots.fragments.Fragment_Reserves_ABM;
 import com.example.pba_greenspots.fragments.PerfilUsuarioFragment;
 import com.example.pba_greenspots.fragments.RegisterFragment;
@@ -156,7 +157,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
                 ft.replace(R.id.content_fragments, new Fragment_Reserves_ABM()).commit();
                 break;
             case R.id.abmgestores:
-                ft.replace(R.id.content_fragments, new Fragment_Reserves_ABM()).commit();
+                ft.replace(R.id.content_fragments, new Fragment_Gestores_ABM()).commit();
                 break;
         }
         setTitle(item.getTitle());
