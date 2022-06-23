@@ -59,10 +59,10 @@ public class PerfilUsuarioFragment extends Fragment {
 
        firebaseAuth = FirebaseAuth.getInstance();
        user =  firebaseAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance();
-       // idUser = user.getUid();
+       db = FirebaseFirestore.getInstance();
+       idUser = user.getUid();
 
-        idUser= "uLUvRr66zLry5357udoS";
+       // idUser= "uLUvRr66zLry5357udoS";
     //forzamos la consulta a la db por un id para comprobar que se traen los datos pedidos
 
         db.collection("Users").document(idUser).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

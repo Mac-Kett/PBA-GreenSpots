@@ -78,7 +78,7 @@ public class RegisterFragment extends Fragment {
         String mail = email.getText().toString().trim();
         String contra =contrasena.getText().toString().trim();
         String country = pais.getText().toString().trim();
-        String typeUser = "3";
+        String typeUser = "1";
 
         mAuth.createUserWithEmailAndPassword(mail, contra)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
