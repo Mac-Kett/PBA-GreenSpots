@@ -134,9 +134,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
             case R.id.home:
                 ft.replace(R.id.content_fragments, new ReservesFragment()).commit();
                 break;
-            case R.id.search:
-                ft.replace(R.id.content_fragments, new RegisterFragment()).commit();
-                break;
+
             case R.id.account:
                 ft.replace(R.id.content_fragments, new PerfilUsuarioFragment()).commit();
                 break;

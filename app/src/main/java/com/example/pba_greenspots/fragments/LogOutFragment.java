@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +59,14 @@ public class LogOutFragment extends Fragment {
             public void onClick(View view) {
                 firebaseAuth.signOut();
                 signOutUser();
+            }
+        });
+        logoutCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.content_fragments, new ReservesFragment()).commit();
             }
         });
 

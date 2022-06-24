@@ -12,35 +12,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_margin="8dp"
         android:gravity="center"
         android:orientation="vertical">
+
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:id="@+id/imgContainer"
+            android:layout_width="200dp"
             android:layout_height="200dp"
-            android:background="@drawable/parque2">
-
-
+            app:cardCornerRadius="100dp"
+            >
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/parque2"
+                />
         </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:id="@+id/nameReserve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="asdasdas"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/descReserve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="kjasdkjhkjndfgb"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18dp"/>
 
-        <TextView
-            android:id="@+id/nameReserve"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text=""
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="18dp"/>
-        <TextView
-            android:id="@+id/descReserve"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text=""
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="18dp"/>
+
         <TextView
             android:id="@+id/muniReserve"
             android:layout_width="match_parent"
