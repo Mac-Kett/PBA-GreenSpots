@@ -2,16 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.PBAGreenSpots" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
-        <item name="colorAccent">@color/teal_200</item>
+        <item name="colorPrimary">#67920b</item>
+        <item name="colorPrimaryDark">#3c6609</item>
+        <item name="colorAccent"> #a8cb6f </item>
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="bottomNavigation">
-        <item name="android:background">@color/green_normal</item>
-        <item name="itemIconTint">@color/green__light2</item>
-        <item name="android:textColor">@color/green__light2</item>
-
-    </style>
 </resources>

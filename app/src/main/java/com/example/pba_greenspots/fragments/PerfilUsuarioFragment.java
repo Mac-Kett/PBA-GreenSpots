@@ -32,10 +32,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class PerfilUsuarioFragment extends Fragment {
 
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private TextView fullname, pais, mail, password;
-    FirebaseFirestore db;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser user;
+    private FirebaseUser user;
     private String idUser;
 
     public PerfilUsuarioFragment() {
@@ -56,16 +56,15 @@ public class PerfilUsuarioFragment extends Fragment {
         pais = v.findViewById(R.id.textViewCountry);
         mail = v.findViewById(R.id.textViewEmail);
         password = v.findViewById(R.id.textViewPassword);
+        user =  firebaseAuth.getCurrentUser();
+        idUser = user.getUid();
+        //  Log.i("id usuario: ",idUser.toString());
+        // ESTA LLEGANDO EL ID DEL USUARIO, NO EL DEL DOCUMENTO
 
-       firebaseAuth = FirebaseAuth.getInstance();
-       user =  firebaseAuth.getCurrentUser();
-       db = FirebaseFirestore.getInstance();
-       idUser = user.getUid();
+        // idUser= "uLUvRr66zLry5357udoS";
+        // forzamos la consulta a la db por un id para comprobar que se traen los datos pedidos
 
-       // idUser= "uLUvRr66zLry5357udoS";
-    //forzamos la consulta a la db por un id para comprobar que se traen los datos pedidos
-
-        db.collection("Users").document(idUser).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("Users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot docSnapshot) {
                 if (docSnapshot.exists()) {
@@ -80,23 +79,6 @@ public class PerfilUsuarioFragment extends Fragment {
         return v;
     }
 
-   /* public void getDbInfo (){
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                               // Log.d(TAG, document.getId() + " => " + document.getData());
-                                //db.collection.getId().nombre()
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-    }*/
 
 
 }

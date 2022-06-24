@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
     private final static String TURISTA = "1";
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private String type;
+    private String type ="";
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
@@ -52,7 +53,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         //UI
-
         drawerLayout = findViewById(R.id.lay_drawer);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -60,28 +60,32 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_fragments, new ReservesFragment()).commit();
         setTitle("Inicio");
-
         // setup toolbar
         setSupportActionBar(toolbar);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(toggle);
-
         // Consultar la DB con el currentUser para pedir el typeUser
-         user = firebaseAuth.getCurrentUser();
-         //idUser = user.getUid();
+        user = firebaseAuth.getCurrentUser();
+        idUser = user.getUid();
 
+        db.collection("Users").document(user.getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                          @Override
+                                          public void onSuccess(DocumentSnapshot dS) {
+                                              if(dS.exists()){
+                                                    type = dS.getString("typeUser");
+                                                    setMenuItems(type);
 
-        // Settear el type con typeUser
-        type="1";
+                                              } else {
+                                                  Log.i("documento","NO EXISTE!");
+                                              }
+                                          }
+                                      });
 
-        // Usar SetMenuItem pasando por parametro el type para desbloquear los items segun corresponda
-        // setMenuItems(user.getType())
-        setMenuItems(type);
+                        // Usar SetMenuItem pasando por parametro el type para desbloquear los items segun corresponda
 
-        navigationView.setNavigationItemSelectedListener(this);
-
+                        navigationView.setNavigationItemSelectedListener(this);
     }
-
 
     //Segun el type que llegue por parametro activa la visibilidad de los items ocultos
     private void setMenuItems(String type) {

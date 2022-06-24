@@ -26,28 +26,22 @@
             android:visible="false"
             android:icon="@drawable/ic_baseline_people_alt_24"
             />
+        <item
+            android:id="@+id/setting"
+            android:title="Configuraciones"
+            android:icon="@drawable/ic_baseline_settings"
+            />
+        <item
+
+            android:id="@+id/logout"
+            android:title="Cerrar sesion"
+
+            android:icon="@drawable/ic_baseline_close_24"
+            />
     </group>
 
-    <item android:title="Settings">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/setting"
-                    android:title="Configuraciones"
-                    android:icon="@drawable/ic_baseline_settings"
-                    />
-                <item
 
-                    android:id="@+id/logout"
-                    android:title="Cerrar sesion"
 
-                    android:icon="@drawable/ic_baseline_close_24"
-                    />
-
-            </group>
-        </menu>
-
-    </item>
 
 
 </menu>

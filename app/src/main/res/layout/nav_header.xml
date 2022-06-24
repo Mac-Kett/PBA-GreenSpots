@@ -2,24 +2,29 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="@color/default_hint"
+    android:layout_height="176dp"
     android:gravity="bottom"
-    android:paddingStart="5dp"
-    android:orientation="vertical">
+    android:padding="15dp"
+    android:orientation="vertical"
+    android:background="@drawable/reserva_fondo_menu"
+    >
 
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/avatar"
-        android:layout_gravity="center"/>
+        android:src="@drawable/greenspot_logo"
+        android:layout_gravity="left"
+        android:layout_marginLeft="5dp"/>
 
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:textColor="@color/black"
-        android:text=" "/>
+        android:layout_marginLeft="5dp"
+        android:paddingTop="8dp"
+        android:textSize="20dp"
+        android:textColor="#EDE7E7"
+        android:textStyle="bold"
+        android:text="PBA GreenSpots"/>
 
 </LinearLayout>

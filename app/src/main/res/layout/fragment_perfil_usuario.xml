@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:orientation="vertical"
-                android:background="#4B612B">
+                android:background="@color/colorAcent">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="140dp"

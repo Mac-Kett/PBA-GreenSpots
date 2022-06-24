@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.example.pba_greenspots.NavigationActivity;
 import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,13 +30,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class RegisterFragment extends Fragment {
 
     private EditText nombreCompleto, email, contrasena, pais;
     private Button btnRegister;
-    private FirebaseAuth mAuth= FirebaseAuth.getInstance();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser user;
     private String idUser;
 
@@ -67,8 +73,6 @@ public class RegisterFragment extends Fragment {
                 userRegister(view);
             }
         });
-
-
         return v;
     }
 
@@ -85,24 +89,51 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            mAuth = FirebaseAuth.getInstance();
                             user =  mAuth.getCurrentUser();
                             assert user != null;
                             idUser = user.getUid();
                             Usuario usuario = new Usuario(idUser,nombre,mail, contra, country, typeUser);
                             //Log.d("usuario", {usuario})
-                            db.collection("Users").add(usuario).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+
+                            DocumentReference dr = db.collection("Users").document(idUser);
+                           /* Map<String, Object> datauser = new HashMap<>();
+                            datauser.put("id", idUser);
+                            datauser.put("nombre", usuario.getNombre().toString());
+                            datauser.put("mail", usuario.getMail().toString());
+                            datauser.put("password", usuario.getPassword().toString());
+                            datauser.put("pais", usuario.getPais().toString());
+                            datauser.put("tipo", usuario.getTypeUser().toString());*/
+                            dr.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d("REGISTRO","Se registro!");
+                                    Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(getActivity(), NavigationActivity.class));
+                                    requireActivity().finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("REGISTRO","Error del registro!");
+                                    Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+
+                          /*  db.collection("Users").add(usuario).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                     if (task.isSuccessful()){
                                         Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
+
                                         startActivity(new Intent(getActivity(), NavigationActivity.class));
                                         requireActivity().finish();
                                     }else{
                                         Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
                                     }
                                 }
-                            });
+                            });*/
 //                                   .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
 //                                    .setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
 //                                        @Override

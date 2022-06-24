@@ -4,9 +4,11 @@
     android:layout_height="?android:attr/actionBarSize"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
-    android:background="@color/green_normal"
+    android:background="@color/colorPrimario"
     android:fitsSystemWindows="true"
+    app:titleTextColor="@color/white"
     app:theme="@style/Theme.PBAGreenSpots"
+    android:elevation="10dp"
     >
 
 

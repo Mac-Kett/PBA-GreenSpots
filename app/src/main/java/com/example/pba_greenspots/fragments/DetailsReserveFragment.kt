@@ -36,7 +36,7 @@ class DetailsReserveFragment : Fragment() {
     lateinit var name : TextView
     lateinit var desc : TextView
     lateinit var muni : TextView
-    lateinit var pagWeb : TextView
+   // lateinit var pagWeb : TextView
     lateinit var telefono: TextView
     lateinit var zonaServicios: TextView
     lateinit var btnPdf : Button
@@ -72,7 +72,7 @@ class DetailsReserveFragment : Fragment() {
         name = v.findViewById(R.id.nameReserve)
         desc = v.findViewById(R.id.descReserve)
         muni = v.findViewById(R.id.muniReserve)
-        pagWeb = v. findViewById(R.id.webReserve)
+       // pagWeb = v. findViewById(R.id.webReserve)
         telefono = v.findViewById(R.id.telReserve)
         zonaServicios = v.findViewById(R.id.serviciosReserve)
 
@@ -87,7 +87,7 @@ class DetailsReserveFragment : Fragment() {
         name.text = reserve.nombreUnidad
         desc.text = reserve.instrumentoPlanificacion
         muni.text = reserve.municipio
-        pagWeb.text = reserve.correoPagWeb
+       // pagWeb.text = reserve.correoPagWeb
         telefono.text = reserve.telefono
         zonaServicios.text = reserve.zonaServicios
 
@@ -138,7 +138,7 @@ class DetailsReserveFragment : Fragment() {
         descripcion.textSize = 14f
         var arrDescripcion = desc.text.toString().split("\n")+
                                 muni.text.toString().split("\n")+
-                                pagWeb.text.toString().split("\n")+
+
                                 telefono.text.toString().split("\n")+
                                 zonaServicios.text.toString().split("\n")
 
