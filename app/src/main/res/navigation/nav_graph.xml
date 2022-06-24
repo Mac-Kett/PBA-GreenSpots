@@ -2,28 +2,29 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_main_graph"
     app:startDestination="@id/fragment_Inicio">
-    <fragment
-        android:id="@+id/fragment_Inicio"
-        android:name="com.example.pba_greenspots.fragments.Fragment_Inicio"
-        android:label="fragment__inicio"
-        tools:layout="@layout/fragment_inicio" >
-        <action
-            android:id="@+id/action_fragment_Inicio_to_fragment_LogIn"
-            app:destination="@id/fragment_LogIn" />
-        <action
-            android:id="@+id/action_fragment_Inicio_to_registro"
-            app:destination="@id/registro" />
-    </fragment>
+
     <fragment
         android:id="@+id/fragment_LogIn"
         android:name="com.example.pba_greenspots.fragments.Fragment_LogIn"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" />
     <fragment
-        android:id="@+id/registro"
-        android:name="com.example.pba_greenspots.registro"
-        android:label="fragment_registro"
-        tools:layout="@layout/fragment_registro" />
+        android:id="@+id/registerFragment"
+        android:name="com.example.pba_greenspots.fragments.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/fragment_Inicio"
+        android:name="com.example.pba_greenspots.fragments.Fragment_Inicio"
+        android:label="fragment_inicio"
+        tools:layout="@layout/fragment_inicio" >
+        <action
+            android:id="@+id/action_fragment_Inicio_to_fragment_LogIn"
+            app:destination="@id/fragment_LogIn" />
+        <action
+            android:id="@+id/action_fragment_Inicio_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
 </navigation>
