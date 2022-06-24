@@ -19,7 +19,8 @@ public class Reserve implements Serializable {
     private String informacionAdicional;
     private String gestionesDesarrollo;
     private String telefono;
-    private String correoPagWeb;
+    private String correo;
+    private String paginaWeb;
     private String infraestructura;
     private String actividadesDelArea;
     private String fauna;
@@ -51,7 +52,8 @@ public class Reserve implements Serializable {
                    String informacionAdicional,
                    String gestionesDesarrollo,
                    String telefono,
-                   String correoPagWeb,
+                   String correo,
+                   String paginaWeb,
                    String infraestructura,
                    String actividadesDelArea,
                    String fauna,
@@ -82,7 +84,8 @@ public class Reserve implements Serializable {
         this.informacionAdicional = informacionAdicional;
         this.gestionesDesarrollo = gestionesDesarrollo;
         this.telefono = telefono;
-        this.correoPagWeb = correoPagWeb;
+        this.correo = correo;
+        this.paginaWeb = paginaWeb;
         this.infraestructura = infraestructura;
         this.actividadesDelArea = actividadesDelArea;
         this.fauna = fauna;
@@ -217,12 +220,20 @@ public class Reserve implements Serializable {
         this.telefono = telefono;
     }
 
-    public String getCorreoPagWeb() {
-        return correoPagWeb;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setCorreoPagWeb(String correoPagWeb) {
-        this.correoPagWeb = correoPagWeb;
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getPaginaWeb() {
+        return paginaWeb;
+    }
+
+    public void setPaginaWeb(String paginaWeb) {
+        this.paginaWeb = paginaWeb;
     }
 
     public String getInfraestructura() {

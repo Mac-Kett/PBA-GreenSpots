@@ -4,49 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemCard"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:elevation="10dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
         <ImageView
             android:id="@+id/imageMockReserva"
-            android:layout_width="116dp"
-            android:layout_height="125dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/nameReserve"
-            app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.506"
-            app:srcCompat="@drawable/greenspots" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/parque_ejemplo" />
 
-        <TextView
-            android:id="@+id/nameReserve"
-            android:layout_width="174dp"
-            android:layout_height="45dp"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.791"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.18" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/nameReserve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                />
 
-        <TextView
-            android:id="@+id/municipioReserve"
-            android:layout_width="158dp"
-            android:layout_height="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.326"
-            app:layout_constraintStart_toEndOf="@+id/imageMockReserva"
-            app:layout_constraintTop_toBottomOf="@+id/nameReserve"
-            app:layout_constraintVertical_bias="0.241" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/muniTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Municipio:"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/municipioReserve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/horaTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="Horarios:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/horarioReserve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

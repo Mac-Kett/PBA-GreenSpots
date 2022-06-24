@@ -25,6 +25,7 @@ class ReserveAdapter (var listaDB : MutableList<Reserve>,
     override fun onBindViewHolder(holder: ReserveAdapter.ReserveHolder, position: Int) {
         holder.setName(listaDB[position].nombreUnidad)
         holder.setMunicipio(listaDB[position].municipio)
+        holder.setHorario(listaDB[position].horarios)
         holder.getCardView().setOnClickListener{
             onItemClick (position)
         }
@@ -48,6 +49,10 @@ class ReserveAdapter (var listaDB : MutableList<Reserve>,
         fun setMunicipio(muni: String){
             val txt: TextView = view.findViewById(R.id.municipioReserve)
             txt.text = muni
+        }
+        fun setHorario(horario: String){
+            val txt: TextView = view.findViewById(R.id.horarioReserve)
+            txt.text = horario
         }
 
         fun getCardView () : CardView {
