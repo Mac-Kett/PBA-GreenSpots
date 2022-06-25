@@ -43,8 +43,8 @@
                 android:layout_height="170dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="15dp"
+                android:elevation="15dp"
                 android:layout_gravity="center"
-                android:elevation="10dp"
                 android:backgroundTint="#00000000">
 
                 <RelativeLayout
@@ -85,7 +85,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_margin="10dp"
             android:padding="5dp"
             android:elevation="15dp"
             app:cardCornerRadius="15dp"
@@ -213,7 +213,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_margin="10dp"
             android:padding="5dp"
             android:elevation="15dp"
             app:cardCornerRadius="15dp"
@@ -346,7 +346,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_margin="10dp"
             android:padding="5dp"
             android:elevation="15dp"
             app:cardCornerRadius="15dp"
@@ -457,7 +457,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_margin="10dp"
             android:padding="5dp"
             android:elevation="15dp"
             app:cardCornerRadius="15dp"
