@@ -106,7 +106,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/ic_place"/>
+                        android:src="@drawable/ic_municipio"
+                        app:tint="@color/colorPrimario"/>
                     <TextView
                         android:id="@+id/muniReserve"
                         android:layout_width="wrap_content"
@@ -428,6 +429,79 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:elevation="15dp"
+            app:cardCornerRadius="15dp"
+            android:backgroundTint="@color/colorAcent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_resenia"
+                        app:tint="@color/colorPrimario" />
+                    <TextView
+                        android:id="@+id/reseniaTitleReserve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reseñas"
+                        android:textColor="#000"
+                        android:textSize="23dp"
+                        android:paddingLeft="15dp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="25dp">
+
+                    <TextView
+                        android:id="@+id/viewReseniaReserve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="#000"
+                        android:textSize="15dp"
+                        android:paddingLeft="15dp"
+                        android:layout_gravity="center_vertical"/>
+                    <EditText
+                        android:id="@+id/editTextTextMultiLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+
+                        android:background="@color/white"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <Button
             android:id="@+id/generarPDF"
             android:layout_width="150dp"
