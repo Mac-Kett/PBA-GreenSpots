@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,9 +22,10 @@
 
         <SearchView
             android:id="@+id/svBuscador"
-            android:layout_width="300dp"
+            android:layout_width="290dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:background="@color/colorAcent"
             />
 
         <TextView
@@ -30,21 +33,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/svBuscador"
-            android:layout_marginLeft="15px"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp"
+            android:textSize="16dp"
             android:clickable="true"
-            android:text="Filtros" />
+            android:text="Busqueda Avanzada" />
 
         <Button
             android:id="@+id/btnBuscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="12dp"
             android:layout_toEndOf="@+id/svBuscador"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Buscar"
+            android:backgroundTint="@color/colorPrimario"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
     </RelativeLayout>
