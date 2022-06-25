@@ -207,6 +207,12 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="comentarios">20</string>
+    <string name="senderos_recorridos">Senderos Recorridos</string>
+    <string name="todo">TODO</string>
+    <string name="msg_cierre">¿Quiere cerrar sesion?</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
 
 
 </resources>

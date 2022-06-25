@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_margin="5dp">
+                android:layout_margin="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -224,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_margin="5dp">
+                android:layout_margin="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -243,6 +243,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Actividades"
+                        android:textColor="#000"
+                        android:textSize="25dp"
+                        android:paddingLeft="15dp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_senderos"
+                        app:tint="@color/colorPrimario" />
+                    <TextView
+                        android:id="@+id/senderosReserve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Senderos"
                         android:textColor="#000"
                         android:textSize="25dp"
                         android:paddingLeft="15dp"
@@ -334,7 +357,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_margin="5dp">
+                android:layout_margin="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -507,6 +530,7 @@
             android:id="@+id/generarPDF"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:backgroundTint="@color/colorPrimario"
             android:textColor="@color/white"
             android:text="Descargar"

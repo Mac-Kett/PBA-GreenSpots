@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorAcent"
         android:gravity="center"
         android:padding="18dp"
@@ -28,7 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/logogreenspots"
-                android:src="@drawable/greenspot_logo" />
+                android:src="@drawable/greenspot_logo"
+                tools:ignore="ImageContrastCheck" />
 
         </androidx.cardview.widget.CardView>
 
@@ -38,7 +39,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text="@string/bienvenido_a"
-            android:textColor="#fff"
+            android:textColor="#757575"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -49,7 +50,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/complete_el_formulario"
-            android:textColor="#fff"
+            android:textColor="#455A64"
             android:textSize="17dp"
             android:textStyle="italic" />
 
@@ -81,7 +82,8 @@
                     android:textColor="@color/black"
                     android:inputType="textPersonName"
                     android:minHeight="50dp"
-                    android:textColorHint="#546E7A" />
+                    android:textColorHint="#546E7A"
+                    android:autofillHints="" />
 
                 <EditText
                     android:id="@+id/email_registro"
@@ -93,7 +95,8 @@
                     android:textColor="@color/black"
                     android:inputType="textEmailAddress"
                     android:minHeight="50dp"
-                    android:textColorHint="#546E7A" />
+                    android:textColorHint="#546E7A"
+                    android:autofillHints="" />
 
                 <EditText
                     android:id="@+id/contrasenia_registro"
@@ -105,7 +108,8 @@
                     android:textColor="@color/black"
                     android:inputType="textPassword"
                     android:minHeight="50dp"
-                    android:textColorHint="#546E7A" />
+                    android:textColorHint="#546E7A"
+                    android:autofillHints="" />
 
                 <EditText
                     android:id="@+id/pais_registro"
@@ -117,7 +121,8 @@
                     android:textColor="@color/black"
                     android:inputType="textPersonName"
                     android:minHeight="50dp"
-                    android:textColorHint="#546E7A" />
+                    android:textColorHint="#546E7A"
+                    android:autofillHints="" />
 
                 <Button
                     android:id="@+id/btnRegister"
@@ -126,8 +131,8 @@
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/colorPrimario"
                     android:text="@string/registrarse"
-                    android:textSize="18dp"
-                    android:textColor="#F8F8F8" />
+                    android:textColor="#000000"
+                    android:textSize="18dp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

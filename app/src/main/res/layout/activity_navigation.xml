@@ -32,9 +32,9 @@
         android:layout_height="match_parent"
         android:id="@+id/nav_view"
         android:layout_gravity="start"
-        android:background="@color/colorPrimarioOscuro"
-        app:itemTextColor="@color/colorAcent"
-        app:itemIconTint="@color/colorAcent"
+        android:background="@color/colorAcent"
+        app:itemTextColor="#323232"
+        app:itemIconTint="@color/colorPrimarioOscuro"
         app:menu="@menu/bottom_nav_menu"
         app:headerLayout="@layout/nav_header"
         />
