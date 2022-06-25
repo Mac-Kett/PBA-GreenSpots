@@ -34,11 +34,20 @@ class DetailsReserveFragment : Fragment() {
     private var listaDB : MutableList<Reserve> = mutableListOf()
     lateinit var v : View
     lateinit var name : TextView
-    lateinit var desc : TextView
     lateinit var muni : TextView
-   // lateinit var pagWeb : TextView
+    lateinit var acceso : TextView
+    lateinit var pubPriv : TextView
+    lateinit var mail : TextView
     lateinit var telefono: TextView
-    lateinit var zonaServicios: TextView
+    lateinit var actividades : TextView
+    lateinit var entrada : TextView
+    lateinit var zonaServicios : TextView
+    lateinit var horario : TextView
+    lateinit var flora : TextView
+    lateinit var fauna : TextView
+    lateinit var geologia : TextView
+    lateinit var superficie : TextView
+
     lateinit var btnPdf : Button
 
 
@@ -58,38 +67,45 @@ class DetailsReserveFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        //lista que emula la db
-      //  listaDB.add(Reserve("Instrumento Planif: ","Matanza", "Nombre del parque"))
         lateinit var reserve : Reserve
          reserve = (arguments?.getSerializable("reserve") as Reserve?)!!
-
-       // reserve = (arguments?.getSerializable
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_details_reserve, container, false)
 
         // referencio los textView
         name = v.findViewById(R.id.nameReserve)
-        desc = v.findViewById(R.id.descReserve)
         muni = v.findViewById(R.id.muniReserve)
-       // pagWeb = v. findViewById(R.id.webReserve)
+        acceso = v.findViewById(R.id.accesoReserve)
+        pubPriv = v.findViewById(R.id.pubPrivReserve)
+        mail = v.findViewById(R.id.emailReserve)
         telefono = v.findViewById(R.id.telReserve)
+        actividades = v.findViewById(R.id.actividadesReserve)
+        entrada = v.findViewById(R.id.costoEntradaReserve)
         zonaServicios = v.findViewById(R.id.serviciosReserve)
+        horario = v.findViewById(R.id.horariosReserve)
+        flora = v.findViewById(R.id.floraReserve)
+        fauna = v.findViewById(R.id.faunaReserve)
+        geologia = v.findViewById(R.id.geoloReserve)
+        superficie = v.findViewById(R.id.superfReserve)
 
-        //referencio el boton
+        //referencio el boton de descarga
         btnPdf = v.findViewById(R.id.generarPDF)
 
         // seteo los TextView con los datos de la db
-//        name.text = listaDB[0].nombreUnidad
-//        desc.text = listaDB[0].instrumentoPlanificacion
-//        muni.text = listaDB[0].municipio
-
         name.text = reserve.nombreUnidad
-        desc.text = reserve.instrumentoPlanificacion
         muni.text = reserve.municipio
-       // pagWeb.text = reserve.correoPagWeb
+        acceso.text = reserve.acceso
+        pubPriv.text = reserve.administracionPublicaPrivada
+        mail.text = reserve.correo
         telefono.text = reserve.telefono
+        actividades.text = reserve.actividadesDelArea
+        entrada.text = reserve.ingresoGratuitoPago
         zonaServicios.text = reserve.zonaServicios
+        horario.text = reserve.horarios
+        flora.text = reserve.flora
+        fauna.text = reserve.fauna
+        geologia.text = reserve.geologia
+        superficie.text = reserve.superficie
 
         //pregunto si estan los permisos
         if(checkPermission()) {
@@ -136,13 +152,20 @@ class DetailsReserveFragment : Fragment() {
 
         descripcion.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL))
         descripcion.textSize = 14f
-        var arrDescripcion = desc.text.toString().split("\n")+
-                                muni.text.toString().split("\n")+
-
-                                telefono.text.toString().split("\n")+
-                                zonaServicios.text.toString().split("\n")
-
-
+        var arrDescripcion = muni.text.toString().split("\n")+
+                acceso.text.toString().split("\n")+
+                pubPriv.text.toString().split("\n")+
+                mail.text.toString().split("\n")+
+                telefono.text.toString().split("\n")+
+                actividades.text.toString().split("\n")+
+                entrada.text.toString().split("\n")+
+                zonaServicios.text.toString().split("\n")+
+                horario.text.toString().split("\n")+
+                flora.text.toString().split("\n")+
+                fauna.text.toString().split("\n")+
+                geologia.text.toString().split("\n")+
+                superficie.text.toString().split("\n")
+        ////////////////////////////////////////////////////////////////////////////////////////////
         var y = 200f
         for (item in arrDescripcion) {
             canvas.drawText(item, 10f, y, descripcion)

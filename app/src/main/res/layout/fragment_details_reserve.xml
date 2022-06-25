@@ -43,6 +43,7 @@
                 android:layout_height="140dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="15dp"
+                android:layout_gravity="center"
                 android:elevation="10dp"
                 android:backgroundTint="#00000000">
 
@@ -70,17 +71,6 @@
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/muniReserve"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/nameReserve"
-                        android:layout_marginLeft="160dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="Municipio"
-                        android:textSize="18dp" />
-
                 </RelativeLayout>
 
 
@@ -106,6 +96,27 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_margin="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="25dp">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_place"/>
+                    <TextView
+                        android:id="@+id/muniReserve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Municipio"
+                        android:textColor="#000"
+                        android:textSize="20dp"
+                        android:paddingLeft="15dp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -271,7 +282,7 @@
                         android:src="@drawable/ic_service"
                         app:tint="@color/colorPrimario" />
                     <TextView
-                        android:id="@+id/zonaServReserve"
+                        android:id="@+id/serviciosReserve"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Servicios"
@@ -417,10 +428,13 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-
-
-
+        <Button
+            android:id="@+id/generarPDF"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimario"
+            android:textColor="@color/white"
+            android:text="Descargar"/>
     </LinearLayout>
 
 
