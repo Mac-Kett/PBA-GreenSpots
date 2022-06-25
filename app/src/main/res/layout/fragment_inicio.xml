@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="375dp"
-        android:layout_height="354dp"
+        android:layout_width="340dp"
+        android:layout_height="340dp"
         android:layout_marginTop="48dp"
         android:scaleType="fitXY"
         android:src="@drawable/greenspot_logo"
