@@ -10,7 +10,7 @@
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimarioOscuro"
+        android:background="@color/colorAcent"
         android:gravity="center"
         android:padding="18dp"
         android:orientation="vertical"
@@ -126,6 +126,7 @@
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/colorPrimario"
                     android:text="@string/registrarse"
+                    android:textSize="18dp"
                     android:textColor="#F8F8F8" />
             </LinearLayout>
 

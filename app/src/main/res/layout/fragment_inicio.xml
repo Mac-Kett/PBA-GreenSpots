@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAcent"
     tools:context=".fragments.Fragment_Inicio" >
 
     <ImageView
@@ -13,7 +14,7 @@
         android:layout_height="354dp"
         android:layout_marginTop="48dp"
         android:scaleType="fitXY"
-        android:src="@drawable/logo"
+        android:src="@drawable/greenspot_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,15 +37,24 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:layout_marginRight="15dp"/>
+                android:text="Iniciar Sesion"
+                android:layout_marginRight="15dp"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimario"/>
+
 
             <Button
                 android:id="@+id/btnRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register"
+                android:padding="15dp"
+                android:text="Registrarse"
+                android:textColor="@color/white"
+                android:background="@color/default_hint"
                 android:layout_toRightOf="@id/btnLogin"/>
+
+
         </LinearLayout>
 
 <!--        <com.google.android.gms.common.SignInButton-->
