@@ -11,11 +11,14 @@
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="65dp"
         android:layout_marginTop="28dp"
-        android:text="ABM Reservas"
+        android:text="Gestion de Areas Naturales Protegidas"
         android:textAlignment="center"
-        android:textSize="28sp" />
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:background="@color/colorAcent"
+        />
 
     <Spinner
         android:id="@+id/spABM"
@@ -333,7 +336,9 @@
                         android:id="@+id/btnImagenes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimario"
                         android:text="Imagenes"
+                        android:textSize="20sp"
                         />
 
                     <TextView
@@ -355,33 +360,42 @@
                 android:id="@+id/btnConfirmar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:text="Confirmar"
                 android:textAlignment="center"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:background="@color/colorAcent"/>
 
             <Button
                 android:id="@+id/btnImportarCSV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_margin="15dp"
                 android:text="Importar CSV"
                 android:textAlignment="center"
-                android:visibility="gone" />
+                android:visibility="gone"
+                />
 
             <Button
                 android:id="@+id/btnEliminar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:text="Eliminar"
                 android:textAlignment="center"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:background="#FB2C2C"
+                android:textColor="@color/white"/>
 
             <Button
                 android:id="@+id/btnModificar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:text="Modificar"
                 android:textAlignment="center"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:background="@color/ic_reserve_background"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
