@@ -1,14 +1,21 @@
 package com.example.pba_greenspots.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,9 +37,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.pba_greenspots.ImageResizer;
 import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.Reserve;
@@ -41,6 +50,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.common.primitives.Bytes;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -50,10 +60,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -138,7 +150,9 @@ public class Fragment_Reserves_ABM extends Fragment{
                 }
             }
         });
+
         activityResultLauncherImagenes = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode()== Activity.RESULT_OK){
@@ -155,12 +169,12 @@ public class Fragment_Reserves_ABM extends Fragment{
                 }
             }
         });
+
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
             @Override
             public void onActivityResult(Boolean result) {
                 if (result){
                     Toast.makeText(requireContext(), "Permiso otorgado", Toast.LENGTH_SHORT).show();
-                    seleccionadorDeArchivosCSV();
                 }else{
                     Toast.makeText(requireContext(), "Necesitamos su permiso para poder continuar con la operacion!", Toast.LENGTH_LONG).show();
                 }
@@ -168,6 +182,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void RemoverInformarDuplicados(ArrayList<Uri> listaUrisDeEsteResult) {
         if (!tv_ImagenesDuplicadas.getText().toString().isEmpty()){
             tv_ImagenesDuplicadas.setText("");
@@ -186,6 +201,7 @@ public class Fragment_Reserves_ABM extends Fragment{
             crearViewDuplicados(obtenerNombresArchivos(listaDuplicados));
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private ArrayList<String> obtenerNombresArchivos(ArrayList<Uri> listaUris) {
         ArrayList<String> listaNombres = new ArrayList<>();
         for (Uri uri: listaUris) {
@@ -203,6 +219,7 @@ public class Fragment_Reserves_ABM extends Fragment{
             tv_ImagenesDuplicadas.setText(tv_ImagenesDuplicadas.getText() +", "+ nombre);
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void generarImageViews(ArrayList<Uri> listaUris) {
         for (int i=0; i<listaUris.size(); i++) {
             Uri uriActual = listaUris.get(i);
@@ -210,6 +227,7 @@ public class Fragment_Reserves_ABM extends Fragment{
         }
         imagenesLinearLayoutContainer.setVisibility(View.VISIBLE);
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void generarImageView(Uri uriActual, boolean delStorage) {
         //El boolean "delStorage" hace referencia a si la uri viene del StorageFirebase o de la memoria interna. true= delStorage / false= memoria interna del dispositivo.
         LinearLayout lyActual = new LinearLayout(getContext());
@@ -217,11 +235,10 @@ public class Fragment_Reserves_ABM extends Fragment{
         lyActual.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         ImageView imageView = new ImageView(getContext());
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 200));
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(500,280));
         imageView.setPadding(0,5, 0, 5);
 
         TextView tvNombre = new TextView(getContext());
-
 
         File file = new File(uriActual.toString());
         tvNombre.setText(file.getAbsolutePath());
@@ -235,17 +252,12 @@ public class Fragment_Reserves_ABM extends Fragment{
         btnQuitarActual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagenesLinearLayoutContainer.removeView(lyActual);
-                if (delStorage){
-                    listaUrisEliminar.add(uriActual);
-                }else{
-                    listaUrisImagenes.remove(uriActual);
-                }
+                btnQuitarActualOnClick(lyActual, delStorage, uriActual);
             }
         });
 
         picasso.load(uriActual)
-                .resize(600, 300)
+                .fit()
                 .centerCrop()
                 .into(imageView);
 
@@ -254,6 +266,14 @@ public class Fragment_Reserves_ABM extends Fragment{
         lyActual.addView(tvNombre);
 
         imagenesLinearLayoutContainer.addView(lyActual);
+    }
+    private void btnQuitarActualOnClick(LinearLayout lyActual, boolean delStorage, Uri uriActual) {
+        imagenesLinearLayoutContainer.removeView(lyActual);
+        if (delStorage){
+            listaUrisEliminar.add(uriActual);
+        }else{
+            listaUrisImagenes.remove(uriActual);
+        }
     }
 
     @Override
@@ -436,13 +456,15 @@ public class Fragment_Reserves_ABM extends Fragment{
         btnImportarCSV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestPermission(true);
+                requestPermission(getResources().getIntArray(R.array.FILE_CHOOSER)[0]);
             }
         });
 
         btnImagenes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {requestPermission(false);}
+            public void onClick(View v) {
+                requestPermission(getResources().getIntArray(R.array.FILE_CHOOSER)[1]);
+            }
         });
     }
     private ArrayList<Reserve> obtenerReservasNaturalesCSV(Uri uri){
@@ -530,15 +552,19 @@ public class Fragment_Reserves_ABM extends Fragment{
         }
         return listaReservasNaturales;
     }
-    private void requestPermission(boolean bool){
+    private void requestPermission(int SELECCIONADOR){
         if (ContextCompat.checkSelfPermission(
                 requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED) {
             Log.d(getTag(), "Permiso ya otorgado previamente!", null);
-            if(bool){
-                seleccionadorDeArchivosCSV();
-            }else{
-                seleccionadorDeArchivosImagenes();
+
+            switch (SELECCIONADOR){
+                case 0:
+                    seleccionadorDeArchivosCSV();
+                    break;
+                case 1:
+                    seleccionadorDeArchivosImagenes();
+                    break;
             }
 
         } else {
@@ -572,52 +598,136 @@ public class Fragment_Reserves_ABM extends Fragment{
             putReserveDB(reservaNatural);
         }
     }
+
+    @SuppressLint("Range")
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private String obtenerNombreArchivo(Uri uri){
-//        String[] nombre = uri.getLastPathSegment().split("/");
-//        return nombre[nombre.length-1];
-        return uri.getLastPathSegment().substring(uri.getLastPathSegment().lastIndexOf("/")+1);
+        //return uri.getLastPathSegment().substring(uri.getLastPathSegment().lastIndexOf("/")+1);
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void putImagesStorage(Reserve reserve){
         uploadStorageTerminado=false;
-        final int total = listaUrisImagenes.size();
+        final int TOTAL = listaUrisImagenes.size();
         for (Uri uri: listaUrisImagenes){
-            StorageReference refImagen = storageReference.child("images").child(reserve.getId()).child(obtenerNombreArchivo(uri));
+            String name = obtenerNombreArchivo(uri);
+            StorageReference refImagen = storageReference.child("images").child(reserve.getId()).child(name);
 
-            refImagen.putFile(uri)
-                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if (task.isSuccessful()){
-                                Log.d(getTag(), "Imagen subida exitosamente: "+task.getResult().getStorage() ,null);
-                            }else{
-                                Log.d(getTag(), "Failed : "+task.getResult().getError() ,null);
-                            }
-                            listaUrisImagenes.remove(uri);
-                            if (listaUrisImagenes.size()==0){
-                                uploadStorageTerminado=true;
-                                if (procesoTerminado()){
-                                    actualizarInterfazProcesoCompleto();
-                                }
-                            }else{
-                                int porc = (int)100-(100*listaUrisImagenes.size()/total);
-                                progressDialog.setProgress(porc);
-                            }
-
-                        }
-                    });
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.d(getTag(), "Failed : "+e.getMessage() ,null);
-//                        }
-//                    });
+            try {
+                InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                //File file = getBitmapFile(bitmap, name);
+                //Uri uriUpload=Uri.fromFile(file);
+                Bitmap bitmapReduced = ImageResizer.reduceBitmapSize(bitmap, 2000000);
+                InputStream inputStreamStorage= getByteArrayInputStream(bitmapReduced);
+                putImageStorage(refImagen, inputStreamStorage, TOTAL, uri);
+                 //putImageStorage(refImagen, uriUpload, TOTAL);
+            }catch (IOException e){
+                Log.d(getTag(), e.getMessage());
+            }
         }
     }
+
+
+    private void putImageStorage(StorageReference refImagen, InputStream inputStream, int TOTAL, Uri uriEliminar) {
+        refImagen.putStream(inputStream)
+                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if (task.isSuccessful()){
+                            Log.d(getTag(), "Imagen subida exitosamente: "+task.getResult().getStorage() ,null);
+                        }else{
+                            Log.d(getTag(), "Failed : "+task.getResult().getError() ,null);
+                        }
+                        listaUrisImagenes.remove(uriEliminar);
+                        if (listaUrisImagenes.size()==0){
+                            uploadStorageTerminado=true;
+                            if (procesoTerminado()){
+                                actualizarInterfazProcesoCompleto();
+                            }
+                        }else{
+                            int porc = (int)100-(100*listaUrisImagenes.size()/TOTAL);
+                            progressDialog.setProgress(porc);
+                        }
+                    }
+                });
+    }
+
+//    private void putImageStorage(StorageReference refImagen, Uri uri, int TOTAL) {
+//        refImagen.putFile(uri)
+//                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//                        if (task.isSuccessful()){
+//                            Log.d(getTag(), "Imagen subida exitosamente: "+task.getResult().getStorage() ,null);
+//                        }else{
+//                            Log.d(getTag(), "Failed : "+task.getResult().getError() ,null);
+//                        }
+//                        listaUrisImagenes.remove(uri);
+//                        if (listaUrisImagenes.size()==0){
+//                            uploadStorageTerminado=true;
+//                            if (procesoTerminado()){
+//                                actualizarInterfazProcesoCompleto();
+//                            }
+//                        }else{
+//                            int porc = (int)100-(100*listaUrisImagenes.size()/TOTAL);
+//                            progressDialog.setProgress(porc);
+//                        }
+//                    }
+//                });
+//    }
+
+    private ByteArrayInputStream getByteArrayInputStream(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] bitmapData = byteArrayOutputStream.toByteArray();
+        return new ByteArrayInputStream(bitmapData);
+    }
+
+//    private File getBitmapFile(Bitmap bitmap, String name){
+//        File file = new File(Environment.getExternalStorageDirectory()+File.separator+name);
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//        byte[] bitmapData = byteArrayOutputStream.toByteArray();
+//
+//        try{
+//            file.createNewFile();
+//            FileOutputStream fileOutputStream = new FileOutputStream(file);
+//            fileOutputStream.write(bitmapData);
+//            fileOutputStream.flush();
+//            fileOutputStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Log.d(getTag(), e.getMessage());
+//        }
+//        return file;
+//    }
+
     private void actualizarInterfazProcesoCompleto() {
         progressDialog.setProgress(100);
         progressDialog.dismiss();
         Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
-        limpiarFormulario();
+//        limpiarFormulario();
+        spABM.setSelection(0); //flujo alta.
     }
     private void putReserveDB(Reserve reservaNatural) {
         bdTerminado = false;
@@ -625,6 +735,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 .document(reservaNatural.getId())
                 .set(reservaNatural)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onSuccess(Void unused) {
                         putImagesStorage(reservaNatural);
@@ -771,12 +882,11 @@ public class Fragment_Reserves_ABM extends Fragment{
                         }
                     }
                 });
-
-
     }
     private void obtenerURLDescarga(StorageReference reference) {
     reference.getDownloadUrl()
             .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onSuccess(Uri uri) {
                     generarImageView(uri, true);
@@ -805,6 +915,7 @@ public class Fragment_Reserves_ABM extends Fragment{
             }
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void modificarImagenesEnStorage(Reserve reserve) {
         //StorageReference refReserva = storageReference.child("images").child(id);
         // 1) Elimino del Storage aquellas imagenes que el usuario decidio quitar (y ya estaban en el Storage).
@@ -830,6 +941,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                 .document(reserve.getId())
                 .set(reserve)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
@@ -897,8 +1009,6 @@ public class Fragment_Reserves_ABM extends Fragment{
     private boolean procesoTerminado(){
         return bdTerminado && uploadStorageTerminado && deleteStorageTerminado;
     }
-
-
     private void eliminarReservaBD(Reserve reserve) {
         //recibe una instancia de Reserve y la elimina de la db
         db.collection("Reserves")

@@ -214,5 +214,10 @@
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
 
+    <integer-array name="FILE_CHOOSER">
+        <item name="IMPORTAR_CSV">0</item>
+        <item name="IMPORTAR_IMAGENES">1</item>
+    </integer-array>
+
 
 </resources>
