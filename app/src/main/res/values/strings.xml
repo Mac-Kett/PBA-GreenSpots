@@ -44,7 +44,7 @@
     <string-array name="MUNICIPIOS">
         <item>25 de mayo</item>
         <item>Adolfo Alsina</item>
-        <item>Adolfo González Chávez</item>
+        <item>Adolfo González Chavez</item>
         <item>Alberti</item>
         <item>Almirante Brown</item>
         <item>Arrecifes</item>
@@ -54,20 +54,20 @@
         <item>Bahía Blanca</item>
         <item>Balcarce</item>
         <item>Baradero</item>
-        <item>Beníto Juárez</item>
+        <item>Beníto Juarez</item>
         <item>Berazategui</item>
         <item>Berisso</item>
         <item>Bolívar</item>
         <item>Bragado</item>
         <item>Campana</item>
         <item>Cañuelas</item>
-        <item>Capitán Sarmiento</item>
+        <item>Capitan Sarmiento</item>
         <item>Carlos Casares</item>
         <item>Carlos Tejedor</item>
         <item>Carmen De Areco</item>
         <item>Castelli</item>
         <item>Chacabuco</item>
-        <item>Chascomús</item>
+        <item>Chascomus</item>
         <item>Chivilcoy</item>
         <item>Colón</item>
         <item>Coronel Brandsen</item>
@@ -75,13 +75,13 @@
         <item>Coronel Leonardo</item>
         <item>Rosales</item>
         <item>Coronel Pringles</item>
-        <item>Coronel Suárez</item>
+        <item>Coronel Suarez</item>
         <item>Daireaux</item>
         <item>Dolores</item>
         <item>Ensenada</item>
         <item>Escobar</item>
-        <item>Esteban Echeverría</item>
-        <item>Exaltación De La Cruz</item>
+        <item>Esteban Echeverria</item>
+        <item>Exaltacion De La Cruz</item>
         <item>Ezeiza</item>
         <item>Florencio Varela</item>
         <item>Florentino Ameghino</item>
@@ -96,18 +96,18 @@
         <item>General Lavalle</item>
         <item>General Paz</item>
         <item>General Pinto</item>
-        <item>General Pueyrredón</item>
-        <item>General Rodríguez</item>
-        <item>General San Martín</item>
+        <item>General Pueyrredon</item>
+        <item>General Rodriguez</item>
+        <item>General San Martin</item>
         <item>General Viamonte</item>
         <item>General Villegas</item>
         <item>Gobierno de la Ciudad</item>
         <item>Guamini</item>
-        <item>Hipólito Yrigoyen</item>
+        <item>Hipolito Yrigoyen</item>
         <item>Hurlingham</item>
-        <item>Ituzaingó</item>
+        <item>Ituzaingo</item>
         <item>José C. Paz</item>
-        <item>Junín</item>
+        <item>Junin</item>
         <item>La Costa</item>
         <item>La Matanza</item>
         <item>La Plata</item>
@@ -116,12 +116,12 @@
         <item>Las Flores</item>
         <item>Leandro N. Alem</item>
         <item>Lincoln</item>
-        <item>Lobería</item>
+        <item>Loberia</item>
         <item>Lobos</item>
         <item>Lomas de Zamora</item>
-        <item>Luján</item>
+        <item>Lujan</item>
         <item>Magdalena</item>
-        <item>Maipú</item>
+        <item>Maipu</item>
         <item>Malvinas Argenitnas</item>
         <item>Mar Chiquita</item>
         <item>Marcos Paz</item>
@@ -130,38 +130,38 @@
         <item>Monte</item>
         <item>Monte Hermoso</item>
         <item>Moreno</item>
-        <item>Morón</item>
+        <item>Moron</item>
         <item>Navarro</item>
         <item>Necochea</item>
         <item>Nueve de Julio</item>
-        <item>Olavarría</item>
+        <item>Olavarria</item>
         <item>Patagones</item>
-        <item>Pehuajó</item>
+        <item>Pehuajo</item>
         <item>Pellegrini</item>
         <item>Pergamino</item>
         <item>Pila</item>
         <item>Pilar</item>
         <item>Pinamar</item>
-        <item>Presidente Perón</item>
-        <item>Puán</item>
+        <item>Presidente Peron</item>
+        <item>Puan</item>
         <item>Punta Indio</item>
         <item>Quilmes</item>
         <item>Ramallo</item>
         <item>Rauch</item>
         <item>Rivadavia</item>
         <item>Rojas</item>
-        <item>Roque Pérez</item>
+        <item>Roque Perez</item>
         <item>Saavedra</item>
         <item>Saladillo</item>
         <item>Salliquelo</item>
         <item>Salto</item>
-        <item>San Andrés de Giles</item>
+        <item>San Andres de Giles</item>
         <item>San Antonio de Areco</item>
         <item>San Cayetano</item>
         <item>San Fernando</item>
         <item>San Isidro</item>
-        <item>San Miguel Joaquín</item>
-        <item>San Nicolás</item>
+        <item>San Miguel Joaquin</item>
+        <item>San Nicolas</item>
         <item>San Pedro</item>
         <item>San Vicente</item>
         <item>Suipacha</item>
@@ -174,7 +174,7 @@
         <item>Tres Arroyos</item>
         <item>Tres de Febrero</item>
         <item>Tres Lomas</item>
-        <item>Vicente López</item>
+        <item>Vicente Lopez</item>
         <item>Villa Gesell</item>
         <item>Villarino</item>
     </string-array>
@@ -202,8 +202,8 @@
     </string-array>
 
     <string-array name="ZONA_DE_SERVICIOS">
-        <item>si</item>
-        <item>no</item>
+        <item>No</item>
+        <item>Si</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

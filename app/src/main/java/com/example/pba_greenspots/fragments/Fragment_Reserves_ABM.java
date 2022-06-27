@@ -69,7 +69,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Fragment_Reserves_ABM extends Fragment{
 
@@ -137,13 +139,19 @@ public class Fragment_Reserves_ABM extends Fragment{
         storageReference=storage.getReference();
         listaUrisImagenes = new ArrayList<>();
         listaUrisEliminar = new ArrayList<>();
+
         activityResultLauncherCSV = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == Activity.RESULT_OK){
+                    assert result.getData() != null;
                     ArrayList<Reserve> listaReservas = obtenerReservasNaturalesCSV(result.getData().getData());
-                    for (Reserve Reserve:listaReservas) {
-                        putReserveDB(Reserve);
+                    if (!listaReservas.isEmpty()) {
+                        for (Reserve Reserve : listaReservas) {
+                            putReserveDB(Reserve);
+                        }
+                    }else{
+                        Toast.makeText(getContext(), "Corrobore el archivo seleccionado!", Toast.LENGTH_LONG).show();
                     }
                 }else{
                     Toast.makeText(getContext(), "No se ha seleccionado ningun CSV", Toast.LENGTH_LONG).show();
@@ -468,9 +476,11 @@ public class Fragment_Reserves_ABM extends Fragment{
         });
     }
     private ArrayList<Reserve> obtenerReservasNaturalesCSV(Uri uri){
+        final int CANT_CAMPOS = 30;
         BufferedReader bufferedReader = null;
         String line;
         ArrayList<Reserve> listaReservasNaturales = new ArrayList<>();
+        ArrayList<String> listaFilasErrores = new ArrayList<>();
         Reserve reservaActual;
         try
         {
@@ -486,10 +496,19 @@ public class Fragment_Reserves_ABM extends Fragment{
                     try {
                         reservaActual = new Reserve();
 
-                        //SI ALGUNO DE LOS CAMPOS OBLIGATORIOS ES NULL NO SE DEBE SUMAR EL OBJETO A LA LISTA. ES POR ESO QUE SE LANZA UN ERROR.
-                        if(splitted[0].isEmpty() || splitted[27].isEmpty()){
-                            throw new Exception();
-                        }else {
+                        //TODOS LOS CAMPOS SON OBLIGATORIOS.
+                        if (splitted.length==CANT_CAMPOS){
+                            int z=0;
+                            while(z<splitted.length){
+                                if (splitted[z].equals("")){
+                                    throw new Exception("Complete los campos");
+                                }
+                                z++;
+                            }
+                        }else{
+                            throw  new Exception("Complete los campos");
+                        }
+
                             //SET DEL ATRIBUTO, CAMPO POR CAMPO.
                             reservaActual.setNombreUnidad(splitted[0].trim());
                             reservaActual.setInstrumentoPlanificacion(splitted[1].trim());
@@ -497,7 +516,14 @@ public class Fragment_Reserves_ABM extends Fragment{
                             reservaActual.setInstrumentoLegal(splitted[3].trim());
                             reservaActual.setAcceso(splitted[4].trim());
                             reservaActual.setImportancia(splitted[5].trim());
-                            reservaActual.setFechaCreacion(splitted[6].trim());
+
+                            if (Reserve.validarFecha(splitted[6])){
+                                reservaActual.setFechaCreacion(splitted[6].trim());
+                            }else{
+                                throw new Exception(" Error formato fecha: dd/MM/yyyy ");
+                            }
+
+
                             reservaActual.setCaracteristicasGenerales(splitted[7].trim());
                             reservaActual.setGeolocalizacion(splitted[8].trim());
                             reservaActual.setSuperficie(splitted[9].trim());
@@ -517,41 +543,46 @@ public class Fragment_Reserves_ABM extends Fragment{
                             reservaActual.setPersonal(splitted[23].trim());
 
                             //VALIDAR QUE LOS STRINGS DE ESTOS CAMPOS COINCIDAN CON ALGUN STRING DENTRO DEL ARRAYSTRING DEL RECURSO EN VALUES->STRINGS.XML
-                            //TODO Reveer que los valores del Split en determinada posición coincidan con las listas que yo puse. ADRI
-                            if (reservaActual.validarAtributo(splitted[22].trim(), requireContext().getResources().getStringArray(R.array.SENIALIZACION_DE_SENDEROS))) {
-                                reservaActual.setSenializacion(splitted[22].trim());
-                            }
-                            if (reservaActual.validarAtributo(splitted[23].trim(), requireContext().getResources().getStringArray(R.array.NIVELES_DIFICULTAD))) {
-                                reservaActual.setDificultadSenderismo(splitted[23].trim());
-                            }
-                            if (reservaActual.validarAtributo(splitted[24].trim(), requireContext().getResources().getStringArray(R.array.COSTO))) {
-                                reservaActual.setIngresoGratuitoPago(splitted[24].trim());
-                            }
-                            if (reservaActual.validarAtributo(splitted[25].trim(), requireContext().getResources().getStringArray(R.array.ZONA_DE_SERVICIOS))) {
-                                reservaActual.setZonaServicios(splitted[25].trim());
-                            }
-                            if (reservaActual.validarAtributo(splitted[26].trim(), requireContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION))) {
-                                reservaActual.setAdministracionPublicaPrivada(splitted[26].trim());
-                            }
-                            if (reservaActual.validarAtributo(splitted[27].trim(), requireContext().getResources().getStringArray(R.array.MUNICIPIOS))) {
-                                reservaActual.setMunicipio(splitted[27].trim());
-                            }else {
-                                throw new Exception();
-                            }
+                            validarSpinners(reservaActual, splitted);
+
                             listaReservasNaturales.add(reservaActual);
-                        }
+
                     }catch (Exception e){
                         Log.d(getTag(), e.getMessage());
+                        listaFilasErrores.add("Fila: "+(i+1)+": "+e.getMessage());
                     }
                 }
                 i++;
             }
             bufferedReader.close();
+            Snackbar.make(requireContext(), requireView(), listaReservasNaturales.size()+" filas importadas.", Snackbar.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return listaReservasNaturales;
     }
+
+    private void validarSpinners(Reserve reservaActual, String[] splitted) throws Exception {
+        boolean resul=true;
+        if (reservaActual.validarAtributo(splitted[24].trim(), requireContext().getResources().getStringArray(R.array.SENIALIZACION_DE_SENDEROS))
+                && reservaActual.validarAtributo(splitted[25].trim(), requireContext().getResources().getStringArray(R.array.NIVELES_DIFICULTAD))
+                && reservaActual.validarAtributo(splitted[26].trim(), requireContext().getResources().getStringArray(R.array.COSTO))
+                && reservaActual.validarAtributo(splitted[27].trim(), requireContext().getResources().getStringArray(R.array.ZONA_DE_SERVICIOS))
+                && reservaActual.validarAtributo(splitted[28].trim(), requireContext().getResources().getStringArray(R.array.MUNICIPIOS))
+                && reservaActual.validarAtributo(splitted[29].trim(), requireContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION))){
+            reservaActual.setSenializacion(splitted[24]);
+            reservaActual.setDificultadSenderismo(splitted[25]);
+            reservaActual.setIngresoGratuitoPago(splitted[26]);
+            reservaActual.setZonaServicios(splitted[27]);
+            reservaActual.setMunicipio(splitted[28]);
+            reservaActual.setAdministracionPublicaPrivada(splitted[29]);
+        }else{
+            throw new Exception("Alguno de los campos Senializacion de senderos, Niveles de dificultad, Costo, Zona de servicios, Municipios, Tipo de administracion no es compatible con lo definido");
+        }
+
+
+    }
+
     private void requestPermission(int SELECCIONADOR){
         if (ContextCompat.checkSelfPermission(
                 requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
@@ -647,7 +678,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         }
     }
 
-
     private void putImageStorage(StorageReference refImagen, InputStream inputStream, int TOTAL, Uri uriEliminar) {
         refImagen.putStream(inputStream)
                 .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -655,10 +685,13 @@ public class Fragment_Reserves_ABM extends Fragment{
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()){
                             Log.d(getTag(), "Imagen subida exitosamente: "+task.getResult().getStorage() ,null);
+                            Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
                         }else{
                             Log.d(getTag(), "Failed : "+task.getResult().getError() ,null);
+                            Toast.makeText(getContext(), "ERROR. No pudimos almacenar todas sus imagenes!", Toast.LENGTH_LONG).show();
                         }
                         listaUrisImagenes.remove(uriEliminar);
+
                         if (listaUrisImagenes.size()==0){
                             uploadStorageTerminado=true;
                             if (procesoTerminado()){
@@ -672,61 +705,16 @@ public class Fragment_Reserves_ABM extends Fragment{
                 });
     }
 
-//    private void putImageStorage(StorageReference refImagen, Uri uri, int TOTAL) {
-//        refImagen.putFile(uri)
-//                .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                        if (task.isSuccessful()){
-//                            Log.d(getTag(), "Imagen subida exitosamente: "+task.getResult().getStorage() ,null);
-//                        }else{
-//                            Log.d(getTag(), "Failed : "+task.getResult().getError() ,null);
-//                        }
-//                        listaUrisImagenes.remove(uri);
-//                        if (listaUrisImagenes.size()==0){
-//                            uploadStorageTerminado=true;
-//                            if (procesoTerminado()){
-//                                actualizarInterfazProcesoCompleto();
-//                            }
-//                        }else{
-//                            int porc = (int)100-(100*listaUrisImagenes.size()/TOTAL);
-//                            progressDialog.setProgress(porc);
-//                        }
-//                    }
-//                });
-//    }
-
     private ByteArrayInputStream getByteArrayInputStream(Bitmap bitmap){
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] bitmapData = byteArrayOutputStream.toByteArray();
         return new ByteArrayInputStream(bitmapData);
     }
-
-//    private File getBitmapFile(Bitmap bitmap, String name){
-//        File file = new File(Environment.getExternalStorageDirectory()+File.separator+name);
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//        byte[] bitmapData = byteArrayOutputStream.toByteArray();
-//
-//        try{
-//            file.createNewFile();
-//            FileOutputStream fileOutputStream = new FileOutputStream(file);
-//            fileOutputStream.write(bitmapData);
-//            fileOutputStream.flush();
-//            fileOutputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.d(getTag(), e.getMessage());
-//        }
-//        return file;
-//    }
-
     private void actualizarInterfazProcesoCompleto() {
         progressDialog.setProgress(100);
         progressDialog.dismiss();
-        Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
-//        limpiarFormulario();
+        limpiarFormulario();
         spABM.setSelection(0); //flujo alta.
     }
     private void putReserveDB(Reserve reservaNatural) {
@@ -734,27 +722,25 @@ public class Fragment_Reserves_ABM extends Fragment{
         db.collection("Reserves")
                 .document(reservaNatural.getId())
                 .set(reservaNatural)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onSuccess(Void unused) {
-                        putImagesStorage(reservaNatural);
-                        Log.d(getTag(),"SE REGISTRO CON EXITO!");
-                        listaReservasNaturales.add(reservaNatural);
-                        actualizarSpinnerReservas();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Error, Toast.LENGTH_LONG).show();
-                        Log.d(getTag(),"OCURRIO UN ERROR: "+e.getMessage(), e);
-                    }
-                })
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         bdTerminado=true;
+                        if (task.isSuccessful()){
+                            if (listaUrisImagenes.isEmpty()){
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(), getResources().getText(R.string.msg_Alta_ReservaNatural_Exito), Toast.LENGTH_SHORT).show();
+                            }else{
+                                putImagesStorage(reservaNatural);
+                            }
+                            Log.d(getTag(),"SE REGISTRO CON EXITO!");
+                            listaReservasNaturales.add(reservaNatural);
+                            actualizarSpinnerReservas();
+                        }else{
+                            Toast.makeText(getContext(), R.string.msg_Alta_ReservaNatural_Error, Toast.LENGTH_LONG).show();
+                            Log.d(getTag(),"OCURRIO UN ERROR: "+task.getException().getMessage());
+                        }
                         if (procesoTerminado()){
                             actualizarInterfazProcesoCompleto();
                         }
@@ -902,6 +888,7 @@ public class Fragment_Reserves_ABM extends Fragment{
 
     }
     private void modificarReserva() {
+
         Reserve reservaNaturalFormulario = crearReservaNaturalConDatosFormulario();
         Reserve reservaNaturalSeleccionada = (Reserve) spReserves.getSelectedItem();
         reservaNaturalFormulario.setId(reservaNaturalSeleccionada.getId());
@@ -910,9 +897,9 @@ public class Fragment_Reserves_ABM extends Fragment{
             //valido campos
             if(validarCampos()){
                 modificarEnBD(reservaNaturalFormulario);
-            }else{
-                Toast.makeText(getContext(), "No ha modificado ningun campo!", Toast.LENGTH_LONG).show();
             }
+        }else{
+            Toast.makeText(getContext(), "No ha modificado ningun campo!", Toast.LENGTH_LONG).show();
         }
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -944,11 +931,19 @@ public class Fragment_Reserves_ABM extends Fragment{
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        bdTerminado=true;
+
                         if (task.isSuccessful()){
                             modificarImagenesEnStorage(reserve);
                             //Toast.makeText(getContext(), R.string.msg_Modificacion_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
+                            if (procesoTerminado() && listaUrisImagenes.size()==0 && listaUrisEliminar.size()==0){
+                                actualizarInterfazProcesoCompleto();
+                                Toast.makeText(getContext(), getResources().getText(R.string.msg_Modificacion_Ok), Toast.LENGTH_LONG).show();
+                            }
                         }
-                    bdTerminado=true;
+
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -1011,29 +1006,26 @@ public class Fragment_Reserves_ABM extends Fragment{
     }
     private void eliminarReservaBD(Reserve reserve) {
         //recibe una instancia de Reserve y la elimina de la db
+        bdTerminado=false;
         db.collection("Reserves")
                 .document(reserve.getId())
                 .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        eliminarImagenesStorageReserva(reserve);
-                        //Toast.makeText(getContext(), R.string.msg_Baja_ReservaNatural_Exito+" "+reserve.getNombreUnidad(), Toast.LENGTH_LONG).show();
-                        listaReservasNaturales.remove(reserve);
-                        actualizarSpinnerReservas();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(getTag(), "onFailure: "+ e.getMessage());
-                        Toast.makeText(getContext(), R.string.msg_Baja_ReservaNatural_Error+" "+ reserve.getNombreUnidad() , Toast.LENGTH_LONG).show();
-                    }
-                })
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        bdTerminado=true;
+                        if (task.isSuccessful()){
+                            if (!listaUrisEliminar.isEmpty()){
+                                eliminarImagenesStorageReserva(reserve);
+                            }else{
+                                Toast.makeText(getContext(), R.string.msg_Baja_ReservaNatural_Exito, Toast.LENGTH_LONG).show();
+                            }
+                            listaReservasNaturales.remove(reserve);
+                            actualizarSpinnerReservas();
+                        }else{
+                            Log.d(getTag(), "onFailure: "+ Objects.requireNonNull(task.getException()).getMessage());
+                            Toast.makeText(getContext(), R.string.msg_Baja_ReservaNatural_Error+" "+ reserve.getNombreUnidad() , Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
     }
@@ -1094,10 +1086,16 @@ public class Fragment_Reserves_ABM extends Fragment{
                     ((EditText) editText).setError(getString(R.string.msg_campoIncompleto));
                     ((EditText) editText).setHintTextColor(Color.RED);
                     bool = false;
-                    break;
+                    //break;
                 }
             }
         }
+        if (!Reserve.validarFecha(et_fechaCreacion.getText().toString())){
+            et_fechaCreacion.setError("Formato incorrecto!");
+            et_fechaCreacion.setHintTextColor(Color.RED);
+            bool=false;
+        }
+
         return bool;
     }
     private void limpiarFormulario() {
@@ -1157,10 +1155,6 @@ public class Fragment_Reserves_ABM extends Fragment{
         imagenesLinearLayoutContainer.setVisibility(View.GONE);
         limpiarFormulario();
     }
-
-
-
-
 
 }
 

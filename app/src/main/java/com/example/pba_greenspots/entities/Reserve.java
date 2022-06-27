@@ -1,6 +1,10 @@
 package com.example.pba_greenspots.entities;
 
+import android.annotation.SuppressLint;
+
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -37,7 +41,9 @@ public class Reserve implements Serializable {
     private String personal;
     private ArrayList<String> listaImagenes;
 
-    public Reserve(){}
+    public Reserve(){
+        this.id = UUID.randomUUID().toString();
+    }
 
     public Reserve(String nombreUnidad,
                    String instrumentoPlanificaicon,
@@ -365,12 +371,26 @@ public class Reserve implements Serializable {
         boolean result=false;
         int i=0;
         while(i<stringArray.length && !result){
-                if(avalidar.equalsIgnoreCase(stringArray[i])){
+                if(avalidar.equals(stringArray[i])){
                     result=true;
                 }
                 i++;
         }
         return result;
     }
+
+    static public boolean validarFecha(String fechaCreacion){
+        boolean result=true;
+        try{
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat dmy = new SimpleDateFormat("dd/MM/yyyy");
+            dmy.setLenient(false);
+            java.util.Date fechaParseada = dmy.parse(fechaCreacion);
+        } catch (ParseException e) {
+            result=false;
+            //e.printStackTrace();
+        }
+        return result;
+    }
+
 
 }
