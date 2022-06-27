@@ -84,9 +84,10 @@ dependencies {
     implementation 'androidx.annotation:annotation'
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.google.code.gson:gson:2.8.9'
-}
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.annotation:annotation'
+}
+
 
 task wrapper(type: Wrapper){
     gradleVersion = '7.2'
