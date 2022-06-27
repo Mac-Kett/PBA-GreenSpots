@@ -60,4 +60,12 @@ public class METODOS_COMPLEMENTARIOS {
 
         return spinnerZonaServicios;
     }
+
+    public static Spinner completarSpinnerPaises(Spinner spinnerPaises, Context context){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.PAISES, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPaises.setAdapter(adapter);
+
+        return spinnerPaises;
+    }
 }
