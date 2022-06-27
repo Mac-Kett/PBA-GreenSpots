@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,11 +16,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,13 +47,17 @@ import androidx.fragment.app.Fragment;
 import com.example.pba_greenspots.ImageResizer;
 import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.R;
+import com.example.pba_greenspots.entities.Gestor;
 import com.example.pba_greenspots.entities.Reserve;
+import com.example.pba_greenspots.entities.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.common.primitives.Bytes;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -58,6 +65,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -69,8 +77,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Fragment_Reserves_ABM extends Fragment{
@@ -128,6 +138,7 @@ public class Fragment_Reserves_ABM extends Fragment{
     private ProgressDialog progressDialog;
     private int contador;
     private boolean bdTerminado,uploadStorageTerminado,deleteStorageTerminado;
+    private Gestor user;
 
     public Fragment_Reserves_ABM() {
         // Required empty public constructor
@@ -139,7 +150,12 @@ public class Fragment_Reserves_ABM extends Fragment{
         storageReference=storage.getReference();
         listaUrisImagenes = new ArrayList<>();
         listaUrisEliminar = new ArrayList<>();
-
+        user= obtenerUser();
+        //Variables para saber si completaron los procesos upload y delete.
+        contador=0;
+        bdTerminado=true;
+        uploadStorageTerminado=true;
+        deleteStorageTerminado=true;
         activityResultLauncherCSV = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -158,7 +174,6 @@ public class Fragment_Reserves_ABM extends Fragment{
                 }
             }
         });
-
         activityResultLauncherImagenes = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -177,7 +192,6 @@ public class Fragment_Reserves_ABM extends Fragment{
                 }
             }
         });
-
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
             @Override
             public void onActivityResult(Boolean result) {
@@ -190,6 +204,89 @@ public class Fragment_Reserves_ABM extends Fragment{
         });
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view= inflater.inflate(R.layout.fragment_reserves_abm, container, false);
+        scrollView = view.findViewById(R.id.scrollView);
+        formLinearLayout = view.findViewById(R.id.formLinearLayout);
+        imagenesLinearLayoutContainer = view.findViewById(R.id.imagenesLayoutContainer);
+        tv_ImagenesDuplicadas = view.findViewById(R.id.tv_ImagenesDuplicadas);
+
+        btnConfirmar = view.findViewById(R.id.btnConfirmar);
+        btnModificar = view.findViewById(R.id.btnModificar);
+        btnEliminar = view.findViewById(R.id.btnEliminar);
+        btnImportarCSV = view.findViewById(R.id.btnImportarCSV);
+        btnImagenes = view.findViewById(R.id.btnImagenes);
+
+        spABM = view.findViewById(R.id.spABM);
+        spReserves = view.findViewById(R.id.spReservas);
+        spMunicipios = view.findViewById(R.id.spMunicipios);
+        spTipoAdministracion = view.findViewById(R.id.spTipoAdministracion);
+        spCosto = view.findViewById(R.id.spCosto);
+        spNivelesDificultad = view.findViewById(R.id.spNivelesDificultad);
+        spSenializacionServicios = view.findViewById(R.id.spSenializacionServicios);
+        spZonaServicios = view.findViewById(R.id.spZonaServicios);
+
+        instanciarEditTextsFormulario(view);
+        cargarArrayListEditTextsFormulario();
+        formatearProgressDialog();
+        configuracionEventosListenersBotones();
+        METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerTipoAdministracion(spTipoAdministracion, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerCosto(spCosto, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerNivelesDificultad(spNivelesDificultad, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerSenializacionServicios(spSenializacionServicios, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerZonaServicios(spZonaServicios, requireContext());
+
+
+        spMunicipios.setSelection(Arrays.asList(getResources().getStringArray(R.array.MUNICIPIOS)).indexOf(user.getMunicipio()));
+        spMunicipios.setEnabled(false);
+
+        spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spABM.getSelectedItem().equals(getResources().getStringArray(R.array.ABM)[2])){
+                    cargarFormularioDeReserva((Reserve)spReserves.getSelectedItem());
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spABM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        flujoAlta();
+                        break;
+                    case 1:
+                        flujoBaja();
+                        break;
+                    case 2:
+                        flujoModificacion();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spABM.setBackgroundColor(Color.RED);
+            }
+        });
+
+        // OBTENGO RESERVAS NATURALES Y LAS CARGO AL SPINNER CORRESPONDIENTE
+        getReservasNaturalesBDPorMunicipioGestor();
+
+        return view;
+    }
+    private Gestor obtenerUser() {
+        Gson gson = new Gson();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        String userString = sharedPreferences.getString("user", "");
+        return gson.fromJson(userString, Gestor.class);
+    }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void RemoverInformarDuplicados(ArrayList<Uri> listaUrisDeEsteResult) {
         if (!tv_ImagenesDuplicadas.getText().toString().isEmpty()){
@@ -283,88 +380,32 @@ public class Fragment_Reserves_ABM extends Fragment{
             listaUrisImagenes.remove(uriActual);
         }
     }
+//    private void getAllReservasNaturalesBD() {
+//        db.collection("Reserves")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()){
+//                            listaReservasNaturales=new ArrayList<Reserve>();
+//                            Reserve reservaNaturalActual;
+//                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+//                                reservaNaturalActual = documentSnapshot.toObject(Reserve.class);
+//                                listaReservasNaturales.add(reservaNaturalActual);
+//                                Log.d(getTag(), String.valueOf(listaReservasNaturales));
+//                            }
+//                            actualizarSpinnerReservas();
+//                        }else{
+//                            Log.d(getTag(), "ERROR OBTENIENDO DATA!", task.getException());
+//                            Toast.makeText(getContext(), "ERROR! No pudimos completar la lista de reservas", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
+//    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_reserves_abm, container, false);
-        scrollView = view.findViewById(R.id.scrollView);
-        formLinearLayout = view.findViewById(R.id.formLinearLayout);
-        imagenesLinearLayoutContainer = view.findViewById(R.id.imagenesLayoutContainer);
-        tv_ImagenesDuplicadas = view.findViewById(R.id.tv_ImagenesDuplicadas);
-
-        btnConfirmar = view.findViewById(R.id.btnConfirmar);
-        btnModificar = view.findViewById(R.id.btnModificar);
-        btnEliminar = view.findViewById(R.id.btnEliminar);
-        btnImportarCSV = view.findViewById(R.id.btnImportarCSV);
-        btnImagenes = view.findViewById(R.id.btnImagenes);
-
-        spABM = view.findViewById(R.id.spABM);
-        spReserves = view.findViewById(R.id.spReservas);
-        spMunicipios = view.findViewById(R.id.spMunicipios);
-        spTipoAdministracion = view.findViewById(R.id.spTipoAdministracion);
-        spCosto = view.findViewById(R.id.spCosto);
-        spNivelesDificultad = view.findViewById(R.id.spNivelesDificultad);
-        spSenializacionServicios = view.findViewById(R.id.spSenializacionServicios);
-        spZonaServicios = view.findViewById(R.id.spZonaServicios);
-
-        instanciarEditTextsFormulario(view);
-        cargarArrayListEditTextsFormulario();
-        formatearProgressDialog();
-        configuracionEventosListenersBotones();
-        METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
-        METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
-        METODOS_COMPLEMENTARIOS.completarSpinnerTipoAdministracion(spTipoAdministracion, requireContext());
-        METODOS_COMPLEMENTARIOS.completarSpinnerCosto(spCosto, requireContext());
-        METODOS_COMPLEMENTARIOS.completarSpinnerNivelesDificultad(spNivelesDificultad, requireContext());
-        METODOS_COMPLEMENTARIOS.completarSpinnerSenializacionServicios(spSenializacionServicios, requireContext());
-        METODOS_COMPLEMENTARIOS.completarSpinnerZonaServicios(spZonaServicios, requireContext());
-
-        //Variables para saber si terminaron bien los procesos de upload y delete.
-        contador=0;
-        bdTerminado=true;
-        uploadStorageTerminado=true;
-        deleteStorageTerminado=true;
-
-        spReserves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spABM.getSelectedItem().equals(getResources().getStringArray(R.array.ABM)[2])){
-                    cargarFormularioDeReserva((Reserve)spReserves.getSelectedItem());
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        spABM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        flujoAlta();
-                        break;
-                    case 1:
-                        flujoBaja();
-                        break;
-                    case 2:
-                        flujoModificacion();
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                spABM.setBackgroundColor(Color.RED);
-            }
-        });
-
-        // OBTENGO RESERVAS NATURALES Y LAS CARGO AL SPINNER CORRESPONDIENTE
-        getReservasNaturalesBD();
-
-        return view;
-    }
-    private void getReservasNaturalesBD() {
+    private void getReservasNaturalesBDPorMunicipioGestor() {
         db.collection("Reserves")
+                .whereEqualTo("municipio", user.getMunicipio())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -385,6 +426,7 @@ public class Fragment_Reserves_ABM extends Fragment{
                     }
                 });
     }
+
     //Éste Array es para el formulario (Alta, Baja, Mod)
     private void cargarArrayListEditTextsFormulario() {
         listaEditTexts = new ArrayList<>();

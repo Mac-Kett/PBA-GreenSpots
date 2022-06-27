@@ -14,15 +14,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.pba_greenspots.NavigationActivity;
 import com.example.pba_greenspots.R;
+import com.example.pba_greenspots.entities.Admin;
+import com.example.pba_greenspots.entities.Gestor;
 import com.example.pba_greenspots.entities.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
@@ -35,9 +39,18 @@ public class Fragment_LogIn extends Fragment {
     private Button btnEntrar;
     private EditText etMail, etPass;
     private Usuario user;
+    private SharedPreferences sharedPreferences;
+    private Gson gson;
 
     public Fragment_LogIn() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        gson = new Gson();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,16 +79,8 @@ public class Fragment_LogIn extends Fragment {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 try {
                                     if (task.isSuccessful()) {
-                                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        Gson gson = new Gson();
-
                                         obtenerUsuarioFirebaseFiresStore(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-                                        String jsonUser = gson.toJson(user);
-                                        editor.putString("user", jsonUser).commit();
-                                        Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(getActivity(), NavigationActivity.class));
-                                        requireActivity().finish();
+
                                     } else {
                                         Toast.makeText(getContext(), "No se ha podido iniciar sesion!", Toast.LENGTH_LONG).show();
                                     }
@@ -107,7 +112,25 @@ public class Fragment_LogIn extends Fragment {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         //si es succesfull si o si tuvo que haber encontrado al menos 1 item. El limit(1) hace que me retorne uno solo.
-                        user = task.getResult().getDocuments().get(0).toObject(Usuario.class);
+                        String typeUser = (String)task.getResult().getDocuments().get(0).get("typeUser");
+
+                        switch (Objects.requireNonNull(typeUser)){
+                            case "1":
+                                user = task.getResult().getDocuments().get(0).toObject(Usuario.class);
+                                break;
+                            case "2":
+                                user = task.getResult().getDocuments().get(0).toObject(Gestor.class);
+                                break;
+                            case "3":
+                                user = task.getResult().getDocuments().get(0).toObject(Admin.class);
+                        }
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        String jsonUser = gson.toJson(user);
+                        editor.putString("user", jsonUser).commit();
+                        Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getActivity(), NavigationActivity.class));
+                        requireActivity().finish();
                     }else{
                         Log.d(getTag(), "No se ha podido completar la carga del usuario", null);
                     }

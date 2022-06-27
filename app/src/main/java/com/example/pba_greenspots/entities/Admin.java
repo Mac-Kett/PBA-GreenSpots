@@ -5,6 +5,7 @@ public class Admin extends Gestor{
         super(municipio);
     }
 
+    public Admin(){}
     public Admin(String id, String nombre, String mail, String password, String pais, String typeUser, String municipio) {
         super(id, nombre, mail, password, pais, typeUser, municipio);
     }
