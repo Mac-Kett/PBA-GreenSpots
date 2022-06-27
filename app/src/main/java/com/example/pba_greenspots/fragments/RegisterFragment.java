@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.NavigationActivity;
 import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.Usuario;
@@ -30,13 +32,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 public class RegisterFragment extends Fragment {
 
-    private EditText nombreCompleto, email, contrasena, pais;
+    private EditText nombreCompleto, email, contrasena;
+    private Spinner spPaises;
     private Button btnRegister;
     private final FirebaseAuth mAuth= FirebaseAuth.getInstance();
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -64,8 +63,10 @@ public class RegisterFragment extends Fragment {
         nombreCompleto = v.findViewById(R.id.nombre_registro);
         email = v.findViewById(R.id.email_registro);
         contrasena = v.findViewById(R.id.contrasenia_registro);
-        pais = v.findViewById(R.id.pais_registro);
+        spPaises = v.findViewById(R.id.spPaises);
         btnRegister = v.findViewById(R.id.btnRegister);
+
+        METODOS_COMPLEMENTARIOS.completarSpinnerPaises(spPaises, requireContext());
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +82,8 @@ public class RegisterFragment extends Fragment {
         String nombre = nombreCompleto.getText().toString().trim();
         String mail = email.getText().toString().trim();
         String contra =contrasena.getText().toString().trim();
-        String country = pais.getText().toString().trim();
+       // String country = pais.getText().toString().trim();
+        String country = spPaises.getSelectedItem().toString().trim();
         String typeUser = "1";
 
         mAuth.createUserWithEmailAndPassword(mail, contra)
@@ -93,16 +95,7 @@ public class RegisterFragment extends Fragment {
                             assert user != null;
                             idUser = user.getUid();
                             Usuario usuario = new Usuario(idUser,nombre,mail, contra, country, typeUser);
-                            //Log.d("usuario", {usuario})
-
                             DocumentReference dr = db.collection("Users").document(idUser);
-                           /* Map<String, Object> datauser = new HashMap<>();
-                            datauser.put("id", idUser);
-                            datauser.put("nombre", usuario.getNombre().toString());
-                            datauser.put("mail", usuario.getMail().toString());
-                            datauser.put("password", usuario.getPassword().toString());
-                            datauser.put("pais", usuario.getPais().toString());
-                            datauser.put("tipo", usuario.getTypeUser().toString());*/
                             dr.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
@@ -118,44 +111,10 @@ public class RegisterFragment extends Fragment {
                                     Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
                                 }
                             });
-
-
-
-                          /*  db.collection("Users").add(usuario).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentReference> task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
-
-                                        startActivity(new Intent(getActivity(), NavigationActivity.class));
-                                        requireActivity().finish();
-                                    }else{
-                                        Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });*/
-//                                   .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                                    .setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<Void> task) {
-//                                            if (task.isSuccessful()){
-//                                                Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
-//                                            } else {
-//                                                Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
-//                                            }
-//                                        }
-//                                    });
-
                         } else{
                             Toast.makeText(getActivity(),task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
-
     }
-
-
-
-
 }

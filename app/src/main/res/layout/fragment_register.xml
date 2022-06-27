@@ -16,22 +16,16 @@
         android:orientation="vertical"
         >
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="35dp"
-            android:foregroundGravity="center_horizontal"
-            app:cardCornerRadius="100dp">
+
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:contentDescription="@string/logogreenspots"
                 android:src="@drawable/greenspot_logo"
                 tools:ignore="ImageContrastCheck" />
 
-        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,10 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
             app:cardCornerRadius="15dp">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,58 +64,52 @@
                 android:orientation="vertical"
                 android:padding="15dp">
 
-
                 <EditText
                     android:id="@+id/nombre_registro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
+                    android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/nombre"
-                    android:textColor="@color/black"
                     android:inputType="textPersonName"
                     android:minHeight="50dp"
-                    android:textColorHint="#546E7A"
-                    android:autofillHints="" />
+                    android:textColor="@color/black"
+                    android:textColorHint="#546E7A" />
 
                 <EditText
                     android:id="@+id/email_registro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
+                    android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/email"
-                    android:textColor="@color/black"
                     android:inputType="textEmailAddress"
                     android:minHeight="50dp"
-                    android:textColorHint="#546E7A"
-                    android:autofillHints="" />
+                    android:textColor="@color/black"
+                    android:textColorHint="#546E7A" />
 
                 <EditText
                     android:id="@+id/contrasenia_registro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
+                    android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/contrasenia"
-                    android:textColor="@color/black"
                     android:inputType="textPassword"
                     android:minHeight="50dp"
-                    android:textColorHint="#546E7A"
-                    android:autofillHints="" />
+                    android:textColor="@color/black"
+                    android:textColorHint="#546E7A" />
 
-                <EditText
-                    android:id="@+id/pais_registro"
+                <Spinner
+                    android:id="@+id/spPaises"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:ems="10"
-                    android:hint="@string/pais"
-                    android:textColor="@color/black"
-                    android:inputType="textPersonName"
+                    android:layout_marginBottom="5dp"
                     android:minHeight="50dp"
-                    android:textColorHint="#546E7A"
-                    android:autofillHints="" />
+                    android:visibility="visible" />
 
                 <Button
                     android:id="@+id/btnRegister"
