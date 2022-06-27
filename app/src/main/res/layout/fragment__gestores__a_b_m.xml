@@ -13,14 +13,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical"/>
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true">
+            android:fillViewport="true"/>
 
             <LinearLayout
                 android:id="@+id/formLinearLayout"
@@ -110,9 +109,6 @@
                     android:hint="Contraseña"
                     android:inputType="text" />
 
-            </LinearLayout>
-        </ScrollView>
-
         <Button
             android:id="@+id/btnConfirmar"
             android:layout_width="wrap_content"
@@ -138,4 +134,4 @@
             android:visibility="gone" />
     </LinearLayout>
 </ScrollView>
-    </FrameLayout>
+</FrameLayout>
