@@ -4,9 +4,11 @@ public class Gestor extends Usuario{
     private String municipio;
 
     public Gestor(String municipio) {
+        super();
         this.municipio = municipio;
     }
 
+    public Gestor(){}
     public Gestor(String id, String nombre, String mail, String password, String pais, String typeUser, String municipio) {
         super(id, nombre, mail, password, pais, typeUser);
         this.municipio = municipio;
