@@ -24,14 +24,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-50dp"
+            android:layout_marginTop="-60dp"
             >
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="170dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:cardCornerRadius="15dp"
-                android:elevation="15dp"
                 android:layout_gravity="center"
                 android:backgroundTint="#00000000">
 
@@ -43,28 +42,23 @@
                         android:id="@+id/reserva_icon"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:src="@drawable/ic_reserve_round"
                         android:layout_centerHorizontal="true"
-                        />
+                        android:src="@drawable/ic_reserve_round" />
 
                     <TextView
                         android:id="@+id/nameReserve"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/reserva_icon"
-                        android:layout_marginLeft="115dp"
-                        android:layout_marginBottom="20dp"
-                        android:paddingTop="1dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="3dp"
+                        android:padding="2dp"
                         android:text="Nombre reserva"
                         android:textColor="#393838"
-                        android:textSize="25dp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
-
-
-
-
             </androidx.cardview.widget.CardView>
 
 

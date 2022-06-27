@@ -7,13 +7,15 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
+    android:background="#F4F3ED"
     tools:context=".fragments.LogOutFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_margin="20dp"
         android:elevation="15dp"
-        android:backgroundTint="@color/colorPrimario"
+        android:backgroundTint="@color/colorAcent"
         app:cardCornerRadius="30dp"
         >
 
@@ -23,7 +25,7 @@
             android:gravity="center"
             android:layout_marginTop="35dp"
             android:textStyle="italic"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="25sp"
             android:text="@string/msg_cierre"/>
         <LinearLayout
@@ -46,7 +48,7 @@
                 android:id="@+id/logoutAceptar"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:backgroundTint="#314BF3"
+                android:backgroundTint="@color/colorPrimario"
                 android:onClick="onClickLogOut"
                 android:textColor="@color/white"
                 android:text="@string/aceptar" />
