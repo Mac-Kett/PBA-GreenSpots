@@ -1,7 +1,9 @@
 package com.example.pba_greenspots.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.util.Objects;
 
@@ -63,7 +66,13 @@ public class Fragment_LogIn extends Fragment {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 try {
                                     if (task.isSuccessful()) {
+                                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        Gson gson = new Gson();
+
                                         obtenerUsuarioFirebaseFiresStore(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+                                        String jsonUser = gson.toJson(user);
+                                        editor.putString("user", jsonUser).commit();
                                         Toast.makeText(getContext(), "Bienvenido!", Toast.LENGTH_LONG).show();
                                         startActivity(new Intent(getActivity(), NavigationActivity.class));
                                         requireActivity().finish();

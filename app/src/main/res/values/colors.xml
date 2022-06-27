@@ -20,5 +20,13 @@
 
 
 
+
+
+    <color name="superior_turquoise">#7EF3C4</color>
+    <color name="final_ligth_blue">#81D8F1</color>
+    <color name="apple_green">#81D8F1</color>
+    <color name="less_superior_turquoise">#7EF3C4</color>
+
+
     <color name="default_hint">#808080</color>
 </resources>
