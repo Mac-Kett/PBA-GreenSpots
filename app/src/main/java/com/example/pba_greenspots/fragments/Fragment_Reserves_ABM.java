@@ -587,6 +587,8 @@ public class Fragment_Reserves_ABM extends Fragment{
                             //VALIDAR QUE LOS STRINGS DE ESTOS CAMPOS COINCIDAN CON ALGUN STRING DENTRO DEL ARRAYSTRING DEL RECURSO EN VALUES->STRINGS.XML
                             validarSpinners(reservaActual, splitted);
 
+                            validarMunicipioGestor(reservaActual, splitted);
+
                             listaReservasNaturales.add(reservaActual);
 
                     }catch (Exception e){
@@ -604,22 +606,28 @@ public class Fragment_Reserves_ABM extends Fragment{
         return listaReservasNaturales;
     }
 
+    private void validarMunicipioGestor(Reserve reservaActual, String[] splitted) throws Exception {
+        if (splitted[28].equals(user.getMunicipio())) {
+            reservaActual.setMunicipio(splitted[28]);
+        }else {
+            throw new Exception("municipio invalido");
+        }
+    }
+
+
     private void validarSpinners(Reserve reservaActual, String[] splitted) throws Exception {
-        boolean resul=true;
         if (reservaActual.validarAtributo(splitted[24].trim(), requireContext().getResources().getStringArray(R.array.SENIALIZACION_DE_SENDEROS))
                 && reservaActual.validarAtributo(splitted[25].trim(), requireContext().getResources().getStringArray(R.array.NIVELES_DIFICULTAD))
                 && reservaActual.validarAtributo(splitted[26].trim(), requireContext().getResources().getStringArray(R.array.COSTO))
                 && reservaActual.validarAtributo(splitted[27].trim(), requireContext().getResources().getStringArray(R.array.ZONA_DE_SERVICIOS))
-                && reservaActual.validarAtributo(splitted[28].trim(), requireContext().getResources().getStringArray(R.array.MUNICIPIOS))
                 && reservaActual.validarAtributo(splitted[29].trim(), requireContext().getResources().getStringArray(R.array.TIPO_ADMINISTRACION))){
             reservaActual.setSenializacion(splitted[24]);
             reservaActual.setDificultadSenderismo(splitted[25]);
             reservaActual.setIngresoGratuitoPago(splitted[26]);
             reservaActual.setZonaServicios(splitted[27]);
-            reservaActual.setMunicipio(splitted[28]);
             reservaActual.setAdministracionPublicaPrivada(splitted[29]);
         }else{
-            throw new Exception("Alguno de los campos Senializacion de senderos, Niveles de dificultad, Costo, Zona de servicios, Municipios, Tipo de administracion no es compatible con lo definido");
+            throw new Exception("Alguno de los campos Senializacion de senderos, Niveles de dificultad, Costo, Zona de servicios, Tipo de administracion no es compatible con lo definido");
         }
 
 
