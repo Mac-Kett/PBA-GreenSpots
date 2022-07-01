@@ -11,7 +11,7 @@
     <color name="colorPrimario">#67920b</color>
     <color name="colorPrimarioOscuro">#2A4A04</color>
     <color name="colorAcent"> #BDE182 </color>
-
+    <color name="light_yellow">#FFF7AE</color>
     <color name="green_dark">#388E3C</color>
     <color name="green_normal">#4B612B</color>
     <color name="green_light">#3a9188</color>
