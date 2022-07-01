@@ -31,20 +31,29 @@
                 android:id="@+id/lyImagesContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5sp"
+                android:layout_marginHorizontal="5dp"
                 android:orientation="horizontal">
 
             </LinearLayout>
         </HorizontalScrollView>
 
-        <ImageView
-            android:id="@+id/ivImage"
-            android:layout_width="380dp"
-            android:layout_height="250dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvContenedorImagen"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
             android:layout_gravity="center"
             android:layout_margin="5dp"
-            android:background="@drawable/border_black_round"
-            />
+            android:layout_marginHorizontal="10dp"
+            app:cardCornerRadius="20dp"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+
+                />
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 

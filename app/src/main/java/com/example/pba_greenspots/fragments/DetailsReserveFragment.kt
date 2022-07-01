@@ -4,10 +4,8 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Paint
-import android.graphics.Typeface
+import android.content.res.ColorStateList
+import android.graphics.*
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
@@ -28,6 +26,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.pba_greenspots.R
 import com.example.pba_greenspots.entities.Reserve
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.collection.LLRBNode
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
@@ -116,10 +115,8 @@ class DetailsReserveFragment : Fragment() {
         superficie.text = reserve.superficie
 
         ivImage = v.findViewById(R.id.ivImage)
-        ivImage.clipToOutline=true
 
         //trato las imagenes
-        ivImage.visibility = View.GONE
         obtenerImagenes(reserve)
 
 
@@ -237,21 +234,22 @@ class DetailsReserveFragment : Fragment() {
     }
 
     private fun generarImagen(uri: Uri) {
-        var imageView:ImageView = ImageView(context)
-        var params = LinearLayout.LayoutParams(300, 200)
+        val imageView:ImageView = ImageView(context)
+        picasso
+                .load(uri)
+                //.fit()
+                //.resize(500,300)
+                .fit()
+                //.onlyScaleDown()
+                .placeholder(com.google.android.material.R.drawable.mtrl_ic_error)
+                .into(imageView)
+
+        var params = LinearLayout.LayoutParams(350, 300)
         params.setMargins(5)
         params.gravity = Gravity.CENTER
         imageView.setBackgroundResource(R.drawable.border_black_round)
         imageView.clipToOutline = true
         imageView.layoutParams = params
-        var progressBar:ProgressBar = ProgressBar(context)
-
-
-        picasso
-                .load(uri)
-                .fit()
-                .placeholder(com.google.android.material.R.drawable.mtrl_ic_error)
-                .into(imageView)
 
         imageView.setOnClickListener {
             var circularProgressDrawable:CircularProgressDrawable
@@ -260,9 +258,11 @@ class DetailsReserveFragment : Fragment() {
             circularProgressDrawable.centerRadius = 30f
             circularProgressDrawable.start()
 
-            ivImage.visibility = View.VISIBLE
+            cvContenedorImagen.visibility = View.VISIBLE
             picasso.load(uri)
-                    .fit()
+                    .resize(700,500)
+                    .onlyScaleDown()
+                    .centerInside()
                     .placeholder(circularProgressDrawable)
                     .into(ivImage)
         }
