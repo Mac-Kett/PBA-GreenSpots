@@ -155,7 +155,11 @@ class ReservesFragment : Fragment() {
 
             }
             //Le seteo al recycler la lista de reservas ya filtrada.
-            recycler.adapter = ReserveAdapter(reservasMostrar){pos->
+        if (reservasMostrar.isEmpty()){
+            Toast.makeText(context, "No se encontraron resultados!", Toast.LENGTH_LONG).show()
+        }
+
+        recycler.adapter = ReserveAdapter(reservasMostrar){pos->
                 onItemClick(pos)
             }
 

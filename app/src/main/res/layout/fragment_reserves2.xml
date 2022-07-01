@@ -22,10 +22,11 @@
 
         <SearchView
             android:id="@+id/svBuscador"
-            android:layout_width="260dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:background="@color/colorAcent"
+            android:background="@drawable/border_black_round"
+            android:backgroundTint="@color/colorAcent"
             />
 
         <TextView
@@ -33,17 +34,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/svBuscador"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:padding="5dp"
             android:text="Busqueda Avanzada"
-            android:textSize="16dp" />
+            android:textSize="14sp"
+            android:background="@drawable/border_black_round"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/btnBuscar"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/svBuscador"
@@ -52,7 +55,10 @@
             android:text="Buscar"
             android:backgroundTint="@color/colorPrimario"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="14sp"
+            android:layout_alignParentRight="true"
+            android:textAllCaps="false"
+            android:background="@drawable/border_black_round"/>
 
     </RelativeLayout>
 
@@ -62,6 +68,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
+        android:background="@drawable/border_black_round"
         app:layout_constraintTop_toBottomOf="@id/linearLayout">
 
         <LinearLayout
@@ -74,14 +81,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="Municipio" />
-
+                android:text="Municipio"
+                android:layout_margin="2dp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
             <Spinner
                 android:id="@+id/spnMunicipio"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:visibility="visible"
-                />
+                android:layout_margin="2dp"
+                android:textAlignment="viewEnd"/>
 
         </LinearLayout>
 
@@ -96,12 +108,17 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="Señalizacion de senderos" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <Spinner
                 android:id="@+id/spnSenializacionSenderos"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:visibility="visible"
+                android:textAlignment="viewEnd"
                 />
 
         </LinearLayout>
@@ -117,12 +134,17 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="Dificultad Senderos" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <Spinner
                 android:id="@+id/spnDificultadSenderismo"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:visibility="visible"
+                android:textAlignment="viewEnd"
                 />
 
         </LinearLayout>
@@ -138,12 +160,17 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="$" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <Spinner
                 android:id="@+id/spnGratuitoPago"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:visibility="visible"
+                android:textAlignment="viewEnd"
                 />
 
         </LinearLayout>
@@ -159,12 +186,17 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="Tiene zona de servicios" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <Spinner
                 android:id="@+id/spnZonaServicios"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:visibility="visible"
+                android:textAlignment="viewEnd"
                 />
 
         </LinearLayout>
@@ -180,12 +212,18 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="Tipo de administracion" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <Spinner
                 android:id="@+id/spnTipoAdministracion"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:visibility="visible"
+                android:textAlignment="viewEnd"
+
                 />
 
         </LinearLayout>
