@@ -15,14 +15,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,15 +47,11 @@ import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.Gestor;
 import com.example.pba_greenspots.entities.Reserve;
-import com.example.pba_greenspots.entities.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.common.primitives.Bytes;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -72,13 +66,9 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -1148,15 +1138,17 @@ public class Fragment_Reserves_ABM extends Fragment{
 
         return bool;
     }
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void limpiarFormulario() {
 
         for (Object o: listaEditTexts) {
             if(o instanceof EditText) {
-                ((EditText) o).setHintTextColor(getResources().getColor(R.color.default_hint));
+                ((EditText) o).setHintTextColor(getResources().getColor(R.color.colorPrimario));
                 ((EditText) o).setText("");
             } else {
-                ((Spinner) o).setBackgroundColor(getResources().getColor(R.color.default_hint));
                 ((Spinner) o).setSelection(0);
+                ((Spinner) o).setBackground(getResources().getDrawable(R.drawable.border_green_round));
+                ((Spinner) o).setPadding(0, 15, 0, 15);
             }
         }
         imagenesLinearLayoutContainer.removeAllViews();
