@@ -6,7 +6,6 @@
     android:gravity="clip_vertical"
     android:padding="15dp"
     android:orientation="vertical"
-    android:background="@drawable/parque2"
     >
 
 </LinearLayout>

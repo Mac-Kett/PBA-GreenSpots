@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAcent"
-    tools:context=".fragments.Fragment_Inicio" >
+    tools:context=".fragments.Fragment_Inicio"
+    android:layout_gravity="center">
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -40,8 +41,9 @@
                 android:text="Iniciar Sesion"
                 android:layout_marginRight="15dp"
                 android:padding="15dp"
-                android:textColor="@color/white"
-                android:background="@color/colorPrimario"/>
+                android:textColor="@color/light_yellow"
+                android:background="@drawable/border_black_round"
+                android:backgroundTint="@color/colorPrimario"/>
 
 
             <Button
@@ -50,9 +52,11 @@
                 android:layout_height="wrap_content"
                 android:padding="15dp"
                 android:text="Registrarse"
-                android:textColor="@color/white"
-                android:background="@color/default_hint"
-                android:layout_toRightOf="@id/btnLogin"/>
+                android:textColor="@color/colorPrimario"
+                android:backgroundTint="@color/light_yellow"
+                android:background="@drawable/border_black_round"
+                android:layout_toRightOf="@id/btnLogin"
+                />
 
 
         </LinearLayout>

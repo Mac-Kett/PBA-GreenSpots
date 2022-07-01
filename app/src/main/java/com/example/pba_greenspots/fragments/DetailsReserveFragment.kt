@@ -2,54 +2,61 @@ package com.example.pba_greenspots.fragments
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Paint
-import android.graphics.Typeface
+import android.content.res.ColorStateList
+import android.graphics.*
 import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.text.TextPaint
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.*
+import androidx.cardview.widget.CardView
 
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.pba_greenspots.R
 import com.example.pba_greenspots.entities.Reserve
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.collection.LLRBNode
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_details_reserve.*
 import java.io.File
 import java.io.FileOutputStream
 
 
 class DetailsReserveFragment : Fragment() {
 
-    var db = Firebase.firestore
-    private var listaDB : MutableList<Reserve> = mutableListOf()
-    lateinit var v : View
-    lateinit var name : TextView
-    lateinit var muni : TextView
-    lateinit var acceso : TextView
-    lateinit var pubPriv : TextView
-    lateinit var mail : TextView
-    lateinit var telefono: TextView
-    lateinit var actividades : TextView
-    lateinit var entrada : TextView
-    lateinit var zonaServicios : TextView
-    lateinit var horario : TextView
-    lateinit var flora : TextView
-    lateinit var fauna : TextView
-    lateinit var geologia : TextView
-    lateinit var superficie : TextView
-
-    lateinit var btnPdf : Button
-
+    //private var db = Firebase.firestore
+    private var picasso = Picasso.get()
+    //private var listaDB : MutableList<Reserve> = mutableListOf()
+    private lateinit var v : View
+    private lateinit var name : TextView
+    private lateinit var muni : TextView
+    private lateinit var acceso : TextView
+    private lateinit var pubPriv : TextView
+    private lateinit var mail : TextView
+    private lateinit var telefono: TextView
+    private lateinit var actividades : TextView
+    private lateinit var entrada : TextView
+    private lateinit var zonaServicios : TextView
+    private lateinit var horario : TextView
+    private lateinit var flora : TextView
+    private lateinit var fauna : TextView
+    private lateinit var geologia : TextView
+    private lateinit var superficie : TextView
+    private lateinit var btnPdf : Button
+    private lateinit var ivImage : ImageView
 
     companion object {
         fun newInstance() = DetailsReserveFragment()
@@ -106,6 +113,12 @@ class DetailsReserveFragment : Fragment() {
         fauna.text = reserve.fauna
         geologia.text = reserve.geologia
         superficie.text = reserve.superficie
+
+        ivImage = v.findViewById(R.id.ivImage)
+
+        //trato las imagenes
+        obtenerImagenes(reserve)
+
 
         //pregunto si estan los permisos
         if(checkPermission()) {
@@ -186,6 +199,76 @@ class DetailsReserveFragment : Fragment() {
 
         pdfDocument.close()
 
+    }
+
+    private fun obtenerImagenes(reserve:Reserve){
+        val refReserve = FirebaseStorage.getInstance().getReference().child("images").child(reserve.id)
+
+        refReserve.listAll()
+                .addOnCompleteListener(OnCompleteListener {
+                    if (it.isSuccessful){
+                        var listReferences:List<StorageReference> = it.result.items
+                        if (listReferences.isNotEmpty()){
+                            for (ref:StorageReference in listReferences){
+                                obtenerDownloadURL(ref)
+                            }
+                        }
+                    }else{
+                        lySuperiorImagenes.visibility = View.GONE
+                        Toast.makeText(context, "Ha ocurrido un error obteniendo las imagenes!", Toast.LENGTH_LONG).show()
+                        Log.d(tag, it.exception?.message, null)
+                    }
+                })
+    }
+
+    private fun obtenerDownloadURL(ref: StorageReference) {
+        ref.downloadUrl
+                .addOnCompleteListener(OnCompleteListener {
+                    if (it.isSuccessful) {
+                        generarImagen(it.result)
+                    }else{
+                        Toast.makeText(context, "Ha ocurrido un error descargando la imagen: "+ref, Toast.LENGTH_LONG).show()
+                        Log.d(tag, it.exception?.message, null)
+                    }
+                })
+    }
+
+    private fun generarImagen(uri: Uri) {
+        val imageView:ImageView = ImageView(context)
+        picasso
+                .load(uri)
+                //.fit()
+                //.resize(500,300)
+                .fit()
+                //.onlyScaleDown()
+                .placeholder(com.google.android.material.R.drawable.mtrl_ic_error)
+                .into(imageView)
+
+        var params = LinearLayout.LayoutParams(350, 300)
+        params.setMargins(5)
+        params.gravity = Gravity.CENTER
+        imageView.setBackgroundResource(R.drawable.border_black_round)
+        imageView.clipToOutline = true
+        imageView.layoutParams = params
+
+        imageView.setOnClickListener {
+            var circularProgressDrawable:CircularProgressDrawable
+            circularProgressDrawable = context?.let { it1 -> CircularProgressDrawable(it1) }!!
+            circularProgressDrawable.strokeWidth = 5f
+            circularProgressDrawable.centerRadius = 30f
+            circularProgressDrawable.start()
+
+            cvContenedorImagen.visibility = View.VISIBLE
+            picasso.load(uri)
+                    .resize(700,500)
+                    .onlyScaleDown()
+                    .centerInside()
+                    .placeholder(circularProgressDrawable)
+                    .into(ivImage)
+        }
+
+
+        lyImagesContainer.addView(imageView)
     }
 
 }

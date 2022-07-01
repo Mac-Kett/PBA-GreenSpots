@@ -84,7 +84,7 @@
                             android:id="@+id/cant_resenas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/comentarios"
+                            android:text=""
                             android:textSize="20dp"
                             android:textStyle="bold"
                             android:textColor="#575656"/>
@@ -107,7 +107,7 @@
                             android:id="@+id/cant_senderos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3"
+                            android:text=""
                             android:textSize="20dp"
                             android:textStyle="bold"
                             android:textColor="#575656"/>
@@ -131,7 +131,7 @@
                             android:id="@+id/cant_areas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="15"
+                            android:text=""
                             android:textSize="20dp"
                             android:textStyle="bold"
                             android:textColor="#575656"/>
@@ -212,28 +212,6 @@
                     android:textSize="20dp"
                     android:paddingLeft="15dp"
                     android:layout_gravity="center_vertical"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="25dp">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_phone"/>
-                <TextView
-                    android:id="@+id/textViewPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone"
-                    android:textColor="#000"
-                    android:textSize="20dp"
-                    android:paddingLeft="15dp"
-                    android:layout_gravity="center_vertical"/>
-
             </LinearLayout>
 
 

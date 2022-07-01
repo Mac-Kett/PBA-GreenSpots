@@ -86,35 +86,45 @@ public class RegisterFragment extends Fragment {
         String country = spPaises.getSelectedItem().toString().trim();
         String typeUser = "1";
 
-        mAuth.createUserWithEmailAndPassword(mail, contra)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            user =  mAuth.getCurrentUser();
-                            assert user != null;
-                            idUser = user.getUid();
-                            Usuario usuario = new Usuario(idUser,nombre,mail, contra, country, typeUser);
-                            DocumentReference dr = db.collection("Users").document(idUser);
-                            dr.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d("REGISTRO","Se registro!");
-                                    Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(getActivity(), NavigationActivity.class));
-                                    requireActivity().finish();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("REGISTRO","Error del registro!");
-                                    Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        } else{
-                            Toast.makeText(getActivity(),task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+        if (validarCampos(nombre, mail, contra, country)){
+            mAuth.createUserWithEmailAndPassword(mail, contra)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                user =  mAuth.getCurrentUser();
+                                assert user != null;
+                                idUser = user.getUid();
+                                Usuario usuario = new Usuario(idUser,nombre,mail, contra, country, typeUser);
+                                DocumentReference dr = db.collection("Users").document(idUser);
+                                dr.set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d("REGISTRO","Se registro!");
+                                        Toast.makeText(getActivity(),"Se ha registrado con exito!", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(getActivity(), NavigationActivity.class));
+                                        requireActivity().finish();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("REGISTRO","Error del registro!");
+                                        Toast.makeText(getActivity(),"ERROR AL REGISTRARSE", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            } else{
+                                Toast.makeText(getActivity(),task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+
+        }else{
+            Toast.makeText(getContext(), "Complete los datos!", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private boolean validarCampos(String nombre, String mail, String contra, String country ) {
+        return !(nombre.isEmpty() || mail.isEmpty() || contra.isEmpty() || contra.isEmpty());
     }
 }
