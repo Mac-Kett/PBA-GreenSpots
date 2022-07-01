@@ -9,9 +9,8 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     >
-
     <LinearLayout
         android:id="@+id/lySuperiorImagenes"
         android:layout_width="match_parent"
@@ -21,24 +20,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:layout_margin="5dp"
-            android:layout_gravity="center"
-            android:padding="2dp">
+            android:layout_gravity="center">
 
             <LinearLayout
                 android:id="@+id/lyImagesContainer"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5sp"
-                android:orientation="horizontal"
-                android:outlineAmbientShadowColor="@color/black">
+                android:orientation="horizontal">
 
             </LinearLayout>
-        </ScrollView>
+        </HorizontalScrollView>
 
         <ImageView
             android:id="@+id/ivImage"
@@ -48,8 +45,6 @@
             android:layout_margin="5dp"
             android:background="@drawable/border_black_round"
             />
-
-
     </LinearLayout>
 
 
