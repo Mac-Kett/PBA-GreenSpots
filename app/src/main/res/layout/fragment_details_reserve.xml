@@ -7,62 +7,78 @@
     android:layout_height="match_parent"
     tools:context=".fragments.DetailsReserveFragment">
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
     <LinearLayout
+        android:id="@+id/lySuperiorImagenes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:padding="2dp">
+
+            <LinearLayout
+                android:id="@+id/lyImagesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5sp"
+                android:orientation="horizontal"
+                android:outlineAmbientShadowColor="@color/black">
+
+            </LinearLayout>
+        </ScrollView>
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="380dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/border_black_round"
+            />
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/lyInformacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lySuperiorImagenes"
         >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/parque2">
 
-        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/nameReserve"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-60dp"
-            >
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cardCornerRadius="15dp"
-                android:layout_gravity="center"
-                android:backgroundTint="#00000000">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/reserva_icon"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_centerHorizontal="true"
-                        android:src="@drawable/ic_reserve_round" />
-
-                    <TextView
-                        android:id="@+id/nameReserve"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/reserva_icon"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="3dp"
-                        android:padding="2dp"
-                        android:text="Nombre reserva"
-                        android:textColor="#393838"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-
-        </LinearLayout>
+            android:layout_below="@+id/reserva_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="3dp"
+            android:padding="2dp"
+            android:text="Nombre reserva"
+            android:textColor="#393838"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -515,9 +531,10 @@
             android:layout_margin="15dp"
             android:backgroundTint="@color/colorPrimario"
             android:textColor="@color/white"
+            android:textAllCaps="false"
             android:text="Descargar"
-            android:textSize="25dp"/>
+            android:textSize="25dp"
+            android:background="@drawable/border_black_round"/>
     </LinearLayout>
-
-
+</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
