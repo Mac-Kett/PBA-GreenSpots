@@ -20,9 +20,9 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.example.pba_greenspots.R;
 import com.example.pba_greenspots.entities.Gestor;
+import com.example.pba_greenspots.entities.Reserve;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,7 +33,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
+import com.example.pba_greenspots.METODOS_COMPLEMENTARIOS;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -45,8 +47,8 @@ public class Fragment_Gestores_ABM extends Fragment {
     private FirebaseUser userDB;
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    private Spinner spMunicipios,
-            spABM,
+    private Spinner spMunicipios2,
+            spABM2,
             spGestores;
     private EditText et_Nombre,
             et_email,
@@ -71,8 +73,8 @@ public class Fragment_Gestores_ABM extends Fragment {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.fragment_reserves_abm);
 
-        //spMunicipios.setSelection(Arrays.asList(getResources().getStringArray(R.array.MUNICIPIOS)).indexOf();
-        //spMunicipios.setEnabled(false);
+        //spMunicipios2.setSelection(Arrays.asList(getResources().getStringArray(R.array.MUNICIPIOS)).indexOf(spMunicipios2));
+        //spMunicipios2.setEnabled(false);
     }
 
     @Override
@@ -80,27 +82,28 @@ public class Fragment_Gestores_ABM extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment__gestores__a_b_m, container, false);
         scrollView = view.findViewById(R.id.scrollView);
-        formLinearLayout = view.findViewById(R.id.formLinearLayout);
+        formLinearLayout = view.findViewById(R.id.formLinearLayout2);
         btnConfirmar = view.findViewById(R.id.btnConfirmar);
         btnModificar = view.findViewById(R.id.btnModificar);
         btnEliminar = view.findViewById(R.id.btnEliminar);
-        spABM = view.findViewById(R.id.spABM);
+        spABM2 = view.findViewById(R.id.spABM2);
         spGestores = view.findViewById(R.id.spGestores);
-        spMunicipios = view.findViewById(R.id.spMunicipios);
+        spMunicipios2 = view.findViewById(R.id.spMunicipios2);
 
         user= obtenerUser();
 
         instanciarEditTextsFormulario(view);
         cargarArrayListEditTextsFormulario();
 
-
-        //METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM, requireContext());
-        //METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerABM(spABM2, requireContext());
+        METODOS_COMPLEMENTARIOS.completarSpinnerMunicipios(spMunicipios2, requireContext());
 
         spGestores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                cargarFormularioDeGestor((Gestor) spGestores.getSelectedItem());
+                if (spGestores.getSelectedItem().equals(getResources().getStringArray(R.array.ABM)[2])){
+                    cargarFormularioDeGestor((Gestor)spGestores.getSelectedItem());
+                }
             }
 
             @Override
@@ -109,8 +112,8 @@ public class Fragment_Gestores_ABM extends Fragment {
             }
         }
         );
-/*
-        spABM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        spABM2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -124,13 +127,12 @@ public class Fragment_Gestores_ABM extends Fragment {
                         flujoModificacion();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                spABM.setBackgroundColor(Color.RED);
+                spABM2.setBackgroundColor(Color.RED);
             }
         });
-*/
+
         configuracionEventosListenersBotones();
         db.collection("Users")
                 .get()
@@ -153,7 +155,7 @@ public class Fragment_Gestores_ABM extends Fragment {
                         }
                     }
                 });
-
+        getAllGestores();
         return view;
     }
 
@@ -163,8 +165,8 @@ public class Fragment_Gestores_ABM extends Fragment {
         listaEditTexts.add(et_Nombre);
         listaEditTexts.add(et_contrasenia);
         listaEditTexts.add(et_email);
-        listaEditTexts.add(spMunicipios);
-        listaEditTexts.add(spABM);
+        listaEditTexts.add(spMunicipios2);
+        listaEditTexts.add(spABM2);
         listaEditTexts.add(spGestores);
         listaEditTexts.add(et_pais);
         listaEditTexts.add(et_typeUser);
@@ -175,12 +177,34 @@ public class Fragment_Gestores_ABM extends Fragment {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spGestores.setAdapter(arrayAdapter);
     }
+    private void getAllGestores() {
+         db.collection("Users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            listaGestores=new ArrayList<Gestor>();
+                            Gestor gestorActual;
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                gestorActual = documentSnapshot.toObject(Gestor.class);
+                                listaGestores.add(gestorActual);
+                                Log.d(getTag(), String.valueOf(listaGestores));
+                            }
+                            actualizarSpinnerGestores();
+                        }else{
+                            Log.d(getTag(), "ERROR OBTENIENDO DATA!", task.getException());
+                            Toast.makeText(getContext(), "ERROR! No pudimos completar la lista de gestores", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
 
     private void configuracionEventosListenersBotones() {
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                crearGestorConDatosFormulario();
+                crearGestor();
             }
         });
 
@@ -312,14 +336,14 @@ public class Fragment_Gestores_ABM extends Fragment {
                 et_contrasenia.getText().toString().trim(),
                 et_pais.toString().trim(),
                 et_typeUser.toString().trim(),
-                spMunicipios.getSelectedItem().toString().trim()
+                spMunicipios2.getSelectedItem().toString().trim()
         );
         return gestorNuevo;
     }
 
     private void instanciarEditTextsFormulario(View v) {
 
-        spMunicipios = v.findViewById(R.id.spMunicipios);
+        spMunicipios2 = v.findViewById(R.id.spMunicipios2);
         et_Nombre = v.findViewById(R.id.et_nombre);
         et_contrasenia = v.findViewById(R.id.et_contrasenia);
         et_email = v.findViewById(R.id.et_email);
@@ -327,15 +351,16 @@ public class Fragment_Gestores_ABM extends Fragment {
         et_typeUser = v.findViewById(R.id.et_typeUser);
     }
 
+    //TODO ésto no se llama
     private void cargarFormularioItemSeleccionado() {
         Gestor gestorSeleccionado;
         gestorSeleccionado = (Gestor) spGestores.getSelectedItem();
         et_Nombre.setText(gestorSeleccionado.getNombre());
         et_contrasenia.setText(gestorSeleccionado.getPassword());
         try {
-            spMunicipios.setSelection(obtenerIndiceDelRecurso(gestorSeleccionado.getMunicipio(), getContext().getResources().getStringArray(R.array.MUNICIPIOS)));
+            spMunicipios2.setSelection(obtenerIndiceDelRecurso(gestorSeleccionado.getMunicipio(), getContext().getResources().getStringArray(R.array.MUNICIPIOS)));
         } catch (Exception e) {
-            spMunicipios.setSelection(0);
+            spMunicipios2.setSelection(0);
         }
         et_email.setText(gestorSeleccionado.getMail());
         et_pais.setText(gestorSeleccionado.getPais());
@@ -409,9 +434,9 @@ public class Fragment_Gestores_ABM extends Fragment {
         if (!esMismoGestor(gestorSeleccionado)) {
             et_Nombre.setText(gestorSeleccionado.getNombre());
             try {
-                spMunicipios.setSelection(obtenerIndiceDelRecurso(gestorSeleccionado.getMunicipio(), getContext().getResources().getStringArray(R.array.MUNICIPIOS)));
+                spMunicipios2.setSelection(obtenerIndiceDelRecurso(gestorSeleccionado.getMunicipio(), getContext().getResources().getStringArray(R.array.MUNICIPIOS)));
             } catch (Exception e) {
-                spMunicipios.setSelection(0);
+                spMunicipios2.setSelection(0);
             }
             et_email.setText(gestorSeleccionado.getMail());
             et_contrasenia.setText(gestorSeleccionado.getPassword());
@@ -421,13 +446,13 @@ public class Fragment_Gestores_ABM extends Fragment {
     }
 
     private boolean esMismoGestor(Gestor gestorSeleccionado) {
-        return gestorSeleccionado.getNombre().equals(et_Nombre.getText().toString().trim()) && gestorSeleccionado.getMunicipio().equals(spMunicipios.getSelectedItem().toString().trim());
+        return gestorSeleccionado.getNombre().equals(et_Nombre.getText().toString().trim()) && gestorSeleccionado.getMunicipio().equals(spMunicipios2.getSelectedItem().toString().trim());
     }
     private void actualizarInterfazProcesoCompleto() {
         //progressDialog.setProgress(100);
         //progressDialog.dismiss();
         limpiarFormulario();
-        spABM.setSelection(0); //flujo alta.
+        spABM2.setSelection(0); //flujo alta.
     }
     private Gestor obtenerUser() {
         Gson gson = new Gson();
